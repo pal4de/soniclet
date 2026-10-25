@@ -37,7 +37,10 @@ struct SoundMenuContent: View {
                     .keyboardShortcut(",", modifiers: .command)
                 if !model.bluetoothOutputs.isEmpty {
                     Button(action: openHeadphoneSettings) {
-                        footerLabel(model.hasAppleHeadphones && Self.hasHeadphonePanel ? "Headphone Settings…" : "Bluetooth Settings…")
+                        Text(SystemSettingsLinks.headphoneTitle(isApple: model.hasAppleHeadphones)).font(.callout)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.horizontal, 8).padding(.vertical, 4)
+                            .contentShape(Rectangle())
                     }
                 }
                 Button(action: updateAction) {
@@ -86,7 +89,7 @@ struct SoundMenuContent: View {
                     : L10n.text("Volume cannot be adjusted for this device"))
                 .help(model.outputVolume.canAdjust ? L10n.format("Volume for %@", model.outputName) : L10n.text("Adjust the volume on the device"))
             Button { model.stepVolume(up: true) } label: {
-                Image(systemName: model.outputSymbol, variableValue: model.outputSymbolValue).foregroundStyle(.secondary)
+                Image(systemName: model.volumeSymbol, variableValue: model.outputSymbolValue).foregroundStyle(.secondary)
                     .frame(width: 24, height: 24)
             }
             .buttonStyle(MenuRowButtonStyle())
@@ -97,23 +100,14 @@ struct SoundMenuContent: View {
         .font(.system(size: 15))
         .frame(height: 24)
     }
-    private static let hasHeadphonePanel = FileManager.default.fileExists(
-        atPath: "/System/Library/ExtensionKit/Extensions/HeadphoneSettingsExtension.appex")
-
     private func openHeadphoneSettings() {
         dismissPanel()
-        let pane = model.hasAppleHeadphones && Self.hasHeadphonePanel
-            ? "com.apple.HeadphoneSettings" : "com.apple.BluetoothSettings"
-        if let url = URL(string: "x-apple.systempreferences:\(pane)"), NSWorkspace.shared.open(url) { return }
-        NSWorkspace.shared.open(URL(fileURLWithPath: "/System/Applications/System Settings.app"))
+        SystemSettingsLinks.openHeadphones(isApple: model.hasAppleHeadphones)
     }
 
     private func openSystemSettings() {
         dismissPanel()
-        guard let url = URL(string: "x-apple.systempreferences:com.apple.Sound-Settings.extension") else { return }
-        if !NSWorkspace.shared.open(url) {
-            NSWorkspace.shared.open(URL(fileURLWithPath: "/System/Applications/System Settings.app"))
-        }
+        SystemSettingsLinks.openSound()
     }
     private func deviceSection(_ direction: AudioDirection) -> some View {
         VStack(alignment: .leading, spacing: 2) {

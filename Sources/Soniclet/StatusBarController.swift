@@ -60,6 +60,10 @@ final class StatusBarController: NSObject, NSMenuDelegate {
             item.title = updates.menuTitle
             item.isEnabled = updates.actionIsEnabled
         }
+        if let item = NSApplication.shared.mainMenu?.items.first?.submenu?.item(withTag: 107) {
+            item.title = SystemSettingsLinks.headphoneTitle(isApple: model.hasAppleHeadphones)
+            item.isHidden = model.bluetoothOutputs.isEmpty
+        }
         guard let menu = currentMenu else { return }
         menu.item(withTag: 101)?.title = summaryLines[0]
         menu.item(withTag: 102)?.title = summaryLines[1]
@@ -170,6 +174,14 @@ final class StatusBarController: NSObject, NSMenuDelegate {
         dismissMenu()
         // Finish native menu tracking before activating a settings window or alert.
         DispatchQueue.main.async { [weak self] in self?.settings.show() }
+    }
+
+    @objc func showHeadphoneSettings() {
+        dismissMenu()
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            SystemSettingsLinks.openHeadphones(isApple: self.model.hasAppleHeadphones)
+        }
     }
 
     @objc func checkForUpdates() {

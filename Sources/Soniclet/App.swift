@@ -66,6 +66,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                                       action: #selector(StatusBarController.showSettings), keyEquivalent: ",")
         settingsItem.target = statusController
         appMenu.addItem(settingsItem)
+        let headphones = NSMenuItem(title: L10n.text("Bluetooth Settings…"),
+                                    action: #selector(StatusBarController.showHeadphoneSettings), keyEquivalent: "")
+        headphones.tag = 107
+        headphones.target = statusController
+        appMenu.addItem(headphones)
         let update = NSMenuItem(title: L10n.text("Check for Updates…"),
                                 action: #selector(StatusBarController.checkForUpdates), keyEquivalent: "")
         update.tag = 104

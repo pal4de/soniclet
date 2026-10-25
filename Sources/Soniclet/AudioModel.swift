@@ -145,7 +145,10 @@ final class AudioModel: ObservableObject {
     var outputSymbol: String {
         if let output = devices.first(where: { $0.key.direction == .output && $0.objectID == outputID }),
            output.symbol == "headphones" { return "headphones" }
-        return outputVolume.muted || (outputVolume.canAdjust && outputVolume.value <= 0)
+        return volumeSymbol
+    }
+    var volumeSymbol: String {
+        outputVolume.muted || (outputVolume.canAdjust && outputVolume.value <= 0)
             ? "speaker.slash.fill" : "speaker.wave.3.fill"
     }
     var outputSymbolValue: Double {
