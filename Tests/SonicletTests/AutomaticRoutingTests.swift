@@ -52,6 +52,34 @@ struct AutomaticRoutingTests {
         let speaker = DeviceKey(uid: "speaker", direction: .output)
         require(output.evaluate(RoutingSnapshot(connected: [speaker], priority: [speaker], current: speaker)).selection == nil,
                 "Input and output policies are independent")
+        var failedAutomatic = AutomaticRouting()
+        var failedSnapshot = RoutingSnapshot(connected: [external, builtIn], priority: [external, builtIn], current: builtIn)
+        _ = failedAutomatic.evaluate(failedSnapshot)
+        failedAutomatic.selectionFailed(failedSnapshot)
+        require(failedAutomatic.manual == nil, "Failure never changes automatic mode to manual")
+        require(failedAutomatic.evaluate(failedSnapshot).selection == nil, "Repeated notifications cannot retry the failed context")
+        failedSnapshot.current = external
+        require(failedAutomatic.evaluate(failedSnapshot).selection == nil && failedAutomatic.manual == nil,
+                "Reflection after timeout must not be inferred to be a manual choice")
+        failedSnapshot.current = builtIn
+        _ = failedAutomatic.evaluate(failedSnapshot)
+        failedSnapshot.connected.insert(headset)
+        require(failedAutomatic.evaluate(failedSnapshot).selection == external, "A new connection context permits another automatic attempt")
+        var failedManual = AutomaticRouting()
+        _ = failedManual.evaluate(failedSnapshot)
+        failedManual.selectManually(external)
+        failedManual.selectionFailed(failedSnapshot)
+        require(failedManual.manual == external, "Failure preserves the explicit manual target, not the observed fallback")
+        failedSnapshot.current = headset
+        _ = failedManual.evaluate(failedSnapshot)
+        require(failedManual.manual == external, "Late fallback updates cannot replace manual intent after failure")
+        var coordinated = AutomaticRouting()
+        failedSnapshot.current = builtIn
+        _ = coordinated.evaluate(failedSnapshot)
+        failedSnapshot.current = headset
+        coordinated.observed(failedSnapshot)
+        require(coordinated.evaluate(failedSnapshot).selection == external && coordinated.manual == nil,
+                "Input changes caused by output negotiation are observed without inventing manual intent")
         print("PASS: automatic priority, manual preservation, external defaults, prompts, decline, reconnect, hidden choices and no-candidate behavior")
     }
 }

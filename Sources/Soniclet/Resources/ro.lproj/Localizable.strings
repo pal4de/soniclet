@@ -73,3 +73,5 @@
 "Resume Automatic Selection" = "Reia selecția automată";
 "Keep Manual Selection" = "Păstrează selecția manuală";
 "Switch %@ from %@ to %@?" = "Comuți %@ de la %@ la %@?";
+
+"Could not confirm the switch to %@. Please try again." = "Nu s-a putut confirma comutarea la %@. Încearcă din nou.";

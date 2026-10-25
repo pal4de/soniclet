@@ -73,3 +73,5 @@
 "Resume Automatic Selection" = "Automatische selectie hervatten";
 "Keep Manual Selection" = "Handmatige selectie behouden";
 "Switch %@ from %@ to %@?" = "%@ van %@ naar %@ schakelen?";
+
+"Could not confirm the switch to %@. Please try again." = "De overschakeling naar %@ kon niet worden bevestigd. Probeer het opnieuw.";

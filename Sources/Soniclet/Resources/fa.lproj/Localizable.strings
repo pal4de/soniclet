@@ -73,3 +73,5 @@
 "Resume Automatic Selection" = "ازسرگیری انتخاب خودکار";
 "Keep Manual Selection" = "حفظ انتخاب دستی";
 "Switch %@ from %@ to %@?" = "تغییر %@ از %@ به %@؟";
+
+"Could not confirm the switch to %@. Please try again." = "تغییر به %@ تأیید نشد. دوباره تلاش کنید.";

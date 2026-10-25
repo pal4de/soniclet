@@ -73,3 +73,5 @@
 "Resume Automatic Selection" = "Lanjutkan pemilihan otomatis";
 "Keep Manual Selection" = "Pertahankan pilihan manual";
 "Switch %@ from %@ to %@?" = "Alihkan %@ dari %@ ke %@?";
+
+"Could not confirm the switch to %@. Please try again." = "Tidak dapat memastikan peralihan ke %@. Coba lagi.";

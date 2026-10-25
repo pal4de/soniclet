@@ -73,3 +73,5 @@
 "Resume Automatic Selection" = "Συνέχιση αυτόματης επιλογής";
 "Keep Manual Selection" = "Διατήρηση χειροκίνητης επιλογής";
 "Switch %@ from %@ to %@?" = "Αλλαγή %@ από %@ σε %@;";
+
+"Could not confirm the switch to %@. Please try again." = "Δεν ήταν δυνατή η επιβεβαίωση της αλλαγής σε %@. Δοκιμάστε ξανά.";

@@ -73,3 +73,5 @@
 "Resume Automatic Selection" = "Otomatik seçime dön";
 "Keep Manual Selection" = "Elle seçimi koru";
 "Switch %@ from %@ to %@?" = "%@ için %@ yerine %@ kullanılsın mı?";
+
+"Could not confirm the switch to %@. Please try again." = "%@ aygıtına geçiş doğrulanamadı. Tekrar deneyin.";

@@ -73,3 +73,5 @@
 "Resume Automatic Selection" = "Automatische Auswahl fortsetzen";
 "Keep Manual Selection" = "Manuelle Auswahl beibehalten";
 "Switch %@ from %@ to %@?" = "%@ von %@ auf %@ umstellen?";
+
+"Could not confirm the switch to %@. Please try again." = "Der Wechsel zu %@ konnte nicht bestätigt werden. Versuche es erneut.";

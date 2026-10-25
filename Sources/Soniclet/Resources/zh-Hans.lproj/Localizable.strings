@@ -73,3 +73,5 @@
 "Resume Automatic Selection" = "恢复自动选择";
 "Keep Manual Selection" = "保留手动选择";
 "Switch %@ from %@ to %@?" = "将%@从%@切换到%@？";
+
+"Could not confirm the switch to %@. Please try again." = "无法确认已切换到%@。请重试。";

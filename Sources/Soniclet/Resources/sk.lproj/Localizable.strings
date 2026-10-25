@@ -73,3 +73,5 @@
 "Resume Automatic Selection" = "Obnoviť automatický výber";
 "Keep Manual Selection" = "Ponechať ručný výber";
 "Switch %@ from %@ to %@?" = "Prepnúť %@ z %@ na %@?";
+
+"Could not confirm the switch to %@. Please try again." = "Prepnutie na %@ sa nepodarilo potvrdiť. Skúste to znova.";

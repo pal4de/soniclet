@@ -280,7 +280,7 @@ final class StatusBarController: NSObject, NSMenuDelegate {
     }
 
     private func configureDevice(_ item: NSMenuItem, device: AudioDevice) {
-        let pending = model.pendingSelection == device.key
+        let pending = model.pendingSelections.contains(device.key)
         item.title = device.name
         item.state = .off
         item.isEnabled = !pending

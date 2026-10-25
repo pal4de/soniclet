@@ -73,3 +73,5 @@
 "Resume Automatic Selection" = "Gjenoppta automatisk valg";
 "Keep Manual Selection" = "Behold manuelt valg";
 "Switch %@ from %@ to %@?" = "Bytt %@ fra %@ til %@?";
+
+"Could not confirm the switch to %@. Please try again." = "Kunne ikke bekrefte byttet til %@. Prøv igjen.";

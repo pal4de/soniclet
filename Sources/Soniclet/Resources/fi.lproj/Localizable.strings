@@ -73,3 +73,5 @@
 "Resume Automatic Selection" = "Jatka automaattista valintaa";
 "Keep Manual Selection" = "Säilytä manuaalinen valinta";
 "Switch %@ from %@ to %@?" = "Vaihda %@ laitteesta %@ laitteeseen %@?";
+
+"Could not confirm the switch to %@. Please try again." = "Vaihtoa laitteeseen %@ ei voitu vahvistaa. Yritä uudelleen.";

@@ -9,7 +9,7 @@ final class AudioModel: ObservableObject {
     @Published private(set) var inputID: UInt32 = 0
     @Published private(set) var outputVolume = OutputVolume(value: 0, channels: [], muteElement: nil, muted: false)
     @Published var errorMessage: String?
-    @Published private(set) var pendingSelection: DeviceKey?
+    @Published private(set) var pendingSelections = Set<DeviceKey>()
     @Published private(set) var accessories: [AudioAccessory] = []
     private var accessoryRefresh: Task<Void, Never>?
     private var accessoryRefreshDate = Date.distantPast
@@ -19,9 +19,15 @@ final class AudioModel: ObservableObject {
     private var observedOutput: UInt32?
     private var refreshWork: DispatchWorkItem?
     private var wakeObserver: NSObjectProtocol?
-    private var selectionRequests: [AudioDirection: UUID] = [:]
+    private struct SelectionRequest {
+        let device: AudioDevice
+        let automatically: Bool
+        var progress: DeviceSelectionProgress
+    }
+    private var selectionRequests: [AudioDirection: SelectionRequest] = [:]
+    private var selectionCheck: DispatchWorkItem?
+    private var selectionErrorTarget: DeviceKey?
     private var routing: [AudioDirection: AutomaticRouting] = [:]
-    private var failedRouting: [AudioDirection: RoutingSnapshot] = [:]
     private let defaults: UserDefaults
     @Published private(set) var automaticDirections: Set<AudioDirection> = []
     @Published private(set) var routingPrompts: [AudioDirection: RoutingPrompt] = [:]
@@ -60,8 +66,18 @@ final class AudioModel: ObservableObject {
                 }
             }
             refreshAccessoriesIfNeeded()
+            checkPendingSelections()
+            if let target = selectionErrorTarget,
+               routingSnapshot(target.direction).current == target || !devices.contains(where: { $0.key == target }) {
+                errorMessage = nil
+                selectionErrorTarget = nil
+            }
             reconcileAutomaticSelection()
-        } catch { errorMessage = error.localizedDescription }
+        } catch {
+            for request in Array(selectionRequests.values) { failSelection(request.device) }
+            errorMessage = error.localizedDescription
+        }
+        scheduleSelectionCheck()
     }
 
     var outputIsAirPlay: Bool {
@@ -164,37 +180,61 @@ final class AudioModel: ObservableObject {
     }
     func select(_ device: AudioDevice, automatically: Bool = false, userInitiated: Bool = true) {
         if userInitiated {
-            failedRouting.removeValue(forKey: device.key.direction)
             routing[device.key.direction, default: AutomaticRouting()].selectManually(device.key)
             routingPrompts.removeValue(forKey: device.key.direction)
         }
-        guard pendingSelection != device.key else { return }
+        guard !pendingSelections.contains(device.key) else { return }
+        // A newer explicit choice supersedes any pending request in this direction.
+        selectionRequests.removeValue(forKey: device.key.direction)
+        pendingSelections = Set(selectionRequests.values.map { $0.device.key })
         guard service.defaultDevice(device.key.direction) != device.objectID else { return }
         errorMessage = nil
-        let request = UUID()
+        selectionErrorTarget = nil
+        let request = SelectionRequest(device: device, automatically: automatically,
+            progress: DeviceSelectionProgress(target: device.key, startedAt: ProcessInfo.processInfo.systemUptime))
         selectionRequests[device.key.direction] = request
         do {
             try service.setDefault(device)
-            pendingSelection = device.key
-            // Core Audio property writes are asynchronous. Read back before completing the progress indicator.
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
-                guard let self, self.selectionRequests[device.key.direction] == request else { return }
-                self.refresh()
-                if self.selected(device) { self.finishSelection(device, automatically: automatically); return }
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) { [weak self] in
-                    guard let self, self.selectionRequests[device.key.direction] == request else { return }
-                    self.refresh()
-                    if self.selected(device) { self.finishSelection(device, automatically: automatically) }
-                    else { self.failSelection(device); self.errorMessage = L10n.format("Could not switch to %@. Please try again.", device.name) }
-                }
+            pendingSelections.insert(device.key)
+            scheduleSelectionCheck()
+        } catch {
+            failSelection(device)
+            errorMessage = error.localizedDescription
+        }
+    }
+    private func scheduleSelectionCheck() {
+        selectionCheck?.cancel()
+        guard !selectionRequests.isEmpty else { selectionCheck = nil; return }
+        let work = DispatchWorkItem { [weak self] in self?.refresh() }
+        selectionCheck = work
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: work)
+    }
+    private func checkPendingSelections() {
+        for direction in AudioDirection.allCases {
+            guard var request = selectionRequests[direction] else { continue }
+            let snapshot = routingSnapshot(direction)
+            let outcome = request.progress.observe(current: snapshot.current, connected: snapshot.connected,
+                now: ProcessInfo.processInfo.systemUptime)
+            selectionRequests[direction] = request
+            switch outcome {
+            case .waiting: break
+            case .confirmed: finishSelection(request.device, automatically: request.automatically)
+            case .disconnected:
+                selectionRequests.removeValue(forKey: direction)
+                pendingSelections.remove(request.device.key)
+                routing[direction, default: AutomaticRouting()].observed(snapshot)
+                if direction == .output { routing[.input, default: AutomaticRouting()].observed(routingSnapshot(.input)) }
+                // A disappearing candidate is a topology update; evaluate the remaining candidates.
+            case .timedOut:
+                failSelection(request.device)
+                errorMessage = L10n.format("Could not confirm the switch to %@. Please try again.", request.device.name)
             }
-        } catch { failSelection(device); errorMessage = error.localizedDescription; refresh() }
+        }
     }
     func automaticSelectionEnabled(_ direction: AudioDirection) -> Bool { automaticDirections.contains(direction) }
     func setAutomaticSelection(_ enabled: Bool, direction: AudioDirection) {
         if enabled { automaticDirections.insert(direction) } else { automaticDirections.remove(direction) }
         defaults.set(enabled, forKey: "automaticSelection." + direction.rawValue)
-        failedRouting.removeValue(forKey: direction)
         routing[direction] = AutomaticRouting()
         routingPrompts.removeValue(forKey: direction)
         refresh()
@@ -202,7 +242,6 @@ final class AudioModel: ObservableObject {
     func isManualSelection(_ direction: AudioDirection) -> Bool { routing[direction]?.manual != nil }
     func resumeAutomaticSelection(_ direction: AudioDirection) {
         routing[direction, default: AutomaticRouting()].resume()
-        failedRouting.removeValue(forKey: direction)
         refresh()
     }
     func resolveRoutingPrompt(_ prompt: RoutingPrompt, resume: Bool) {
@@ -221,10 +260,9 @@ final class AudioModel: ObservableObject {
     }
     private func reconcileAutomaticSelection() {
         for direction in AudioDirection.allCases where automaticDirections.contains(direction) {
-            guard selectionRequests[direction] == nil else { continue }
+            // Settle one request before issuing another automatic write.
+            guard selectionRequests.isEmpty else { continue }
             let snapshot = routingSnapshot(direction)
-            guard failedRouting[direction] != snapshot else { continue }
-            failedRouting.removeValue(forKey: direction)
             let decision = routing[direction, default: AutomaticRouting()].evaluate(snapshot)
             if routingPrompts[direction] != decision.prompt { routingPrompts[direction] = decision.prompt }
             if let key = decision.selection, let device = devices.first(where: { $0.key == key }) {
@@ -234,21 +272,22 @@ final class AudioModel: ObservableObject {
     }
     private func finishSelection(_ device: AudioDevice, automatically: Bool) {
         selectionRequests.removeValue(forKey: device.key.direction)
-        if pendingSelection == device.key { pendingSelection = nil }
+        pendingSelections.remove(device.key)
         routing[device.key.direction, default: AutomaticRouting()].confirmed(device.key)
+        if device.key.direction == .output {
+            routing[.input, default: AutomaticRouting()].observed(routingSnapshot(.input))
+        }
         if automatically { automaticSelectionEvent = UUID() }
-        reconcileAutomaticSelection()
     }
     private func failSelection(_ device: AudioDevice) {
         selectionRequests.removeValue(forKey: device.key.direction)
-        if pendingSelection == device.key { pendingSelection = nil }
-        failedRouting[device.key.direction] = routingSnapshot(device.key.direction)
-        // Failed writes must not cause a retry loop on every volume update.
-        if let current = routingSnapshot(device.key.direction).current {
-            routing[device.key.direction, default: AutomaticRouting()].selectManually(current)
-            if let prompt = routing[device.key.direction, default: AutomaticRouting()].evaluate(routingSnapshot(device.key.direction)).prompt {
-                routing[device.key.direction, default: AutomaticRouting()].keepManual(prompt)
-            }
+        pendingSelections.remove(device.key)
+        selectionErrorTarget = device.key
+        // Suppress retries for this connection/order context without changing mode.
+        routing[device.key.direction, default: AutomaticRouting()].selectionFailed(routingSnapshot(device.key.direction))
+        routingPrompts.removeValue(forKey: device.key.direction)
+        if device.key.direction == .output {
+            routing[.input, default: AutomaticRouting()].observed(routingSnapshot(.input))
         }
     }
     func changeVolume(_ value: Float) {

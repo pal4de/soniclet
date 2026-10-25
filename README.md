@@ -56,7 +56,7 @@ Manual choices remain in effect while connected. A newly available higher-priori
 
 Core Audio reports default changes but not their author. Changes outside Soniclet that occur without a connection change are treated conservatively as manual. Connection notifications are debounced; simultaneous external changes cannot always be attributed perfectly. Mode and declined-prompt context are session-only; the per-direction enable switches persist. Relaunch starts enabled directions in automatic mode.
 
-After a confirmed automatic switch, all icon styles briefly show the volume speaker with a standard SF Symbols effect, then return after two seconds. Reduce Motion suppresses animation. The tooltip always reports the actual input and output. Failed switches show an error and are not continuously retried.
+After a confirmed automatic switch, all icon styles briefly show the volume speaker with a standard SF Symbols effect, then return after two seconds. Reduce Motion suppresses animation. The tooltip always reports the actual input and output. Switches are confirmed from notifications and readback by UID, with a five-second reflection window and a half-second stable match. A single fallback poll runs only while requests are pending. Automatic output/input writes are serialized to avoid Bluetooth negotiation races. A timeout is reported as an unconfirmed switch, not an OS rejection. Failures preserve the existing automatic/manual mode and suppress retries until the connection or priority context changes, or the user explicitly selects/resumes. Late default changes in a failed context are not inferred to be manual choices; a late match clears the stale error.
 
 ### Headphones and battery information
 

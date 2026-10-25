@@ -21,17 +21,33 @@ struct AutomaticRouting {
     private(set) var manual: DeviceKey?
     private var previous: RoutingSnapshot?
     private var declined: RoutingPrompt?
+    private var failedContext: RoutingSnapshot?
     mutating func selectManually(_ key: DeviceKey) {
         manual = key
+        failedContext = nil
         // Respect the explicit choice in the current connection/order context.
         if let available = previous?.available, let candidate = available.first {
             declined = RoutingPrompt(manual: key, candidate: candidate, available: available)
         } else { declined = nil }
     }
-    mutating func resume() { manual = nil; declined = nil; previous = nil }
+    mutating func resume() { manual = nil; declined = nil; previous = nil; failedContext = nil }
     mutating func keepManual(_ prompt: RoutingPrompt) { declined = prompt }
+    // Observing a failure or a coordinated output change is not a user choice.
+    mutating func observed(_ snapshot: RoutingSnapshot) { previous = snapshot }
+    mutating func selectionFailed(_ snapshot: RoutingSnapshot) {
+        previous = snapshot
+        failedContext = snapshot
+    }
     mutating func confirmed(_ key: DeviceKey) { previous?.current = key }
     mutating func evaluate(_ snapshot: RoutingSnapshot) -> RoutingDecision {
+        if let failedContext, failedContext.connected == snapshot.connected,
+           failedContext.priority == snapshot.priority {
+            // Late OS reflection must not be inferred to be a manual selection,
+            // and default/volume notifications must not restart a failed write.
+            previous = snapshot
+            return RoutingDecision(selection: nil, isAutomatic: manual == nil)
+        }
+        failedContext = nil
         if let previous, previous.available != snapshot.available { declined = nil }
         // Core Audio exposes the default, not who changed it. Treat default-only
         // changes outside Soniclet conservatively as manual selections.

@@ -73,3 +73,5 @@
 "Resume Automatic Selection" = "Resume Automatic Selection";
 "Keep Manual Selection" = "Keep Manual Selection";
 "Switch %@ from %@ to %@?" = "Switch %@ from %@ to %@?";
+
+"Could not confirm the switch to %@. Please try again." = "Could not confirm the switch to %@. Please try again.";

@@ -73,3 +73,5 @@
 "Resume Automatic Selection" = "自動選択に戻す";
 "Keep Manual Selection" = "手動選択を維持";
 "Switch %@ from %@ to %@?" = "%@を%@から%@に切り替えますか？";
+
+"Could not confirm the switch to %@. Please try again." = "%@への切り替えを確認できませんでした。もう一度お試しください。";

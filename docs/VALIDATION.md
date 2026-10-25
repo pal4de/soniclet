@@ -17,3 +17,9 @@ Updated 2026-10-26. User observations and automated checks are separate evidence
 - Automatic routing: opt-in implementation added, with pure-policy tests. Native GUI checks verify temporary speaker display and restoration after two seconds, without changing the icon preference or audio routing. Physical connection/disconnection and alert interaction still need manual validation.
 - Keeping the menu open after device selection: deferred in GitHub issue #2. Keep native menu interactions.
 - Developer Program application submitted; membership activation is pending. Actual distribution signing, notarization and App Store sandbox validation remain outstanding.
+
+## 0.7.1 regression coverage
+
+Pure tests cover reflection beyond one second, a transient target overwritten by another route, stable confirmation, five-second timeout, disconnection and confirmation near the deadline. Policy tests verify that failure and late reflection never invent manual selection, explicit manual targets survive failure, repeated default notifications cannot restart failed writes, and new connection contexts allow reevaluation. Physical Bluetooth negotiation remains a separate observation.
+
+After installing 0.7.1, a live readback showed the configured Bluetooth output retained and the preferred USB input selected. Both automatic-selection switches remained enabled and no manual-mode resume control was present. This verifies the current startup path, not every physical reconnect or Bluetooth negotiation sequence.

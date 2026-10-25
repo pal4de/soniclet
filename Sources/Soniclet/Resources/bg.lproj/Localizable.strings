@@ -73,3 +73,5 @@
 "Resume Automatic Selection" = "Възобновяване на автоматичния избор";
 "Keep Manual Selection" = "Запазване на ръчния избор";
 "Switch %@ from %@ to %@?" = "Превключване на %@ от %@ към %@?";
+
+"Could not confirm the switch to %@. Please try again." = "Неуспешно потвърждение на превключването към %@. Опитайте отново.";
