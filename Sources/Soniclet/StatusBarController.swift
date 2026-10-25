@@ -101,7 +101,6 @@ final class StatusBarController: NSObject, NSMenuDelegate {
         menu.item(withTag: 103)?.isEnabled = model.outputVolume.muteElement != nil
         menu.item(withTag: 104)?.title = updates.menuTitle
         menu.item(withTag: 104)?.isEnabled = updates.actionIsEnabled
-        if let item = menu.item(withTag: 104) { (item.view as? MenuActionRow)?.configure(title: updates.menuTitle) }
         if menu.item(withTag: 900) != nil {
             let expected = AudioDirection.allCases.flatMap { model.visibleDevices($0).map(\.key) }
             let actual = menu.items.compactMap { $0.representedObject as? DeviceKey }
@@ -117,7 +116,6 @@ final class StatusBarController: NSObject, NSMenuDelegate {
                 menu.item(withTag: 111)?.isHidden = model.errorMessage == nil
                 if let item = menu.item(withTag: 107) {
                     item.title = SystemSettingsLinks.headphoneTitle(accessory: model.appleHeadphones)
-                    (item.view as? MenuActionRow)?.configure(title: item.title)
                 }
             }
             for view in menu.items.compactMap(\.view) {
@@ -228,22 +226,20 @@ final class StatusBarController: NSObject, NSMenuDelegate {
             menu.addItem(item)
         }
         menu.addItem(.separator())
-        menu.addItem(command(L10n.text("Soniclet Settings…"), #selector(showSettings), key: ","))
+        menu.addItem(command(L10n.text("Soniclet Settings…"), #selector(showSettings)))
         let update = command(updates.menuTitle, #selector(checkForUpdates))
         update.tag = 104
         update.isEnabled = updates.actionIsEnabled
         menu.addItem(update)
-        let quit = NSMenuItem(title: L10n.text("Quit Soniclet"), action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
+        let quit = NSMenuItem(title: L10n.text("Quit Soniclet"), action: #selector(NSApplication.terminate(_:)), keyEquivalent: "")
         quit.target = NSApplication.shared
-        quit.view = MenuActionRow(item: quit)
         menu.addItem(quit)
         return menu
     }
 
-    private func command(_ title: String, _ action: Selector, key: String = "") -> NSMenuItem {
-        let item = NSMenuItem(title: title, action: action, keyEquivalent: key)
+    private func command(_ title: String, _ action: Selector) -> NSMenuItem {
+        let item = NSMenuItem(title: title, action: action, keyEquivalent: "")
         item.target = self
-        item.view = MenuActionRow(item: item)
         return item
     }
 
@@ -259,12 +255,21 @@ final class StatusBarController: NSObject, NSMenuDelegate {
         item.title = device.name
         item.state = .off
         item.isEnabled = !pending
-        let row = item.view as? MenuActionRow ?? MenuActionRow(item: item, device: true)
-        row.configure(title: device.name, symbol: model.symbol(for: device), selected: model.selected(device), pending: pending,
-                      battery: device.key.direction == .output ? model.accessory(for: device)?.batteryPercent : nil)
-        item.view = row
-        item.image = nil
+        item.setAccessibilityValue(L10n.text(pending ? "Switching" : model.selected(device) ? "Selected" : "Not selected"))
+        // Only a disabled pending row needs a view; every selectable row is native.
+        if pending {
+            if item.view == nil { item.view = hosted(PendingDeviceMenuRow(name: device.name)) }
+        } else { item.view = nil }
+        item.image = DeviceMenuIcon.image(symbol: model.symbol(for: device), selected: model.selected(device))
+        if #available(macOS 27.0, *) { item.preferredImageVisibility = .visible }
         item.badge = nil
+        item.toolTip = device.name
+        if device.key.direction == .output, let battery = model.accessory(for: device)?.batteryPercent {
+            let percent = (Double(battery) / 100).formatted(.percent.precision(.fractionLength(0)))
+            item.badge = NSMenuItemBadge(string: percent)
+            item.toolTip = L10n.format("Battery: %@", percent)
+        }
+
     }
 
     @objc private func selectDevice(_ sender: NSMenuItem) {
@@ -298,7 +303,7 @@ final class StatusBarController: NSObject, NSMenuDelegate {
         update.target = self
         update.isEnabled = updates.actionIsEnabled
         menu.addItem(update)
-        let quit = NSMenuItem(title: L10n.text("Quit Soniclet"), action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
+        let quit = NSMenuItem(title: L10n.text("Quit Soniclet"), action: #selector(NSApplication.terminate(_:)), keyEquivalent: "")
         quit.target = NSApplication.shared
         menu.addItem(quit)
         return menu
@@ -364,12 +369,6 @@ final class StatusBarController: NSObject, NSMenuDelegate {
     @objc func checkForUpdates() {
         dismissMenu()
         DispatchQueue.main.async { [weak self] in self?.updates.performUserAction() }
-    }
-
-    func menu(_ menu: NSMenu, willHighlight item: NSMenuItem?) {
-        for candidate in menu.items {
-            (candidate.view as? MenuActionRow)?.setHighlighted(candidate === item)
-        }
     }
 
     func menuWillOpen(_ menu: NSMenu) { menuIsOpen = true }

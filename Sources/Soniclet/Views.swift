@@ -232,3 +232,18 @@ private struct DeviceReorderDrop: DropDelegate {
         return true
     }
 }
+
+/// Noninteractive while Core Audio confirms the requested device.
+struct PendingDeviceMenuRow: View {
+    let name: String
+    var body: some View {
+        HStack(spacing: 9) {
+            ProgressView().controlSize(.small).frame(width: 26, height: 26)
+            Text(name).foregroundStyle(.secondary).lineLimit(1)
+            Spacer(minLength: 0)
+        }.padding(.horizontal, 12).frame(width: 304, height: 32)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(name).accessibilityValue(L10n.text("Switching"))
+        .allowsHitTesting(false)
+    }
+}

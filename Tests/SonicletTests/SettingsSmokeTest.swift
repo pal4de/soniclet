@@ -66,13 +66,18 @@ enum SettingsSmokeTest {
         print("PASS: fixed status item width across volume symbols and both icon styles")
 
         let primary = controller.makeDeviceMenu()
-        guard primary.items.filter({ $0.action != nil }).allSatisfy({ $0.view is MenuActionRow }),
-              primary.items.filter({ $0.representedObject is DeviceKey }).allSatisfy({ $0.target === controller && $0.state == .off && ($0.view as? MenuActionRow)?.displayedIcon?.isValid == true }),
+        let deviceItems = primary.items.filter { $0.representedObject is DeviceKey }
+        guard primary.items.filter({ $0.action != nil && $0.isEnabled }).allSatisfy({ $0.view == nil }),
+              deviceItems.allSatisfy({ $0.target === controller && $0.state == .off && $0.image?.isValid == true }),
               primary.item(withTag: 900)?.title == "Soniclet" else {
-            fail("Selectable items must be individual AppKit rows with native target/action")
+            fail("Selectable menu items must use native rows with visible device images")
         }
-        print("PASS: individual AppKit menu rows with device icons and no checkmarks")
-        verifyMenuRelease()
+        if #available(macOS 27.0, *) {
+            guard deviceItems.allSatisfy({ $0.preferredImageVisibility == .visible }) else {
+                fail("Device images must explicitly stay visible on macOS 27")
+            }
+        }
+        print("PASS: native selectable menu rows, device image visibility and no checkmarks")
         await verifyDragPayload()
 
         let menu = controller.makeContextMenu()
@@ -128,35 +133,6 @@ enum SettingsSmokeTest {
         fflush(stdout)
         NSApplication.shared.terminate(nil)
     }
-    private static func verifyMenuRelease() {
-        let spy = MenuActionSpy()
-        let menu = NSMenu()
-        menu.autoenablesItems = false
-        let item = NSMenuItem(title: "Test", action: #selector(MenuActionSpy.choose(_:)), keyEquivalent: "")
-        item.target = spy
-        let row = MenuActionRow(item: item)
-        item.view = row
-        menu.addItem(item)
-        let window = NSWindow(contentRect: row.bounds, styleMask: .borderless, backing: .buffered, defer: true)
-        window.isReleasedWhenClosed = false
-        window.contentView = row
-        func event(_ type: NSEvent.EventType, _ x: CGFloat) -> NSEvent {
-            NSEvent.mouseEvent(with: type, location: NSPoint(x: x, y: row.bounds.midY), modifierFlags: [],
-                timestamp: ProcessInfo.processInfo.systemUptime, windowNumber: window.windowNumber, context: nil,
-                eventNumber: 1, clickCount: 1, pressure: type == .leftMouseUp ? 0 : 1)!
-        }
-        // The opening mouse-down belongs to NSStatusBarButton, not this row.
-        row.mouseDragged(with: event(.leftMouseDragged, row.bounds.midX))
-        row.mouseUp(with: event(.leftMouseUp, row.bounds.midX))
-        guard spy.calls == 1 else { fail("Release over a menu row did not invoke its action") }
-        row.mouseUp(with: event(.leftMouseUp, -10))
-        item.isEnabled = false
-        row.mouseUp(with: event(.leftMouseUp, row.bounds.midX))
-        guard spy.calls == 1 else { fail("Disabled or outside releases must not invoke an action") }
-        window.close()
-        print("PASS: release-to-select without an initial row mouse-down; disabled/outside releases ignored")
-    }
-
     private static func verifyDragPayload() async {
         let key = DeviceKey(uid: "drag-fixture", direction: .output)
         let provider = DeviceDragItem(key: key).itemProvider()
@@ -193,10 +169,4 @@ enum SettingsSmokeTest {
         fputs("FAIL: \(message)\n", stderr)
         exit(1)
     }
-}
-
-@MainActor
-private final class MenuActionSpy: NSObject {
-    var calls = 0
-    @objc func choose(_ sender: NSMenuItem) { calls += 1 }
 }
