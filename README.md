@@ -46,6 +46,8 @@ Device and command rows are real NSMenuItems, so press-drag-release selection, h
 
 Settings keeps the native grouped form. Drag a device’s handle to reorder that direction’s menu, or use its contextual Move Up/Move Down commands. Order is stored by stable device UID, survives reconnection, and does not change audio routing. Automatic priority-based routing is not enabled or implemented.
 
+See [device icon coverage and fallbacks](docs/DEVICE-ICONS.md) for AirPods, Beats, speakers and other routes.
+
 ### Headphones and battery information
 
 In system-icon mode, headphone outputs use the native headphone symbol. Soniclet-icon mode keeps the chosen app mark.

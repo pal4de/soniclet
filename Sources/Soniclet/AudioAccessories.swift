@@ -8,16 +8,28 @@ struct AudioAccessory: Equatable, Sendable {
     let isApple: Bool
     let batteryPercent: Int?
     var productID: UInt16? = nil
+    var category = "Headphones"
+    var isHeadphone: Bool { ["Headphones", "Headset"].contains(category) }
 
     var symbol: String? {
+        if ["Speaker", "Loudspeaker", "CarAudio"].contains(category) { return "hifispeaker.fill" }
         guard isApple, let productID else { return nil }
         // Public system_profiler product IDs. No BLE packets or private selectors.
-        // Family reference: https://github.com/mooons/airpods-fw/blob/main/airpods-fw
+        // Family references: https://github.com/mooons/airpods-fw/blob/main/airpods-fw
+        // https://github.com/lihaoyun6/AirBattery/blob/main/AirBattery/BatteryInfo/BLEBattery.swift
         switch productID {
         case 0x2002, 0x200F: return "airpods"
         case 0x2013, 0x2019, 0x201B: return "airpods.gen3"
         case 0x200E, 0x2014, 0x2024, 0x2027: return "airpodspro"
         case 0x200A, 0x201F, 0x202D: return "airpodsmax"
+        case 0x2003: return "beats.powerbeats3"
+        case 0x2005, 0x2010: return "beats.earphones"
+        case 0x2006, 0x2009, 0x200C: return "beats.headphones"
+        case 0x200B: return "beats.powerbeatspro"
+        case 0x2011: return "beats.studiobuds"
+        case 0x2012: return "beats.fit.pro"
+        case 0x2016: return "beats.studiobudsplus"
+        case 0x2017: return "beats.studio.pro"
         default: return nil
         }
     }
@@ -43,7 +55,7 @@ struct AudioAccessory: Equatable, Sendable {
             return connected.flatMap { item in
                 item.compactMap { name, record -> Self? in
                     guard let type = record["device_minorType"] as? String,
-                          ["Headphones", "Headset"].contains(type) else { return nil }
+                          ["Headphones", "Headset", "Speaker", "Loudspeaker", "CarAudio"].contains(type) else { return nil }
                     let rawAddress = (record["device_address"] as? String ?? "").lowercased()
                     let hex = rawAddress.filter { $0.isASCII && $0.isHexDigit }
                     let address = hex.count == 12 ? hex : nil
@@ -60,7 +72,7 @@ struct AudioAccessory: Equatable, Sendable {
                     let vendor = (record["device_vendorID"] as? String ?? "").lowercased()
                     let product = (record["device_productID"] as? String ?? "").lowercased()
                     let productID = UInt16(product.hasPrefix("0x") ? String(product.dropFirst(2)) : product, radix: 16)
-                    return Self(name: name, address: address, isApple: vendor == "0x004c", batteryPercent: battery, productID: productID)
+                    return Self(name: name, address: address, isApple: vendor == "0x004c", batteryPercent: battery, productID: productID, category: type)
                 }
             }
         }

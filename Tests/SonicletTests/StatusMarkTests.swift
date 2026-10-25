@@ -16,7 +16,7 @@ struct StatusMarkTests {
         require(MenuBarIconStyle.current(in: defaults) == .system, "Invalid style falls back to system")
         defaults.set(MenuBarIconStyle.soniclet.rawValue, forKey: MenuBarIconStyle.preferenceKey)
         require(MenuBarIconStyle.current(in: defaults) == .soniclet, "Persist the selected style")
-        for name in ["airpods", "airpodspro", "airpodsmax", "airpods.gen3"] {
+        for name in ["airpods", "airpodspro", "airpodsmax", "airpods.gen3", "beats.headphones", "beats.earphones", "beats.powerbeats3", "beats.powerbeatspro", "beats.studiobuds", "homepod.fill", "homepodmini.fill", "appletv.fill", "hifispeaker.fill"] {
             require(NSImage(systemSymbolName: name, accessibilityDescription: nil) != nil, "Missing system symbol: \(name)")
         }
         let levels: [(Float, Int)] = [(0, 0), (0.01, 1), (1.0 / 3.0, 1), (0.5, 2), (2.0 / 3.0, 2), (1, 3)]

@@ -41,6 +41,40 @@ enum DeviceSymbols {
         }
         return "airpods"
     }
+    static func output(modelName: String, iconFileName: String) -> String? {
+        let headphones = headphones(modelName: modelName, iconFileName: iconFileName)
+        if headphones != "headphones" { return headphones }
+        let identity = (modelName + " " + iconFileName).lowercased().filter { $0.isLetter || $0.isNumber }
+        if identity.contains("homepodmini") { return "homepodmini.fill" }
+        if identity.contains("homepod") { return "homepod.fill" }
+        if identity.contains("appletv") { return "appletv.fill" }
+        if identity.contains("display") { return "display" }
+        if (modelName + " " + iconFileName).range(of: #"(?i)\b(?:beats|powerbeats)"#, options: .regularExpression) != nil {
+            if identity.contains("studiobudsplus") { return "beats.studiobudsplus" }
+            if identity.contains("studiobuds") { return "beats.studiobuds" }
+            if identity.contains("fitpro") { return "beats.fit.pro" }
+            if identity.contains("powerbeatspro") { return "beats.powerbeatspro" }
+            if identity.contains("powerbeats3") { return "beats.powerbeats3" }
+            if identity.contains("powerbeats") { return "beats.powerbeats" }
+            if identity.contains("studiopro") { return "beats.studio.pro" }
+            if identity.contains("beatsx") || identity.contains("flex") { return "beats.earphones" }
+            return "beats.headphones"
+        }
+        return nil
+    }
+
+    static func fallback(for symbol: String) -> String {
+        switch symbol {
+        case "beats.studio.pro": return "beats.headphones"
+        case "beats.studiobudsplus": return "beats.studiobuds"
+        case "beats.fit.pro": return "earbuds"
+        default:
+            if symbol.hasPrefix("airpods") || symbol.hasPrefix("beats.") { return "headphones" }
+            if symbol.hasPrefix("homepod") || symbol.hasPrefix("appletv") { return "airplay.audio" }
+            return "speaker.wave.2.fill"
+        }
+    }
+
 }
 
 struct DevicePreference: Identifiable, Codable {

@@ -59,10 +59,10 @@ final class CoreAudioService {
         return (value.takeRetainedValue() as URL).lastPathComponent
     }
 
-    private func headphoneSymbol(_ device: AudioDeviceID) -> String {
+    private func canonicalOutputSymbol(_ device: AudioDeviceID) -> String? {
         let model = [string(device, kAudioObjectPropertyModelName), string(device, kAudioDevicePropertyModelUID)]
             .compactMap { $0 }.joined(separator: " ")
-        return DeviceSymbols.headphones(modelName: model, iconFileName: iconFileName(device))
+        return DeviceSymbols.output(modelName: model, iconFileName: iconFileName(device))
     }
 
     func defaultDevice(_ direction: AudioDirection) -> AudioDeviceID {
@@ -92,13 +92,15 @@ final class CoreAudioService {
                 let symbol: String
                 if direction == .input {
                     symbol = transport == kAudioDeviceTransportTypeBuiltIn ? "laptopcomputer" : "mic.fill"
+                } else if let canonical = canonicalOutputSymbol(id) {
+                    symbol = canonical
                 } else if hasHeadphoneStream(id) {
-                    symbol = headphoneSymbol(id)
+                    symbol = "headphones"
                 } else {
                     switch transport {
                     case kAudioDeviceTransportTypeBuiltIn: symbol = "laptopcomputer"
                     case kAudioDeviceTransportTypeDisplayPort, kAudioDeviceTransportTypeHDMI: symbol = "display"
-                    case kAudioDeviceTransportTypeBluetooth, kAudioDeviceTransportTypeBluetoothLE: symbol = headphoneSymbol(id)
+                    case kAudioDeviceTransportTypeBluetooth, kAudioDeviceTransportTypeBluetoothLE: symbol = "headphones"
                     case kAudioDeviceTransportTypeAirPlay: symbol = "airplay.audio"
                     default: symbol = "speaker.wave.2.fill"
                     }

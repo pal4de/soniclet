@@ -39,7 +39,21 @@ struct AudioAccessoryTests {
             let other = AudioAccessory(name: "AirPods Pro", address: nil, isApple: false, batteryPercent: nil, productID: productID)
             require(other.symbol == nil, "Other vendors must never inherit Apple's product-ID mapping")
         }
+        let beats: [(UInt16, String)] = [(0x2003, "beats.powerbeats3"), (0x2005, "beats.earphones"),
+            (0x2006, "beats.headphones"), (0x200B, "beats.powerbeatspro"), (0x2011, "beats.studiobuds"),
+            (0x2012, "beats.fit.pro"), (0x2016, "beats.studiobudsplus"), (0x2017, "beats.studio.pro")]
+        for (productID, symbol) in beats {
+            require(AudioAccessory(name: "Renamed", address: nil, isApple: true, batteryPercent: nil, productID: productID).symbol == symbol,
+                    "Known Beats model mapping")
+        }
+        let speakerData = try JSONSerialization.data(withJSONObject: ["SPBluetoothDataType": [["device_connected": [
+            ["Room Audio": ["device_minorType": "Loudspeaker", "device_vendorID": "0x054C", "device_batteryLevelMain": "70%"]],
+            ["Keyboard": ["device_minorType": "Keyboard", "device_vendorID": "0x004C"]]
+        ]]]])
+        let speakers = try AudioAccessory.parseConnected(speakerData)
+        require(speakers.count == 1 && speakers[0].symbol == "hifispeaker.fill" && !speakers[0].isHeadphone && speakers[0].batteryPercent == 70,
+                "Bluetooth speakers retain reported battery data without becoming headphones")
         require(try AudioAccessory.parseConnected(Data("{}".utf8)).isEmpty, "Missing report degrades gracefully")
-        print("PASS: connected-only accessory data, address matching, duplicate names, valid battery bounds and lower-earbud aggregation")
+        print("PASS: connected-only accessory data, address matching, duplicate names, valid battery bounds, lower-earbud aggregation, vendor-checked AirPods/Beats and speaker classification")
     }
 }

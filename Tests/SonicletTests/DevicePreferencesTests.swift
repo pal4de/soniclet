@@ -148,6 +148,14 @@ struct DevicePreferencesTests {
         expectEqual(DeviceSymbols.headphones(modelName: "AirPods (3rd generation)", iconFileName: ""), "airpods.gen3")
         expectEqual(DeviceSymbols.headphones(modelName: "AirPods", iconFileName: ""), "airpods")
         expectEqual(DeviceSymbols.headphones(modelName: "Bluetooth Headset", iconFileName: "headphones.icns"), "headphones")
+        expectEqual(DeviceSymbols.output(modelName: "HomePod mini", iconFileName: ""), "homepodmini.fill")
+        expectEqual(DeviceSymbols.output(modelName: "", iconFileName: "com.apple.AppleTV.icns"), "appletv.fill")
+        expectEqual(DeviceSymbols.output(modelName: "Beats Studio Pro", iconFileName: ""), "beats.studio.pro")
+        expectEqual(DeviceSymbols.output(modelName: "Studio Display", iconFileName: ""), "display")
+        expectEqual(DeviceSymbols.output(modelName: "Unidentified USB Audio", iconFileName: ""), nil)
+        expectEqual(DeviceSymbols.output(modelName: "Studio Monitor", iconFileName: ""), nil)
+        expectEqual(DeviceSymbols.output(modelName: "Heartbeats Headset", iconFileName: ""), nil)
+        expectEqual(DeviceSymbols.fallback(for: "beats.studiobudsplus"), "beats.studiobuds")
     }
     private static func expectTrue(_ value: Bool, _ message: String = "Expected true") {
         if !value { fputs("FAIL: \(message)\n", stderr); exit(1) }

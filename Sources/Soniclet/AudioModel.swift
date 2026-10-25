@@ -59,26 +59,47 @@ final class AudioModel: ObservableObject {
         return AudioAccessory.match(uid: device.key.uid, name: device.name, in: accessories)
     }
     func symbol(for device: AudioDevice) -> String {
-        accessory(for: device)?.symbol ?? device.symbol
+        let entry = accessory(for: device)
+        let candidate = device.key.direction == .input && entry?.isHeadphone == false
+            ? device.symbol : entry?.symbol ?? device.symbol
+        return availableSymbol(candidate)
+    }
+    func symbol(for preference: DevicePreference) -> String {
+        if let device = devices.first(where: { $0.key == preference.key }) { return symbol(for: device) }
+        return availableSymbol(preference.symbol)
+    }
+    private func availableSymbol(_ candidate: String) -> String {
+        NSImage(systemSymbolName: candidate, accessibilityDescription: nil) != nil ? candidate : DeviceSymbols.fallback(for: candidate)
     }
     var appleHeadphones: AudioAccessory? {
         let ordered = bluetoothOutputs.sorted {
             if selected($0) != selected($1) { return selected($0) }
             return $0.name.localizedStandardCompare($1.name) == .orderedAscending
         }
-        return ordered.compactMap { accessory(for: $0) }.first { $0.isApple && $0.address != nil }
+        return ordered.compactMap { accessory(for: $0) }.first { $0.isApple && $0.isHeadphone && $0.address != nil }
     }
     func refreshAccessoriesIfNeeded() {
         #if !SETTINGS_SMOKE_TEST
-        guard !bluetoothOutputs.isEmpty else { accessories = []; return }
+        guard !bluetoothOutputs.isEmpty else {
+            accessoryRefresh?.cancel()
+            accessoryRefresh = nil
+            accessories = []
+            accessorySignature = []
+            accessoryRefreshDate = .distantPast
+            return
+        }
         let signature = Set(bluetoothOutputs.map { $0.key.uid }).union(["output:\(outputID)"])
+        if accessoryRefresh != nil && signature != accessorySignature {
+            accessoryRefresh?.cancel()
+            accessoryRefresh = nil
+        }
         guard accessoryRefresh == nil,
               signature != accessorySignature || Date().timeIntervalSince(accessoryRefreshDate) >= 60 else { return }
         accessorySignature = signature
         accessoryRefreshDate = Date()
         accessoryRefresh = Task { [weak self] in
             let entries = await Task.detached(priority: .utility) { (try? AudioAccessory.readConnected()) ?? [] }.value
-            guard let self else { return }
+            guard let self, !Task.isCancelled, self.accessorySignature == signature else { return }
             self.accessories = entries
             self.accessoryRefresh = nil
         }
@@ -166,8 +187,11 @@ final class AudioModel: ObservableObject {
         refresh()
     }
     var outputSymbol: String {
-        if let output = devices.first(where: { $0.key.direction == .output && $0.objectID == outputID }),
-           (output.symbol == "headphones" || output.symbol.hasPrefix("airpods")) { return symbol(for: output) }
+        guard let output = devices.first(where: { $0.key.direction == .output && $0.objectID == outputID }) else { return volumeSymbol }
+        let icon = symbol(for: output)
+        if icon == "headphones" || icon == "earbuds" || icon.hasPrefix("airpods") || icon.hasPrefix("beats.") ||
+            icon.hasPrefix("homepod") || icon.hasPrefix("appletv") || icon == "airplay.audio" ||
+            icon == "hifispeaker.fill" || icon == "display" { return icon }
         return volumeSymbol
     }
     var volumeSymbol: String {
