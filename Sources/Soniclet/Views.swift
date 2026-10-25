@@ -69,17 +69,6 @@ struct AudioErrorMenuContent: View {
     }
 }
 
-struct PendingDeviceMenuRow: View {
-    let name: String
-    var body: some View {
-        HStack(spacing: 9) {
-            ProgressView().controlSize(.small).frame(width: 26, height: 26)
-            Text(name).font(.body).lineLimit(1)
-            Spacer()
-        }.padding(.horizontal, 12).frame(width: 304, height: 30)
-    }
-}
-
 struct DeviceSettingsView: View {
     @ObservedObject var model: AudioModel
     @StateObject private var loginItem = LoginItemModel()
@@ -165,13 +154,6 @@ private struct MenuRowHighlight: ViewModifier {
 }
 
 
-private struct DeviceDragItem: Codable, Transferable {
-    let key: DeviceKey
-    static var transferRepresentation: some TransferRepresentation {
-        CodableRepresentation(contentType: UTType(exportedAs: "io.github.pal4de.soniclet.device", conformingTo: .data))
-    }
-}
-
 private struct DevicePreferenceRow: View {
     @ObservedObject var model: AudioModel
     let preference: DevicePreference
@@ -180,7 +162,7 @@ private struct DevicePreferenceRow: View {
     private var direction: AudioDirection { preference.key.direction }
     private var index: Int { model.savedDevices(direction).firstIndex { $0.key == preference.key } ?? 0 }
 
-    var body: some View {
+    private var rowContent: some View {
         HStack(spacing: 8) {
             Toggle(isOn: Binding(get: {
                 model.preferences.first { $0.key == preference.key }?.isVisible ?? true
@@ -203,13 +185,18 @@ private struct DevicePreferenceRow: View {
                 .contentShape(Rectangle())
                 .help(L10n.text("Drag devices to change their order in the menu."))
                 .accessibilityLabel(L10n.text("Drag devices to change their order in the menu."))
-                .draggable(DeviceDragItem(key: preference.key))
+        }
+    }
+    var body: some View {
+        rowContent
+        .contentShape(Rectangle())
+        .onDrag {
+            DeviceDragItem(key: preference.key).itemProvider()
+        } preview: {
+            rowContent.frame(width: 460).padding(8)
         }
         .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { rowHeight = $0 }
-        .dropDestination(for: DeviceDragItem.self) { items, point in
-            guard items.count == 1 else { return false }
-            return model.moveDevice(items[0].key, relativeTo: preference.key, after: point.y > rowHeight / 2)
-        }
+        .onDrop(of: [DeviceDragItem.contentType(direction)], delegate: DeviceReorderDrop(model: model, target: preference.key, rowHeight: rowHeight))
         .contextMenu {
             Button(L10n.text("Move Up"), systemImage: "chevron.up") {
                 model.moveDevices(direction, from: IndexSet(integer: index), to: index - 1)
@@ -224,5 +211,24 @@ private struct DevicePreferenceRow: View {
         .accessibilityAction(named: Text(L10n.text("Move Down"))) {
             model.moveDevices(direction, from: IndexSet(integer: index), to: index + 2)
         }
+    }
+}
+
+private struct DeviceReorderDrop: DropDelegate {
+    let model: AudioModel
+    let target: DeviceKey
+    let rowHeight: CGFloat
+    func validateDrop(info: DropInfo) -> Bool {
+        info.hasItemsConforming(to: [DeviceDragItem.contentType(target.direction)])
+    }
+    func dropUpdated(info: DropInfo) -> DropProposal? { DropProposal(operation: .move) }
+    func performDrop(info: DropInfo) -> Bool {
+        guard let provider = info.itemProviders(for: [DeviceDragItem.contentType(target.direction)]).first else { return false }
+        let after = info.location.y > rowHeight / 2
+        DeviceDragItem.load(from: provider, direction: target.direction) { key in
+            guard let key else { return }
+            DispatchQueue.main.async { model.moveDevice(key, relativeTo: target, after: after) }
+        }
+        return true
     }
 }

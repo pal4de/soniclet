@@ -101,6 +101,7 @@ final class StatusBarController: NSObject, NSMenuDelegate {
         menu.item(withTag: 103)?.isEnabled = model.outputVolume.muteElement != nil
         menu.item(withTag: 104)?.title = updates.menuTitle
         menu.item(withTag: 104)?.isEnabled = updates.actionIsEnabled
+        if let item = menu.item(withTag: 104) { (item.view as? MenuActionRow)?.configure(title: updates.menuTitle) }
         if menu.item(withTag: 900) != nil {
             let expected = AudioDirection.allCases.flatMap { model.visibleDevices($0).map(\.key) }
             let actual = menu.items.compactMap { $0.representedObject as? DeviceKey }
@@ -114,7 +115,10 @@ final class StatusBarController: NSObject, NSMenuDelegate {
                 }
                 menu.item(withTag: 110)?.isHidden = model.outputIsAirPlay
                 menu.item(withTag: 111)?.isHidden = model.errorMessage == nil
-                menu.item(withTag: 107)?.title = SystemSettingsLinks.headphoneTitle(accessory: model.appleHeadphones)
+                if let item = menu.item(withTag: 107) {
+                    item.title = SystemSettingsLinks.headphoneTitle(accessory: model.appleHeadphones)
+                    (item.view as? MenuActionRow)?.configure(title: item.title)
+                }
             }
             for view in menu.items.compactMap(\.view) {
                 view.layoutSubtreeIfNeeded()
@@ -175,6 +179,8 @@ final class StatusBarController: NSObject, NSMenuDelegate {
         menu.minimumWidth = 304
         let heading = NSMenuItem.sectionHeader(title: "Soniclet")
         heading.tag = 900
+        heading.view = hosted(Text("Soniclet").font(.headline).frame(width: 280, alignment: .leading)
+            .padding(.horizontal, 12).padding(.top, 8).padding(.bottom, 4))
         menu.addItem(heading)
         let volume = NSMenuItem()
         volume.view = hosted(VolumeMenuContent(model: model).environment(\.controlActiveState, .active))
@@ -229,6 +235,7 @@ final class StatusBarController: NSObject, NSMenuDelegate {
         menu.addItem(update)
         let quit = NSMenuItem(title: L10n.text("Quit Soniclet"), action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
         quit.target = NSApplication.shared
+        quit.view = MenuActionRow(item: quit)
         menu.addItem(quit)
         return menu
     }
@@ -236,6 +243,7 @@ final class StatusBarController: NSObject, NSMenuDelegate {
     private func command(_ title: String, _ action: Selector, key: String = "") -> NSMenuItem {
         let item = NSMenuItem(title: title, action: action, keyEquivalent: key)
         item.target = self
+        item.view = MenuActionRow(item: item)
         return item
     }
 
@@ -249,16 +257,14 @@ final class StatusBarController: NSObject, NSMenuDelegate {
     private func configureDevice(_ item: NSMenuItem, device: AudioDevice) {
         let pending = model.pendingSelection == device.key
         item.title = device.name
-        item.state = .off // Selection is shown by the left icon, without a right checkmark.
-        item.toolTip = device.name
+        item.state = .off
         item.isEnabled = !pending
-        item.view = pending ? hosted(PendingDeviceMenuRow(name: device.name)) : nil
-        item.image = DeviceMenuIcon.image(symbol: model.symbol(for: device), selected: model.selected(device))
-        if device.key.direction == .output, let battery = model.accessory(for: device)?.batteryPercent {
-            let percent = (Double(battery) / 100).formatted(.percent.precision(.fractionLength(0)))
-            item.badge = NSMenuItemBadge(string: percent)
-            item.toolTip = L10n.format("Battery: %@", percent)
-        } else { item.badge = nil }
+        let row = item.view as? MenuActionRow ?? MenuActionRow(item: item, device: true)
+        row.configure(title: device.name, symbol: model.symbol(for: device), selected: model.selected(device), pending: pending,
+                      battery: device.key.direction == .output ? model.accessory(for: device)?.batteryPercent : nil)
+        item.view = row
+        item.image = nil
+        item.badge = nil
     }
 
     @objc private func selectDevice(_ sender: NSMenuItem) {
@@ -358,6 +364,12 @@ final class StatusBarController: NSObject, NSMenuDelegate {
     @objc func checkForUpdates() {
         dismissMenu()
         DispatchQueue.main.async { [weak self] in self?.updates.performUserAction() }
+    }
+
+    func menu(_ menu: NSMenu, willHighlight item: NSMenuItem?) {
+        for candidate in menu.items {
+            (candidate.view as? MenuActionRow)?.setHighlighted(candidate === item)
+        }
     }
 
     func menuWillOpen(_ menu: NSMenu) { menuIsOpen = true }

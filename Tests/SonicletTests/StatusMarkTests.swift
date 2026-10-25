@@ -42,6 +42,21 @@ struct StatusMarkTests {
             }
             require(bitmap.colorAt(x: 29, y: 90)!.alphaComponent > 0.95, "Routing arrows stay opaque")
         }
+        guard let menuIcon = DeviceMenuIcon.image(symbol: "laptopcomputer", selected: true) else { fatalError("Missing device menu icon") }
+        let menuBitmap = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: 52, pixelsHigh: 52,
+            bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false,
+            colorSpaceName: .deviceRGB, bytesPerRow: 0, bitsPerPixel: 0)!
+        NSGraphicsContext.saveGraphicsState()
+        NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: menuBitmap)
+        menuIcon.draw(in: NSRect(x: 0, y: 0, width: 52, height: 52))
+        NSGraphicsContext.restoreGraphicsState()
+        require(menuBitmap.colorAt(x: 8, y: 26)!.alphaComponent > 0.9, "Selected device circle must render")
+        var whitePixels = 0
+        for y in 10..<42 { for x in 10..<42 {
+            let color = menuBitmap.colorAt(x: x, y: y)!
+            if color.redComponent > 0.95 && color.greenComponent > 0.95 && color.blueComponent > 0.95 && color.alphaComponent > 0.9 { whitePixels += 1 }
+        }}
+        require(whitePixels > 10, "Device glyph must render over the selected circle")
         print("PASS: menu-bar template size, stepped waveform opacity, muted state, and opaque routing arrows")
     }
 }

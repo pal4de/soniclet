@@ -17,5 +17,5 @@ if [[ "${1:-}" == "--build-only" ]]; then
   print -r -- "$app_dir" > "$build_dir/settings-test-app-path.txt"
   print "Built native test app: $app_dir"
 else
-  "$app_dir/Contents/MacOS/Soniclet"
+  "$app_dir/Contents/MacOS/Soniclet" "$@"
 fi

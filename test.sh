@@ -26,6 +26,7 @@ swiftc -parse-as-library \
 
 swiftc -parse-as-library \
   "$project_dir/Sources/Soniclet/StatusMark.swift" \
+  "$project_dir/Sources/Soniclet/DeviceMenuIcon.swift" \
   "$project_dir/Tests/SonicletTests/StatusMarkTests.swift" \
   -o "$build_dir/StatusMarkTests"
 "$build_dir/StatusMarkTests" "$project_dir/Soniclet.app"

@@ -1,7 +1,7 @@
 import Foundation
 import CoreAudio
 
-enum AudioDirection: String, Codable, CaseIterable {
+enum AudioDirection: String, Codable, CaseIterable, Sendable {
     case output, input
     var title: String { L10n.text(self == .output ? "Output" : "Input") }
     var scope: AudioObjectPropertyScope {
@@ -12,7 +12,7 @@ enum AudioDirection: String, Codable, CaseIterable {
     }
 }
 
-struct DeviceKey: Hashable, Codable {
+struct DeviceKey: Hashable, Codable, Sendable {
     let uid: String
     let direction: AudioDirection
 }
