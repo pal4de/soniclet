@@ -75,3 +75,5 @@
 "Switch %@ from %@ to %@?" = "להעביר את %@ מ־%@ אל %@?";
 
 "Could not confirm the switch to %@. Please try again." = "לא ניתן לאשר את המעבר אל %@. נסה שוב.";
+
+"Manual" = "ידני";

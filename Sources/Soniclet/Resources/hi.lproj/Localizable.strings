@@ -75,3 +75,5 @@
 "Switch %@ from %@ to %@?" = "%@ को %@ से %@ पर बदलें?";
 
 "Could not confirm the switch to %@. Please try again." = "%@ पर बदलाव की पुष्टि नहीं हो सकी। फिर से कोशिश करें।";
+
+"Manual" = "मैन्युअल";

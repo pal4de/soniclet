@@ -75,3 +75,5 @@
 "Switch %@ from %@ to %@?" = "Chuyển %@ từ %@ sang %@?";
 
 "Could not confirm the switch to %@. Please try again." = "Không thể xác nhận việc chuyển sang %@. Vui lòng thử lại.";
+
+"Manual" = "Thủ công";

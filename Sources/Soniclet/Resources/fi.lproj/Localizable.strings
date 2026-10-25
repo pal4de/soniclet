@@ -75,3 +75,5 @@
 "Switch %@ from %@ to %@?" = "Vaihda %@ laitteesta %@ laitteeseen %@?";
 
 "Could not confirm the switch to %@. Please try again." = "Vaihtoa laitteeseen %@ ei voitu vahvistaa. Yritä uudelleen.";
+
+"Manual" = "Manuaalinen";

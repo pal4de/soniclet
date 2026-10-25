@@ -105,6 +105,13 @@ enum SettingsSmokeTest {
                 fail("Device images must explicitly stay visible on macOS 27")
             }
         }
+        for item in deviceItems {
+            guard let key = item.representedObject as? DeviceKey,
+                  let device = controller.model.devices.first(where: { $0.key == key }) else { continue }
+            guard (item.badge != nil) == controller.model.isManuallySelected(device), item.view == nil else {
+                fail("Manual badges must follow the current selected device without custom selectable views")
+            }
+        }
         print("PASS: native selectable menu rows, device image visibility and no checkmarks")
         await verifyVolumeButtons()
 

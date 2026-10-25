@@ -75,3 +75,5 @@
 "Switch %@ from %@ to %@?" = "Prepnúť %@ z %@ na %@?";
 
 "Could not confirm the switch to %@. Please try again." = "Prepnutie na %@ sa nepodarilo potvrdiť. Skúste to znova.";
+
+"Manual" = "Ručne";

@@ -75,3 +75,5 @@
 "Switch %@ from %@ to %@?" = "Byt %@ från %@ till %@?";
 
 "Could not confirm the switch to %@. Please try again." = "Det gick inte att bekräfta bytet till %@. Försök igen.";
+
+"Manual" = "Manuellt";

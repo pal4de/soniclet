@@ -75,3 +75,5 @@
 "Switch %@ from %@ to %@?" = "%@ için %@ yerine %@ kullanılsın mı?";
 
 "Could not confirm the switch to %@. Please try again." = "%@ aygıtına geçiş doğrulanamadı. Tekrar deneyin.";
+
+"Manual" = "Elle";

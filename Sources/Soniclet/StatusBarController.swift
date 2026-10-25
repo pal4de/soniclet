@@ -311,12 +311,14 @@ final class StatusBarController: NSObject, NSMenuDelegate {
         } else { item.view = nil }
         item.image = DeviceMenuIcon.image(symbol: model.symbol(for: device), selected: model.selected(device))
         if #available(macOS 27.0, *) { item.preferredImageVisibility = .visible }
-        item.badge = nil
+        item.badge = model.isManuallySelected(device) ? NSMenuItemBadge(string: L10n.text("Manual")) : nil
+        if #available(macOS 14.4, *) { item.subtitle = nil }
         item.toolTip = nil
         if device.key.direction == .output, let battery = model.accessory(for: device)?.batteryPercent {
             let percent = (Double(battery) / 100).formatted(.percent.precision(.fractionLength(0)))
-            item.badge = NSMenuItemBadge(string: percent)
-            item.toolTip = L10n.format("Battery: %@", percent)
+            let batteryText = L10n.format("Battery: %@", percent)
+            if #available(macOS 14.4, *) { item.subtitle = batteryText }
+            else { item.toolTip = batteryText }
         }
 
     }

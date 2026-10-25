@@ -75,3 +75,5 @@
 "Switch %@ from %@ to %@?" = "將%@從%@切換至%@？";
 
 "Could not confirm the switch to %@. Please try again." = "無法確認已切換至%@。請再試一次。";
+
+"Manual" = "手動";

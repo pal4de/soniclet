@@ -75,3 +75,5 @@
 "Switch %@ from %@ to %@?" = "Passare %@ da %@ a %@?";
 
 "Could not confirm the switch to %@. Please try again." = "Impossibile confermare il passaggio a %@. Riprova.";
+
+"Manual" = "Manuale";

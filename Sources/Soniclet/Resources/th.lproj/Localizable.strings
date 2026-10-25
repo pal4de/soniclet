@@ -75,3 +75,5 @@
 "Switch %@ from %@ to %@?" = "เปลี่ยน%@จาก %@ เป็น %@ หรือไม่?";
 
 "Could not confirm the switch to %@. Please try again." = "ไม่สามารถยืนยันการเปลี่ยนเป็น %@ ได้ โปรดลองอีกครั้ง";
+
+"Manual" = "ด้วยตนเอง";

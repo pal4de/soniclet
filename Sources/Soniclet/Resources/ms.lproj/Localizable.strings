@@ -75,3 +75,5 @@
 "Switch %@ from %@ to %@?" = "Tukar %@ daripada %@ kepada %@?";
 
 "Could not confirm the switch to %@. Please try again." = "Tidak dapat mengesahkan pertukaran kepada %@. Cuba lagi.";
+
+"Manual" = "Manual";

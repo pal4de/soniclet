@@ -75,3 +75,5 @@
 "Switch %@ from %@ to %@?" = "تغییر %@ از %@ به %@؟";
 
 "Could not confirm the switch to %@. Please try again." = "تغییر به %@ تأیید نشد. دوباره تلاش کنید.";
+
+"Manual" = "دستی";

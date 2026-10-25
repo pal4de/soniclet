@@ -75,3 +75,5 @@
 "Switch %@ from %@ to %@?" = "Превключване на %@ от %@ към %@?";
 
 "Could not confirm the switch to %@. Please try again." = "Неуспешно потвърждение на превключването към %@. Опитайте отново.";
+
+"Manual" = "Ръчно";
