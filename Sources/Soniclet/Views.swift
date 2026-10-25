@@ -1,4 +1,5 @@
 import SwiftUI
+import UniformTypeIdentifiers
 
 struct SoundMenuContent: View {
     @ObservedObject var model: AudioModel
@@ -9,7 +10,7 @@ struct SoundMenuContent: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text(L10n.text("Sound")).font(.headline)
+            Text("Soniclet").font(.headline)
                 .padding(.horizontal, 12).padding(.top, 10).padding(.bottom, 6)
             volumeControl.padding(.horizontal, 12).padding(.bottom, 8)
             Divider().padding(.horizontal, 12)
@@ -32,7 +33,9 @@ struct SoundMenuContent: View {
             }
             Divider().padding(.horizontal, 12)
             VStack(alignment: .leading, spacing: 0) {
-                Button(action: openSystemSettings) { footerLabel("System Sound Settings…") }
+                Text(L10n.text("System Settings")).font(.caption.weight(.medium)).foregroundStyle(.secondary)
+                    .padding(.horizontal, 6).padding(.top, 4).padding(.bottom, 3)
+                Button(action: openSystemSettings) { footerLabel("Sound Settings…") }
                 if !model.bluetoothOutputs.isEmpty {
                     Button(action: openHeadphoneSettings) {
                         Text(SystemSettingsLinks.headphoneTitle(accessory: model.appleHeadphones)).font(.callout)
@@ -44,7 +47,6 @@ struct SoundMenuContent: View {
                 Divider().padding(.horizontal, 6).padding(.vertical, 3)
                 Button(action: settingsAction) { footerLabel("Soniclet Settings…") }
                     .keyboardShortcut(",", modifiers: .command)
-                Divider().padding(.horizontal, 6).padding(.vertical, 3)
                 Button(action: updateAction) {
                     Text(updates.menuTitle).font(.callout)
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -90,7 +92,7 @@ struct SoundMenuContent: View {
                     : L10n.text("Volume cannot be adjusted for this device"))
                 .help(model.outputVolume.canAdjust ? L10n.format("Volume for %@", model.outputName) : L10n.text("Adjust the volume on the device"))
             Button { model.stepVolume(up: true) } label: {
-                Image(systemName: model.volumeSymbol, variableValue: model.outputSymbolValue).foregroundStyle(.secondary)
+                Image(systemName: "speaker.wave.3.fill").foregroundStyle(.secondary)
                     .frame(width: 24, height: 24)
             }
             .buttonStyle(MenuRowButtonStyle())
@@ -133,7 +135,12 @@ struct SoundMenuContent: View {
                     .help(L10n.text("The current device is hidden in settings"))
             }
             if direction == .output {
-                Text(L10n.text("Connect AirPlay devices in System Sound Settings first."))
+                Text(LocalizedStringKey(L10n.text("Connect AirPlay devices in System Sound Settings first.")))
+                    .environment(\.openURL, OpenURLAction { url in
+                        guard url.absoluteString == "soniclet://sound-settings" else { return .discarded }
+                        openSystemSettings()
+                        return .handled
+                    })
                     .font(.caption).foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
                     .padding(.horizontal, 12).padding(.top, 5)
@@ -192,11 +199,6 @@ struct DeviceSettingsView: View {
     @AppStorage(MenuBarIconStyle.preferenceKey) private var menuBarIconStyle = MenuBarIconStyle.system
     var body: some View {
         Form {
-            Section {
-                Text(L10n.text("Choose which devices appear in the menu."))
-                Text(L10n.text("Hiding a device does not change the current input, output, or settings in other apps."))
-                    .font(.callout).foregroundStyle(.secondary)
-            }
             Section(L10n.text("General")) {
                 Picker(L10n.text("Menu bar icon"), selection: $menuBarIconStyle) {
                     Label {
@@ -221,27 +223,24 @@ struct DeviceSettingsView: View {
                 if let error = loginItem.errorMessage { Text(error).foregroundStyle(.red).font(.callout) }
             }
             ForEach(AudioDirection.allCases, id: \.self) { direction in
-                Section(direction.title) {
+                Section {
                     let devices = model.savedDevices(direction)
                     if devices.isEmpty {
                         Text(L10n.text(direction == .output ? "No output devices" : "No input devices")).foregroundStyle(.secondary)
                     }
                     ForEach(devices) { preference in
-                        Toggle(isOn: Binding(get: {
-                            model.preferences.first { $0.key == preference.key }?.isVisible ?? true
-                        }, set: { model.setVisible($0, key: preference.key) })) {
-                            HStack(spacing: 8) {
-                                Image(systemName: preference.symbol).foregroundStyle(.secondary).frame(width: 20)
-                                Text(preference.name)
-                                if !model.isConnected(preference.key) {
-                                    Spacer()
-                                    Text(L10n.text("Not connected")).font(.caption).foregroundStyle(.secondary)
-                                }
-                            }
-                        }
-                        .toggleStyle(.checkbox)
-                        .accessibilityLabel(L10n.format("Show %@ (%@)", preference.name, direction.title))
+                        DevicePreferenceRow(model: model, preference: preference)
                     }
+                } header: {
+                    Text(direction.title)
+                } footer: {
+                    Text([
+                        L10n.text("Choose which devices appear in the menu."),
+                        L10n.text("Drag devices to change their order in the menu."),
+                        L10n.text("Hiding a device does not change the current input, output, or settings in other apps.")
+                    ].joined(separator: " "))
+                    .font(.caption).foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
                 }
             }
         }
@@ -275,5 +274,67 @@ private struct MenuRowHighlight: ViewModifier {
             }
             .onHover { hovered = $0 }
             .onDisappear { hovered = false }
+    }
+}
+
+
+private struct DeviceDragItem: Codable, Transferable {
+    let key: DeviceKey
+    static var transferRepresentation: some TransferRepresentation {
+        CodableRepresentation(contentType: UTType(exportedAs: "io.github.pal4de.soniclet.device", conformingTo: .data))
+    }
+}
+
+private struct DevicePreferenceRow: View {
+    @ObservedObject var model: AudioModel
+    let preference: DevicePreference
+    private typealias RowHeight = State<CGFloat>
+    @RowHeight private var rowHeight: CGFloat = 28
+    private var direction: AudioDirection { preference.key.direction }
+    private var index: Int { model.savedDevices(direction).firstIndex { $0.key == preference.key } ?? 0 }
+
+    var body: some View {
+        HStack(spacing: 8) {
+            Toggle(isOn: Binding(get: {
+                model.preferences.first { $0.key == preference.key }?.isVisible ?? true
+            }, set: { model.setVisible($0, key: preference.key) })) {
+                HStack(spacing: 8) {
+                    Image(systemName: preference.symbol).foregroundStyle(.secondary).frame(width: 20)
+                    Text(preference.name)
+                    Spacer(minLength: 4)
+                    if !model.isConnected(preference.key) {
+                        Text(L10n.text("Not connected")).font(.caption).foregroundStyle(.secondary)
+                    }
+                }
+            }
+            .toggleStyle(.checkbox)
+            .accessibilityLabel(L10n.format("Show %@ (%@)", preference.name, direction.title))
+            Image(systemName: "line.3.horizontal")
+                .foregroundStyle(.secondary)
+                .frame(width: 20, height: 24)
+                .contentShape(Rectangle())
+                .help(L10n.text("Drag devices to change their order in the menu."))
+                .accessibilityLabel(L10n.text("Drag devices to change their order in the menu."))
+                .draggable(DeviceDragItem(key: preference.key))
+        }
+        .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { rowHeight = $0 }
+        .dropDestination(for: DeviceDragItem.self) { items, point in
+            guard items.count == 1 else { return false }
+            return model.moveDevice(items[0].key, relativeTo: preference.key, after: point.y > rowHeight / 2)
+        }
+        .contextMenu {
+            Button(L10n.text("Move Up"), systemImage: "chevron.up") {
+                model.moveDevices(direction, from: IndexSet(integer: index), to: index - 1)
+            }.disabled(index == 0)
+            Button(L10n.text("Move Down"), systemImage: "chevron.down") {
+                model.moveDevices(direction, from: IndexSet(integer: index), to: index + 2)
+            }.disabled(index >= model.savedDevices(direction).count - 1)
+        }
+        .accessibilityAction(named: Text(L10n.text("Move Up"))) {
+            model.moveDevices(direction, from: IndexSet(integer: index), to: index - 1)
+        }
+        .accessibilityAction(named: Text(L10n.text("Move Down"))) {
+            model.moveDevices(direction, from: IndexSet(integer: index), to: index + 2)
+        }
     }
 }

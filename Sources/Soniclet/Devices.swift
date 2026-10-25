@@ -34,6 +34,7 @@ struct DevicePreference: Identifiable, Codable {
     var symbol: String
     var isVisible: Bool
     var transport: UInt32? = nil
+    var sortOrder: Int? = nil
     var id: DeviceKey { key }
 }
 
@@ -95,6 +96,29 @@ final class DevicePreferences {
     func setVisible(_ visible: Bool, for key: DeviceKey) {
         guard let index = devices.firstIndex(where: { $0.key == key }) else { return }
         devices[index].isVisible = visible
+        save()
+    }
+
+    func orderedDevices(_ direction: AudioDirection) -> [DevicePreference] {
+        devices.filter { $0.key.direction == direction }.sorted {
+            let left = $0.sortOrder ?? Int.max
+            let right = $1.sortOrder ?? Int.max
+            if left != right { return left < right }
+            return $0.name.localizedStandardCompare($1.name) == .orderedAscending
+        }
+    }
+
+    func move(_ direction: AudioDirection, from offsets: IndexSet, to destination: Int) {
+        var ordered = orderedDevices(direction)
+        guard !offsets.isEmpty, offsets.allSatisfy({ ordered.indices.contains($0) }),
+              (0...ordered.count).contains(destination) else { return }
+        let moving = offsets.map { ordered[$0] }
+        for index in offsets.reversed() { ordered.remove(at: index) }
+        ordered.insert(contentsOf: moving, at: destination - offsets.filter { $0 < destination }.count)
+        let ranks = Dictionary(uniqueKeysWithValues: ordered.enumerated().map { ($1.key, $0) })
+        for index in devices.indices where devices[index].key.direction == direction {
+            devices[index].sortOrder = ranks[devices[index].key]
+        }
         save()
     }
 

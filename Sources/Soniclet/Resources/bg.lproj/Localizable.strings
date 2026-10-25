@@ -2,7 +2,7 @@
 "Sound" = "Звук";
 "Output" = "Изход";
 "Input" = "Вход";
-"System Sound Settings…" = "Системни настройки за звук…";
+"Sound Settings…" = "Настройки на звука…";
 "Soniclet Settings…" = "Настройки на Soniclet…";
 "Quit Soniclet" = "Изход от Soniclet";
 "Close error" = "Затваряне на съобщението за грешка";
@@ -44,7 +44,7 @@
 "Decrease volume" = "Намаляване на звука";
 "Increase volume" = "Увеличаване на звука";
 
-"Connect AirPlay devices in System Sound Settings first." = "Първо свържете устройствата AirPlay в системните настройки за звук.";
+"Connect AirPlay devices in System Sound Settings first." = "Първо свържете устройствата AirPlay в [системните настройки за звук](soniclet://sound-settings).";
 
 /* GitHub Releases update notification. */
 "Check for Updates…" = "Проверка за актуализации…";
@@ -60,3 +60,7 @@
 "Battery: %@" = "Батерия: %@";
 "“%@” Settings…" = "Настройки на „%@“…";
 "Bluetooth Settings…" = "Настройки за Bluetooth…";
+"System Settings" = "Системни настройки";
+"Drag devices to change their order in the menu." = "Плъзнете устройствата, за да промените реда им в менюто.";
+"Move Up" = "Преместване нагоре";
+"Move Down" = "Преместване надолу";

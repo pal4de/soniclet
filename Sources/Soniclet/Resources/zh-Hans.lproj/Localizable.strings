@@ -2,7 +2,7 @@
 "Sound" = "声音";
 "Output" = "输出";
 "Input" = "输入";
-"System Sound Settings…" = "系统声音设置…";
+"Sound Settings…" = "声音设置…";
 "Soniclet Settings…" = "Soniclet 设置…";
 "Quit Soniclet" = "退出 Soniclet";
 "Close error" = "关闭错误信息";
@@ -44,7 +44,7 @@
 "Decrease volume" = "调低音量";
 "Increase volume" = "调高音量";
 
-"Connect AirPlay devices in System Sound Settings first." = "请先在系统声音设置中连接 AirPlay 设备。";
+"Connect AirPlay devices in System Sound Settings first." = "请先在[系统声音设置](soniclet://sound-settings)中连接 AirPlay 设备。";
 
 /* GitHub Releases update notification. */
 "Check for Updates…" = "检查更新…";
@@ -60,3 +60,7 @@
 "Battery: %@" = "电池：%@";
 "“%@” Settings…" = "“%@”设置…";
 "Bluetooth Settings…" = "蓝牙设置…";
+"System Settings" = "系统设置";
+"Drag devices to change their order in the menu." = "拖移设备以更改其在菜单中的顺序。";
+"Move Up" = "上移";
+"Move Down" = "下移";

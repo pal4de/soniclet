@@ -40,15 +40,15 @@ enum SettingsSmokeTest {
         }
         UserDefaults.standard.set(MenuBarIconStyle.soniclet.rawValue, forKey: MenuBarIconStyle.preferenceKey)
         controller.update()
-        guard controller.statusItem.button?.image?.isTemplate == true,
-              controller.statusItem.button?.image?.size == NSSize(width: 18, height: 18),
+        guard controller.iconView.image?.isTemplate == true,
+              controller.iconView.image?.size == NSSize(width: 19, height: 19),
               controller.statusItem.length == requestedWidth,
               abs((controller.statusItem.button?.frame.width ?? 0) - expectedWidth) <= pixelTolerance else {
-            fail("App-icon style: template=\(controller.statusItem.button?.image?.isTemplate ?? false), size=\(String(describing: controller.statusItem.button?.image?.size)), width=\(controller.statusItem.button?.frame.width ?? 0), expected=\(expectedWidth), pref=\(MenuBarIconStyle.current().rawValue)")
+            fail("App-icon style: template=\(controller.iconView.image?.isTemplate ?? false), size=\(String(describing: controller.iconView.image?.size)), width=\(controller.statusItem.button?.frame.width ?? 0), expected=\(expectedWidth), pref=\(MenuBarIconStyle.current().rawValue)")
         }
         let markWidth = controller.statusItem.button?.frame.width ?? 0
         for level in 0...3 {
-            controller.statusItem.button?.image = StatusMark.makeImage(level: level)
+            controller.iconView.image = StatusMark.makeImage(level: level)
             try? await Task.sleep(nanoseconds: 50_000_000)
             guard controller.statusItem.length == requestedWidth,
                   abs((controller.statusItem.button?.frame.width ?? 0) - markWidth) <= pixelTolerance else {
@@ -61,16 +61,15 @@ enum SettingsSmokeTest {
         print("PASS: fixed status item width across volume symbols and both icon styles")
 
         let menu = controller.makeContextMenu()
-        guard menu.items.count == 9,
+        guard menu.items.count == 8,
               !menu.items[0].isEnabled, menu.items[0].action == nil,
               !menu.items[1].isEnabled, menu.items[1].action == nil,
               menu.items[0].title == controller.summaryLines[0],
               menu.items[1].title == controller.summaryLines[1],
               menu.items[3].isEnabled == (controller.model.outputVolume.muteElement != nil),
               menu.items[5].action == #selector(StatusBarController.showSettings),
-              menu.items[6].isSeparatorItem,
-              menu.items[7].action == #selector(StatusBarController.checkForUpdates),
-              menu.items[8].action == #selector(NSApplication.terminate(_:)),
+              menu.items[6].action == #selector(StatusBarController.checkForUpdates),
+              menu.items[7].action == #selector(NSApplication.terminate(_:)),
               controller.statusItem.button?.toolTip == controller.summaryLines.joined(separator: "\n") else {
             fail("Context menu or tooltip mismatch")
         }
@@ -83,7 +82,7 @@ enum SettingsSmokeTest {
                     guard controller.menuIsOpen, let menu = controller.currentMenu,
                           controller.statusItem.menu === menu else { fail("Native menu lost its permanent attachment") }
                     if context {
-                        guard menu.items.count == 9, menu.items.first?.view == nil,
+                        guard menu.items.count == 8, menu.items.first?.view == nil,
                               menu.items.first?.title == controller.summaryLines[0] else { fail("Wrong right-click menu") }
                     } else {
                         guard let window = menu.items.first?.view?.window,

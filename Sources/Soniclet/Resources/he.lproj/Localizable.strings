@@ -2,7 +2,7 @@
 "Sound" = "צליל";
 "Output" = "פלט";
 "Input" = "קלט";
-"System Sound Settings…" = "הגדרות הצליל של המערכת…";
+"Sound Settings…" = "הגדרות צליל…";
 "Soniclet Settings…" = "הגדרות Soniclet…";
 "Quit Soniclet" = "סיום Soniclet";
 "Close error" = "סגירת הודעת השגיאה";
@@ -44,7 +44,7 @@
 "Decrease volume" = "הנמכת עוצמת הקול";
 "Increase volume" = "הגברת עוצמת הקול";
 
-"Connect AirPlay devices in System Sound Settings first." = "יש לחבר תחילה מכשירי AirPlay בהגדרות הצליל של המערכת.";
+"Connect AirPlay devices in System Sound Settings first." = "יש לחבר תחילה מכשירי AirPlay ב[הגדרות הצליל של המערכת](soniclet://sound-settings).";
 
 /* GitHub Releases update notification. */
 "Check for Updates…" = "בדיקת עדכונים…";
@@ -60,3 +60,7 @@
 "Battery: %@" = "סוללה: %@";
 "“%@” Settings…" = "הגדרות ״%@״…";
 "Bluetooth Settings…" = "הגדרות Bluetooth…";
+"System Settings" = "הגדרות המערכת";
+"Drag devices to change their order in the menu." = "גררו מכשירים כדי לשנות את הסדר שלהם בתפריט.";
+"Move Up" = "העברה למעלה";
+"Move Down" = "העברה למטה";

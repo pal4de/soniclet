@@ -2,7 +2,7 @@
 "Sound" = "Zvuk";
 "Output" = "Výstup";
 "Input" = "Vstup";
-"System Sound Settings…" = "Systémové nastavenia zvuku…";
+"Sound Settings…" = "Nastavenia zvuku…";
 "Soniclet Settings…" = "Nastavenia Soniclet…";
 "Quit Soniclet" = "Ukončiť Soniclet";
 "Close error" = "Zavrieť chybové hlásenie";
@@ -44,7 +44,7 @@
 "Decrease volume" = "Znížiť hlasitosť";
 "Increase volume" = "Zvýšiť hlasitosť";
 
-"Connect AirPlay devices in System Sound Settings first." = "Zariadenia AirPlay najprv pripojte v systémových nastaveniach zvuku.";
+"Connect AirPlay devices in System Sound Settings first." = "Zariadenia AirPlay najprv pripojte v [systémových nastaveniach zvuku](soniclet://sound-settings).";
 
 /* GitHub Releases update notification. */
 "Check for Updates…" = "Vyhľadať aktualizácie…";
@@ -60,3 +60,7 @@
 "Battery: %@" = "Batéria: %@";
 "“%@” Settings…" = "Nastavenia „%@“…";
 "Bluetooth Settings…" = "Nastavenia Bluetooth…";
+"System Settings" = "Systémové nastavenia";
+"Drag devices to change their order in the menu." = "Potiahnutím zariadení zmeníte ich poradie v menu.";
+"Move Up" = "Presunúť nahor";
+"Move Down" = "Presunúť nadol";

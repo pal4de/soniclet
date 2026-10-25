@@ -2,7 +2,7 @@
 "Sound" = "Bunyi";
 "Output" = "Output";
 "Input" = "Input";
-"System Sound Settings…" = "Pengaturan Bunyi Sistem…";
+"Sound Settings…" = "Pengaturan Suara…";
 "Soniclet Settings…" = "Pengaturan Soniclet…";
 "Quit Soniclet" = "Keluar dari Soniclet";
 "Close error" = "Tutup pesan kesalahan";
@@ -44,7 +44,7 @@
 "Decrease volume" = "Kecilkan volume";
 "Increase volume" = "Besarkan volume";
 
-"Connect AirPlay devices in System Sound Settings first." = "Hubungkan perangkat AirPlay terlebih dahulu di pengaturan suara sistem.";
+"Connect AirPlay devices in System Sound Settings first." = "Hubungkan perangkat AirPlay terlebih dahulu di [pengaturan suara sistem](soniclet://sound-settings).";
 
 /* GitHub Releases update notification. */
 "Check for Updates…" = "Periksa Pembaruan…";
@@ -60,3 +60,7 @@
 "Battery: %@" = "Baterai: %@";
 "“%@” Settings…" = "Pengaturan “%@”…";
 "Bluetooth Settings…" = "Pengaturan Bluetooth…";
+"System Settings" = "Pengaturan Sistem";
+"Drag devices to change their order in the menu." = "Seret perangkat untuk mengubah urutannya di menu.";
+"Move Up" = "Pindahkan ke Atas";
+"Move Down" = "Pindahkan ke Bawah";

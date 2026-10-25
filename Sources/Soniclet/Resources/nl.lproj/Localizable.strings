@@ -2,7 +2,7 @@
 "Sound" = "Geluid";
 "Output" = "Uitvoer";
 "Input" = "Invoer";
-"System Sound Settings…" = "Geluidsinstellingen van het systeem…";
+"Sound Settings…" = "Geluidsinstellingen…";
 "Soniclet Settings…" = "Instellingen van Soniclet…";
 "Quit Soniclet" = "Stop Soniclet";
 "Close error" = "Foutmelding sluiten";
@@ -44,7 +44,7 @@
 "Decrease volume" = "Volume verlagen";
 "Increase volume" = "Volume verhogen";
 
-"Connect AirPlay devices in System Sound Settings first." = "Verbind AirPlay-apparaten eerst via de geluidsinstellingen van het systeem.";
+"Connect AirPlay devices in System Sound Settings first." = "Verbind AirPlay-apparaten eerst via de [geluidsinstellingen van het systeem](soniclet://sound-settings).";
 
 /* GitHub Releases update notification. */
 "Check for Updates…" = "Zoek naar updates…";
@@ -60,3 +60,7 @@
 "Battery: %@" = "Batterij: %@";
 "“%@” Settings…" = "Instellingen voor ‘%@’…";
 "Bluetooth Settings…" = "Bluetooth-instellingen…";
+"System Settings" = "Systeeminstellingen";
+"Drag devices to change their order in the menu." = "Sleep apparaten om hun volgorde in het menu te wijzigen.";
+"Move Up" = "Verplaats omhoog";
+"Move Down" = "Verplaats omlaag";

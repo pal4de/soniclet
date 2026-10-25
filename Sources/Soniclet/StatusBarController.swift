@@ -2,6 +2,7 @@ import AppKit
 import Combine
 import SwiftUI
 import QuartzCore
+import Symbols
 
 /// AppKit owns status-item geometry, menu tracking, outside clicks and Escape.
 @MainActor
@@ -9,6 +10,7 @@ final class StatusBarController: NSObject, NSMenuDelegate {
     let model: AudioModel
     let updates = UpdateChecker()
     let statusItem: NSStatusItem
+    let iconView = StatusIconView(frame: NSRect(x: 0, y: 0, width: 22, height: 20))
     private let settings: SettingsWindowController
     private var observations = Set<AnyCancellable>()
     private let attachedMenu = NSMenu()
@@ -25,6 +27,18 @@ final class StatusBarController: NSObject, NSMenuDelegate {
         if let button = statusItem.button {
             button.imagePosition = .imageOnly
             button.imageScaling = .scaleProportionallyDown
+            iconView.imageScaling = .scaleProportionallyDown
+            iconView.contentTintColor = .labelColor
+            iconView.symbolConfiguration = NSImage.SymbolConfiguration(pointSize: 16, weight: .regular)
+            iconView.setAccessibilityElement(false)
+            button.addSubview(iconView)
+            iconView.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                iconView.centerXAnchor.constraint(equalTo: button.centerXAnchor),
+                iconView.centerYAnchor.constraint(equalTo: button.centerYAnchor),
+                iconView.widthAnchor.constraint(equalToConstant: 22),
+                iconView.heightAnchor.constraint(equalToConstant: 20)
+            ])
             button.setAccessibilityLabel(L10n.text("Soniclet — audio devices"))
         }
         attachedMenu.autoenablesItems = false
@@ -85,21 +99,40 @@ final class StatusBarController: NSObject, NSMenuDelegate {
 
     // The item's length is fixed once; every symbol is centered by NSStatusBarButton.
     func displaySymbol(_ name: String, value: Double = 1) {
-        let image = NSImage(systemSymbolName: name, variableValue: value, accessibilityDescription: nil)
+        let renderedValue = name.hasPrefix("speaker.wave.") ? value : 1
+        let image = NSImage(systemSymbolName: name, variableValue: renderedValue, accessibilityDescription: nil)
         image?.isTemplate = true
-        setStatusImage(image, key: "symbol:\(name):\(value)")
+        setStatusImage(image, key: "symbol:\(name):\(renderedValue)")
     }
 
     private func setStatusImage(_ image: NSImage?, key: String) {
-        guard let image, let button = statusItem.button, displayedIconKey != key else { return }
-        if displayedIconKey != nil && !NSWorkspace.shared.accessibilityDisplayShouldReduceMotion {
-            button.wantsLayer = true
-            let transition = CATransition()
-            transition.type = .fade
-            transition.duration = 0.15
-            button.layer?.add(transition, forKey: "iconTransition")
+        guard let image, displayedIconKey != key else { return }
+        let animate = !NSWorkspace.shared.accessibilityDisplayShouldReduceMotion
+        let isSymbol = key.hasPrefix("symbol:")
+        let wasSymbol = displayedIconKey?.hasPrefix("symbol:") == true
+        iconView.removeAllSymbolEffects(animated: false)
+        if animate && isSymbol && wasSymbol {
+            // Public SF Symbols transition: outgoing layers shrink, incoming layers grow.
+            iconView.setSymbolImage(image, contentTransition: .replace.downUp.byLayer)
+        } else {
+            iconView.image = image
+            if animate && isSymbol {
+                iconView.addSymbolEffect(.appear)
+            } else if animate && displayedIconKey != nil {
+                // Raster/template app artwork has no SF Symbol animation layers.
+                iconView.wantsLayer = true
+                let fade = CATransition()
+                fade.type = .fade
+                fade.duration = 0.18
+                iconView.layer?.add(fade, forKey: "artworkTransition")
+                let scale = CABasicAnimation(keyPath: "transform.scale")
+                scale.fromValue = 0.75
+                scale.toValue = 1
+                scale.duration = 0.18
+                scale.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+                iconView.layer?.add(scale, forKey: "artworkScale")
+            }
         }
-        button.image = image
         displayedIconKey = key
     }
 
@@ -140,7 +173,6 @@ final class StatusBarController: NSObject, NSMenuDelegate {
         let settingsItem = NSMenuItem(title: L10n.text("Soniclet Settings…"), action: #selector(showSettings), keyEquivalent: ",")
         settingsItem.target = self
         menu.addItem(settingsItem)
-        menu.addItem(.separator())
         let update = NSMenuItem(title: updates.menuTitle, action: #selector(checkForUpdates), keyEquivalent: "")
         update.tag = 104
         update.target = self

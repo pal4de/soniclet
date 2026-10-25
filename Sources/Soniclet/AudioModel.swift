@@ -87,7 +87,8 @@ final class AudioModel: ObservableObject {
     }
 
     func visibleDevices(_ direction: AudioDirection) -> [AudioDevice] {
-        devices.filter { $0.key.direction == direction && store.isVisible($0.key) }
+        let connected = Dictionary(uniqueKeysWithValues: devices.map { ($0.key, $0) })
+        return store.orderedDevices(direction).filter { $0.isVisible }.compactMap { connected[$0.key] }
     }
     func selected(_ device: AudioDevice) -> Bool {
         device.objectID == (device.key.direction == .output ? outputID : inputID)
@@ -97,16 +98,28 @@ final class AudioModel: ObservableObject {
     }
     func isConnected(_ key: DeviceKey) -> Bool { devices.contains { $0.key == key } }
     func savedDevices(_ direction: AudioDirection) -> [DevicePreference] {
-        preferences.filter { $0.key.direction == direction }.sorted {
-            if isConnected($0.key) != isConnected($1.key) { return isConnected($0.key) }
-            return $0.name.localizedStandardCompare($1.name) == .orderedAscending
-        }
+        store.orderedDevices(direction)
+    }
+    func moveDevices(_ direction: AudioDirection, from offsets: IndexSet, to destination: Int) {
+        store.move(direction, from: offsets, to: destination)
+        preferences = store.devices
+    }
+    @discardableResult
+    func moveDevice(_ key: DeviceKey, relativeTo target: DeviceKey, after: Bool) -> Bool {
+        guard key != target, key.direction == target.direction else { return false }
+        let ordered = savedDevices(key.direction)
+        guard let source = ordered.firstIndex(where: { $0.key == key }),
+              let destination = ordered.firstIndex(where: { $0.key == target }) else { return false }
+        moveDevices(key.direction, from: IndexSet(integer: source), to: destination + (after ? 1 : 0))
+        return true
     }
     func setVisible(_ visible: Bool, key: DeviceKey) {
         store.setVisible(visible, for: key)
         preferences = store.devices
     }
     func select(_ device: AudioDevice) {
+        guard pendingSelection != device.key else { return }
+        guard service.defaultDevice(device.key.direction) != device.objectID else { return }
         errorMessage = nil
         selectionRequest = UUID()
         let request = selectionRequest

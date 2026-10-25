@@ -2,7 +2,7 @@
 "Sound" = "Son";
 "Output" = "Sortie";
 "Input" = "Entrée";
-"System Sound Settings…" = "Réglages Son du système…";
+"Sound Settings…" = "Réglages Son…";
 "Soniclet Settings…" = "Réglages de Soniclet…";
 "Quit Soniclet" = "Quitter Soniclet";
 "Close error" = "Fermer le message d’erreur";
@@ -44,7 +44,7 @@
 "Decrease volume" = "Baisser le volume";
 "Increase volume" = "Augmenter le volume";
 
-"Connect AirPlay devices in System Sound Settings first." = "Connectez d’abord les appareils AirPlay dans les réglages Son du système.";
+"Connect AirPlay devices in System Sound Settings first." = "Connectez d’abord les appareils AirPlay dans les [réglages Son du système](soniclet://sound-settings).";
 
 /* GitHub Releases update notification. */
 "Check for Updates…" = "Rechercher des mises à jour…";
@@ -60,3 +60,7 @@
 "Battery: %@" = "Batterie : %@";
 "“%@” Settings…" = "Réglages de « %@ »…";
 "Bluetooth Settings…" = "Réglages Bluetooth…";
+"System Settings" = "Réglages Système";
+"Drag devices to change their order in the menu." = "Faites glisser les appareils pour modifier leur ordre dans le menu.";
+"Move Up" = "Monter";
+"Move Down" = "Descendre";

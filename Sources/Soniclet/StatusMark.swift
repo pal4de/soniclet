@@ -35,7 +35,7 @@ enum StatusMark {
                                           with: "<rect opacity=\"\(opacity)\" id=\"level-\(index)\"")
         }
         guard let source = NSImage(data: Data(svg.utf8)) else { return nil }
-        let result = NSImage(size: NSSize(width: 18, height: 18), flipped: false) { rect in
+        let result = NSImage(size: NSSize(width: 19, height: 19), flipped: false) { rect in
             // Crop only the artwork's square silhouette, excluding app-icon padding.
             source.draw(in: rect, from: NSRect(x: 172, y: 172, width: 680, height: 680),
                         operation: .sourceOver, fraction: 1)

@@ -67,7 +67,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         settingsItem.target = statusController
         appMenu.addItem(settingsItem)
         appMenu.addItem(.separator())
-        let sound = NSMenuItem(title: L10n.text("System Sound Settings…"),
+        let sound = NSMenuItem(title: L10n.text("Sound Settings…"),
                                action: #selector(StatusBarController.showSystemSoundSettings), keyEquivalent: "")
         sound.target = statusController
         appMenu.addItem(sound)

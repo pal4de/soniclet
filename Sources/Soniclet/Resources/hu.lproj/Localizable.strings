@@ -2,7 +2,7 @@
 "Sound" = "Hang";
 "Output" = "Kimenet";
 "Input" = "Bemenet";
-"System Sound Settings…" = "Rendszerhang-beállítások…";
+"Sound Settings…" = "Hangbeállítások…";
 "Soniclet Settings…" = "A Soniclet beállításai…";
 "Quit Soniclet" = "Kilépés a Sonicletből";
 "Close error" = "Hibaüzenet bezárása";
@@ -44,7 +44,7 @@
 "Decrease volume" = "Hangerő csökkentése";
 "Increase volume" = "Hangerő növelése";
 
-"Connect AirPlay devices in System Sound Settings first." = "Először csatlakoztasd az AirPlay-eszközöket a rendszer hangbeállításaiban.";
+"Connect AirPlay devices in System Sound Settings first." = "Először csatlakoztasd az AirPlay-eszközöket a [rendszer hangbeállításaiban](soniclet://sound-settings).";
 
 /* GitHub Releases update notification. */
 "Check for Updates…" = "Frissítések keresése…";
@@ -60,3 +60,7 @@
 "Battery: %@" = "Akkumulátor: %@";
 "“%@” Settings…" = "„%@” beállításai…";
 "Bluetooth Settings…" = "Bluetooth-beállítások…";
+"System Settings" = "Rendszerbeállítások";
+"Drag devices to change their order in the menu." = "Húzással módosítható az eszközök sorrendje a menüben.";
+"Move Up" = "Mozgatás felfelé";
+"Move Down" = "Mozgatás lefelé";

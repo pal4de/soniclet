@@ -42,6 +42,8 @@ Output volume and mute depend on hardware support. For fixed-volume outputs, adj
 
 Connect an AirPlay device through **System Sound Settings…** first. This app lists devices exposed by Core Audio; it cannot discover or connect all unconnected AirPlay destinations such as HomePod. An active AirPlay endpoint may appear with a generic name. Disconnected AirPlay session endpoints are not retained as permanent devices.
 
+Settings keeps the native grouped form. Drag a device’s handle to reorder that direction’s menu, or use its contextual Move Up/Move Down commands. Order is stored by stable device UID, survives reconnection, and does not change audio routing. Automatic priority-based routing is not enabled or implemented.
+
 ### Headphones and battery information
 
 In system-icon mode, headphone outputs use the native headphone symbol. Soniclet-icon mode keeps the chosen app mark.

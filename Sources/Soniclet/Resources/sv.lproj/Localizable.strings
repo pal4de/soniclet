@@ -2,7 +2,7 @@
 "Sound" = "Ljud";
 "Output" = "Utmatning";
 "Input" = "Inmatning";
-"System Sound Settings…" = "Systemets ljudinställningar…";
+"Sound Settings…" = "Ljudinställningar…";
 "Soniclet Settings…" = "Inställningar för Soniclet…";
 "Quit Soniclet" = "Avsluta Soniclet";
 "Close error" = "Stäng felmeddelande";
@@ -44,7 +44,7 @@
 "Decrease volume" = "Sänk volymen";
 "Increase volume" = "Höj volymen";
 
-"Connect AirPlay devices in System Sound Settings first." = "Anslut först AirPlay-enheter i systemets ljudinställningar.";
+"Connect AirPlay devices in System Sound Settings first." = "Anslut först AirPlay-enheter i [systemets ljudinställningar](soniclet://sound-settings).";
 
 /* GitHub Releases update notification. */
 "Check for Updates…" = "Sök efter uppdateringar…";
@@ -60,3 +60,7 @@
 "Battery: %@" = "Batteri: %@";
 "“%@” Settings…" = "Inställningar för ”%@”…";
 "Bluetooth Settings…" = "Bluetooth-inställningar…";
+"System Settings" = "Systeminställningar";
+"Drag devices to change their order in the menu." = "Dra enheter för att ändra deras ordning i menyn.";
+"Move Up" = "Flytta upp";
+"Move Down" = "Flytta ned";

@@ -110,6 +110,38 @@ struct DevicePreferencesTests {
         DevicePreferences.migrateLegacyPreferences(in: defaults, from: domain)
         expectTrue(defaults.object(forKey: "devicePreferences.v1") == nil, "Ignore malformed legacy data")
     }
+    static func testOrderSurvivesRestartReconnectAndRename() {
+        let (defaults, store) = fixture()
+        let first = device(uid: "first", name: "A")
+        let second = device(uid: "second", name: "B")
+        store.synchronize([first, second])
+        store.move(.output, from: IndexSet(integer: 1), to: 0)
+        store.setVisible(false, for: second.key)
+        let reloaded = DevicePreferences(defaults: defaults)
+        reloaded.synchronize([first])
+        expectEqual(reloaded.orderedDevices(.output).map(\.key), [second.key, first.key])
+        reloaded.synchronize([first, device(uid: "second", objectID: 99, name: "Renamed")])
+        expectEqual(reloaded.orderedDevices(.output).map(\.key), [second.key, first.key])
+        expectFalse(reloaded.isVisible(second.key))
+    }
+    static func testOrderingIsIndependentByDirectionAndNewDevicesAppend() {
+        let (_, store) = fixture()
+        let outputs = [device(uid: "a", name: "A"), device(uid: "b", name: "B")]
+        let inputs = [device(uid: "a", direction: .input, name: "A"), device(uid: "b", direction: .input, name: "B")]
+        store.synchronize(outputs + inputs)
+        store.move(.output, from: IndexSet(integer: 1), to: 0)
+        expectEqual(store.orderedDevices(.input).map(\.key), inputs.map(\.key))
+        store.synchronize(outputs + inputs + [device(uid: "new", name: "0 new")])
+        expectEqual(store.orderedDevices(.output).map { $0.key.uid }, ["b", "a", "new"])
+    }
+    static func testMultirowMovesAndInvalidOffsets() {
+        let (_, store) = fixture()
+        store.synchronize([device(uid: "a", name: "A"), device(uid: "b", name: "B"), device(uid: "c", name: "C")])
+        store.move(.output, from: IndexSet([0, 1]), to: 3)
+        expectEqual(store.orderedDevices(.output).map { $0.key.uid }, ["c", "a", "b"])
+        store.move(.output, from: IndexSet(integer: 99), to: 0)
+        expectEqual(store.orderedDevices(.output).map { $0.key.uid }, ["c", "a", "b"])
+    }
     private static func expectTrue(_ value: Bool, _ message: String = "Expected true") {
         if !value { fputs("FAIL: \(message)\n", stderr); exit(1) }
     }
@@ -127,6 +159,9 @@ struct DevicePreferencesTests {
         testSessionAirPlayRoutesDisappearWhenDisconnected()
         testLegacyPhantomAirPlayRecordsAreCleanedWithoutLosingUSBPreferences()
         testDevelopmentBuildMigrationPreservesUserChoices()
-        print("PASS: 9 device preference tests")
+        testOrderSurvivesRestartReconnectAndRename()
+        testOrderingIsIndependentByDirectionAndNewDevicesAppend()
+        testMultirowMovesAndInvalidOffsets()
+        print("PASS: 12 device preference and ordering tests")
     }
 }

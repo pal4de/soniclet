@@ -2,7 +2,7 @@
 "Sound" = "صدا";
 "Output" = "خروجی";
 "Input" = "ورودی";
-"System Sound Settings…" = "تنظیمات صدای سیستم…";
+"Sound Settings…" = "تنظیمات صدا…";
 "Soniclet Settings…" = "تنظیمات Soniclet…";
 "Quit Soniclet" = "خروج از Soniclet";
 "Close error" = "بستن پیام خطا";
@@ -44,7 +44,7 @@
 "Decrease volume" = "کاهش بلندی صدا";
 "Increase volume" = "افزایش بلندی صدا";
 
-"Connect AirPlay devices in System Sound Settings first." = "ابتدا دستگاه‌های AirPlay را در تنظیمات صدای سیستم متصل کنید.";
+"Connect AirPlay devices in System Sound Settings first." = "ابتدا دستگاه‌های AirPlay را در [تنظیمات صدای سیستم](soniclet://sound-settings) متصل کنید.";
 
 /* GitHub Releases update notification. */
 "Check for Updates…" = "بررسی به‌روزرسانی‌ها…";
@@ -60,3 +60,7 @@
 "Battery: %@" = "باتری: %@";
 "“%@” Settings…" = "تنظیمات «%@»…";
 "Bluetooth Settings…" = "تنظیمات Bluetooth…";
+"System Settings" = "تنظیمات سیستم";
+"Drag devices to change their order in the menu." = "برای تغییر ترتیب دستگاه‌ها در منو، آن‌ها را بکشید.";
+"Move Up" = "انتقال به بالا";
+"Move Down" = "انتقال به پایین";

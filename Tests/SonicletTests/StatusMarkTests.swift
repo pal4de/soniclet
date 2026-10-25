@@ -24,7 +24,7 @@ struct StatusMarkTests {
         require(StatusMark.level(volume: nil, muted: false) == 3, "Unknown hardware volume remains visible")
         for level in 0...3 {
             guard let image = StatusMark.makeImage(level: level, bundle: bundle) else { fatalError("Missing status mark") }
-            require(image.isTemplate && image.size == NSSize(width: 18, height: 18), "Fixed-size native template")
+            require(image.isTemplate && image.size == NSSize(width: 19, height: 19), "Fixed-size native template")
             let bitmap = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: 180, pixelsHigh: 180,
                 bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false,
                 colorSpaceName: .deviceRGB, bytesPerRow: 0, bitsPerPixel: 0)!

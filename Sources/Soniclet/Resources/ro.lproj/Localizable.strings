@@ -2,7 +2,7 @@
 "Sound" = "Sunet";
 "Output" = "Ieșire";
 "Input" = "Intrare";
-"System Sound Settings…" = "Configurări de sunet ale sistemului…";
+"Sound Settings…" = "Configurări de sunet…";
 "Soniclet Settings…" = "Configurări Soniclet…";
 "Quit Soniclet" = "Închide Soniclet";
 "Close error" = "Închide mesajul de eroare";
@@ -44,7 +44,7 @@
 "Decrease volume" = "Micșorează volumul";
 "Increase volume" = "Mărește volumul";
 
-"Connect AirPlay devices in System Sound Settings first." = "Conectează mai întâi dispozitivele AirPlay în setările de sunet ale sistemului.";
+"Connect AirPlay devices in System Sound Settings first." = "Conectează mai întâi dispozitivele AirPlay în [setările de sunet ale sistemului](soniclet://sound-settings).";
 
 /* GitHub Releases update notification. */
 "Check for Updates…" = "Caută actualizări…";
@@ -60,3 +60,7 @@
 "Battery: %@" = "Baterie: %@";
 "“%@” Settings…" = "Configurări pentru „%@”…";
 "Bluetooth Settings…" = "Configurări Bluetooth…";
+"System Settings" = "Configurări sistem";
+"Drag devices to change their order in the menu." = "Trageți dispozitivele pentru a le schimba ordinea în meniu.";
+"Move Up" = "Mută în sus";
+"Move Down" = "Mută în jos";

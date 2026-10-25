@@ -2,7 +2,7 @@
 "Sound" = "Âm thanh";
 "Output" = "Đầu ra";
 "Input" = "Đầu vào";
-"System Sound Settings…" = "Cài đặt âm thanh hệ thống…";
+"Sound Settings…" = "Cài đặt âm thanh…";
 "Soniclet Settings…" = "Cài đặt Soniclet…";
 "Quit Soniclet" = "Thoát Soniclet";
 "Close error" = "Đóng thông báo lỗi";
@@ -44,7 +44,7 @@
 "Decrease volume" = "Giảm âm lượng";
 "Increase volume" = "Tăng âm lượng";
 
-"Connect AirPlay devices in System Sound Settings first." = "Trước tiên, hãy kết nối thiết bị AirPlay trong cài đặt âm thanh hệ thống.";
+"Connect AirPlay devices in System Sound Settings first." = "Trước tiên, hãy kết nối thiết bị AirPlay trong [cài đặt âm thanh hệ thống](soniclet://sound-settings).";
 
 /* GitHub Releases update notification. */
 "Check for Updates…" = "Kiểm tra bản cập nhật…";
@@ -60,3 +60,7 @@
 "Battery: %@" = "Pin: %@";
 "“%@” Settings…" = "Cài đặt “%@”…";
 "Bluetooth Settings…" = "Cài đặt Bluetooth…";
+"System Settings" = "Cài đặt hệ thống";
+"Drag devices to change their order in the menu." = "Kéo các thiết bị để thay đổi thứ tự trong menu.";
+"Move Up" = "Di chuyển lên";
+"Move Down" = "Di chuyển xuống";

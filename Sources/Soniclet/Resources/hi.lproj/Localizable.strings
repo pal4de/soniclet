@@ -2,7 +2,7 @@
 "Sound" = "ध्वनि";
 "Output" = "आउटपुट";
 "Input" = "इनपुट";
-"System Sound Settings…" = "सिस्टम ध्वनि सेटिंग्ज़…";
+"Sound Settings…" = "ध्वनि सेटिंग्ज़…";
 "Soniclet Settings…" = "Soniclet सेटिंग्ज़…";
 "Quit Soniclet" = "Soniclet बंद करें";
 "Close error" = "त्रुटि संदेश बंद करें";
@@ -44,7 +44,7 @@
 "Decrease volume" = "वॉल्यूम घटाएँ";
 "Increase volume" = "वॉल्यूम बढ़ाएँ";
 
-"Connect AirPlay devices in System Sound Settings first." = "पहले सिस्टम की ध्वनि सेटिंग में AirPlay डिवाइस कनेक्ट करें।";
+"Connect AirPlay devices in System Sound Settings first." = "पहले [सिस्टम की ध्वनि सेटिंग](soniclet://sound-settings) में AirPlay डिवाइस कनेक्ट करें।";
 
 /* GitHub Releases update notification. */
 "Check for Updates…" = "अपडेट देखें…";
@@ -60,3 +60,7 @@
 "Battery: %@" = "बैटरी: %@";
 "“%@” Settings…" = "“%@” की सेटिंग्ज़…";
 "Bluetooth Settings…" = "Bluetooth सेटिंग…";
+"System Settings" = "सिस्टम सेटिंग्ज़";
+"Drag devices to change their order in the menu." = "मेनू में क्रम बदलने के लिए डिवाइस खींचें।";
+"Move Up" = "ऊपर ले जाएँ";
+"Move Down" = "नीचे ले जाएँ";

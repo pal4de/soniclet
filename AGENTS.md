@@ -8,6 +8,8 @@ Keep this a small, native macOS audio-device switcher. Prefer public Apple APIs 
 - Keep the device menu permanently assigned to NSStatusItem.menu. Let AppKit handle mouse-down tracking, outside clicks, Escape, keyboard navigation, positioning, and square status-item sizing. Host custom controls with NSMenuItem.view; use menuNeedsUpdate to prepare content rather than synthetic click routing or event monitors.
 - Prefer standard controls, semantic styles, SF Symbols, accessibility, keyboard behavior, and automatic locale/direction handling. Do not imitate inaccessible private Control Center UI.
 - Let Core Audio own device/default/volume state and ServiceManagement own login-item state. Observe and read back system state; do not maintain competing sources of truth.
+- Use the public NSImageView SF Symbols appear/replace effects for system-symbol transitions; keep the status button and its menu responsible for interaction. Respect Reduce Motion. App artwork is a template image and has no SF Symbol animation layers.
+- Keep settings in the native grouped Form. Use platform drag/drop and accessible move commands without replacing the form with a plain table. Display order and any future routing priority are separate concepts.
 - Persist only user preferences. Identify devices by UID and direction, never transient AudioObjectID. Preserve stored settings compatibility. Do not retain disconnected AirPlay session endpoints.
 - Keep app identity stable after publication. Renaming the app must not silently discard preferences or duplicate login items.
 - Keep errors actionable. Never silently reroute audio as a fallback. Hiding devices only affects this app's list.

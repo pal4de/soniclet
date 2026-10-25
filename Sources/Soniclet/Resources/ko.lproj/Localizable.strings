@@ -2,7 +2,7 @@
 "Sound" = "사운드";
 "Output" = "출력";
 "Input" = "입력";
-"System Sound Settings…" = "시스템 사운드 설정…";
+"Sound Settings…" = "사운드 설정…";
 "Soniclet Settings…" = "Soniclet 설정…";
 "Quit Soniclet" = "Soniclet 종료";
 "Close error" = "오류 닫기";
@@ -44,7 +44,7 @@
 "Decrease volume" = "음량 낮추기";
 "Increase volume" = "음량 높이기";
 
-"Connect AirPlay devices in System Sound Settings first." = "먼저 시스템 사운드 설정에서 AirPlay 기기를 연결하세요.";
+"Connect AirPlay devices in System Sound Settings first." = "먼저 [시스템 사운드 설정](soniclet://sound-settings)에서 AirPlay 기기를 연결하세요.";
 
 /* GitHub Releases update notification. */
 "Check for Updates…" = "업데이트 확인…";
@@ -60,3 +60,7 @@
 "Battery: %@" = "배터리: %@";
 "“%@” Settings…" = "“%@” 설정…";
 "Bluetooth Settings…" = "Bluetooth 설정…";
+"System Settings" = "시스템 설정";
+"Drag devices to change their order in the menu." = "기기를 드래그하여 메뉴의 표시 순서를 변경할 수 있습니다.";
+"Move Up" = "위로 이동";
+"Move Down" = "아래로 이동";
