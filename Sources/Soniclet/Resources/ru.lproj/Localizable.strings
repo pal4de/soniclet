@@ -53,4 +53,5 @@
 "Could not check for updates. Try again later." = "Не удалось проверить обновления. Повторите попытку позже.";
 "Version %@ is available…" = "Доступна версия %@…";
 
-"Use app icon in menu bar" = "Использовать значок приложения в строке меню";
+"Menu bar icon" = "Значок в строке меню";
+"System icon" = "Системный значок";

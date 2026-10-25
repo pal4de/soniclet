@@ -1,12 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
   <!-- Two independent, opposing routes around a standalone audio waveform. -->
-  <g fill="none" stroke="white" stroke-width="54" stroke-linecap="round" stroke-linejoin="round">
+  <g fill="none" stroke="white" stroke-width="84" stroke-linecap="round" stroke-linejoin="round">
     <path d="M744 214 H430 C348 214 280 282 280 364 V630 M214 564 L280 630 L346 564"/>
     <path d="M280 810 H594 C676 810 744 742 744 660 V394 M678 460 L744 394 L810 460"/>
   </g>
   <g fill="white">
-    <rect id="level-1" x="432" y="440" width="36" height="144" rx="18"/>
-    <rect id="level-2" x="494" y="384" width="36" height="256" rx="18"/>
-    <rect id="level-3" x="556" y="440" width="36" height="144" rx="18"/>
+    <rect id="level-1" x="405" y="440" width="54" height="144" rx="27"/>
+    <rect id="level-2" x="485" y="384" width="54" height="256" rx="27"/>
+    <rect id="level-3" x="565" y="440" width="54" height="144" rx="27"/>
   </g>
 </svg>

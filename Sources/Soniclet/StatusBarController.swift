@@ -10,28 +10,24 @@ final class StatusBarController: NSObject, NSMenuDelegate {
     let statusItem: NSStatusItem
     private let settings: SettingsWindowController
     private var observations = Set<AnyCancellable>()
-    private(set) var currentMenu: NSMenu?
+    private let attachedMenu = NSMenu()
+    private var forcedContext: Bool?
+    var currentMenu: NSMenu? { menuIsOpen ? attachedMenu : nil }
     private(set) var menuIsOpen = false
-    private let symbolConfiguration = NSImage.SymbolConfiguration(pointSize: 14, weight: .regular)
 
     init(model: AudioModel) {
         self.model = model
         self.settings = SettingsWindowController(model: model)
-        let symbols = ["speaker.slash.fill", "speaker.wave.1.fill", "speaker.wave.2.fill", "speaker.wave.3.fill"]
-        let widest = symbols.compactMap {
-            NSImage(systemSymbolName: $0, accessibilityDescription: nil)?
-                .withSymbolConfiguration(NSImage.SymbolConfiguration(pointSize: 14, weight: .regular))?.size.width
-        }.max() ?? 22
-        statusItem = NSStatusBar.system.statusItem(withLength: ceil(widest) + 12)
+        statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
         super.init()
         if let button = statusItem.button {
-            button.target = self
-            button.action = #selector(clicked(_:))
-            button.sendAction(on: [.leftMouseUp, .rightMouseUp])
             button.imagePosition = .imageOnly
             button.imageScaling = .scaleProportionallyDown
             button.setAccessibilityLabel(L10n.text("Soniclet — audio devices"))
         }
+        attachedMenu.autoenablesItems = false
+        attachedMenu.delegate = self
+        statusItem.menu = attachedMenu
         model.objectWillChange.sink { [weak self] _ in
             DispatchQueue.main.async { self?.update() }
         }.store(in: &observations)
@@ -52,11 +48,11 @@ final class StatusBarController: NSObject, NSMenuDelegate {
     }
 
     func update() {
-        if UserDefaults.standard.bool(forKey: StatusMark.preferenceKey),
+        if MenuBarIconStyle.current() == .soniclet,
            let image = StatusMark.image(volume: model.outputVolume.canAdjust ? model.outputVolume.value : nil,
                                         muted: model.outputVolume.muted) {
             statusItem.button?.image = image
-        } else { displaySymbol(model.outputSymbol) }
+        } else { displaySymbol(model.outputSymbol, value: model.outputSymbolValue) }
         var tooltip = summaryLines
         if updates.release != nil { tooltip.append(updates.menuTitle) }
         statusItem.button?.toolTip = tooltip.joined(separator: "\n")
@@ -73,24 +69,15 @@ final class StatusBarController: NSObject, NSMenuDelegate {
         menu.item(withTag: 104)?.isEnabled = updates.actionIsEnabled
         if let view = menu.items.first?.view {
             let height = view.fittingSize.height
-            if abs(view.frame.height - height) > 0.5 { view.setFrameSize(NSSize(width: 320, height: height)) }
+            if abs(view.frame.height - height) > 0.5 { view.setFrameSize(NSSize(width: 304, height: height)) }
         }
-        menu.update()
     }
 
     // The item's length is fixed once; every symbol is centered by NSStatusBarButton.
-    func displaySymbol(_ name: String) {
-        let image = NSImage(systemSymbolName: name, accessibilityDescription: nil)?
-            .withSymbolConfiguration(symbolConfiguration)
+    func displaySymbol(_ name: String, value: Double = 1) {
+        let image = NSImage(systemSymbolName: name, variableValue: value, accessibilityDescription: nil)
         image?.isTemplate = true
         statusItem.button?.image = image
-    }
-
-    @objc private func clicked(_ sender: NSStatusBarButton) {
-        let event = NSApplication.shared.currentEvent
-        if event?.type == .rightMouseUp || event?.modifierFlags.contains(.control) == true {
-            showContextMenu()
-        } else { showMenu() }
     }
 
     func makeDeviceMenu() -> NSMenu {
@@ -101,7 +88,7 @@ final class StatusBarController: NSObject, NSMenuDelegate {
             updateAction: { [weak self] in self?.checkForUpdates() },
             settingsAction: { [weak self] in self?.showSettings() },
             dismissPanel: { [weak self] in self?.dismissMenu() }
-        ))
+        ).environment(\.controlActiveState, .active))
         content.sizingOptions = [.intrinsicContentSize]
         content.setFrameSize(content.fittingSize)
         let item = NSMenuItem()
@@ -145,23 +132,31 @@ final class StatusBarController: NSObject, NSMenuDelegate {
     private func baseMenu() -> NSMenu {
         let menu = NSMenu()
         menu.autoenablesItems = false
-        menu.delegate = self
         return menu
     }
 
-    func showMenu() { present(makeDeviceMenu()) }
-    func showContextMenu() { present(makeContextMenu()) }
+    func showMenu() {
+        forcedContext = false
+        statusItem.button?.performClick(nil)
+    }
 
-    private func present(_ menu: NSMenu) {
-        guard let button = statusItem.button, button.window != nil else { return }
-        if menuIsOpen { dismissMenu(); return }
+    func showContextMenu() {
+        forcedContext = true
+        statusItem.button?.performClick(nil)
+    }
+
+    func menuNeedsUpdate(_ menu: NSMenu) {
+        guard menu === attachedMenu, !menuIsOpen else { return }
+        let event = NSApplication.shared.currentEvent
+        let context = forcedContext ?? (event?.type == .rightMouseDown || event?.type == .rightMouseUp ||
+                                        event?.modifierFlags.contains(.control) == true)
         updates.checkIfDue()
-        currentMenu = menu
-        // Let the status item anchor its own menu; popUp(at:) positions a menu
-        // item around the point and is unsuitable for one tall custom view.
-        statusItem.menu = menu
-        defer { statusItem.menu = nil; currentMenu = nil }
-        button.performClick(nil)
+        let content = context ? makeContextMenu() : makeDeviceMenu()
+        menu.removeAllItems()
+        for item in content.items {
+            content.removeItem(item)
+            menu.addItem(item)
+        }
     }
 
     func dismissMenu() { currentMenu?.cancelTrackingWithoutAnimation() }
@@ -179,5 +174,5 @@ final class StatusBarController: NSObject, NSMenuDelegate {
     }
 
     func menuWillOpen(_ menu: NSMenu) { menuIsOpen = true }
-    func menuDidClose(_ menu: NSMenu) { menuIsOpen = false }
+    func menuDidClose(_ menu: NSMenu) { menuIsOpen = false; forcedContext = nil }
 }

@@ -10,7 +10,7 @@ A small, native macOS menu-bar utility for choosing audio input and output devic
 - Hide unused devices from this app, independently for input and output.
 - Adjust output volume; the buttons at either end move by one normal volume-key step (1/16).
 - Right-click the menu-bar icon for the current devices, output mute, settings, and quit.
-- Choose the standard speaker or Soniclet’s monochrome mark for the menu bar. Waveform bars brighten from left to right with volume; mute dims all three without a slash.
+- Choose the standard speaker or Soniclet’s monochrome mark from the icon picker in Settings. The initial choice is the system icon; both picker previews use volume level two. Waveform bars brighten from left to right with volume; mute dims all three without a slash.
 - Launch at login using macOS ServiceManagement.
 - Follow macOS language preferences, with 34 bundled translations.
 - See new stable GitHub Releases in the menu, with manual update checking.
@@ -55,7 +55,7 @@ Manual checks before a release: built-in and USB input/output switching; unplug/
 
 ## Architecture and contributions
 
-AppKit owns the status item and both NSMenus, including placement, tracking, outside-click dismissal, and Escape. The device menu embeds SwiftUI through NSMenuItem.view; it has no NSPopover arrow or popover animation. SwiftUI provides the controls and settings scene, with a small AppKit window fallback on macOS 14–25. Core Audio owns routing and volume state; ServiceManagement owns login-item state. User preferences are stored locally in UserDefaults.
+AppKit owns the square status item and its permanently attached NSMenu, including placement, tracking, outside-click dismissal, and Escape. The menu delegate chooses the device controls or the right-click commands at opening time. The device menu embeds SwiftUI through NSMenuItem.view; it has no NSPopover arrow or popover animation. SwiftUI provides the controls and settings scene, with a small AppKit window fallback on macOS 14–25. Core Audio owns routing and volume state; ServiceManagement owns login-item state. User preferences are stored locally in UserDefaults.
 
 See [AGENTS.md](AGENTS.md) for implementation principles and validation. Translation corrections and focused bug reports are welcome. Include macOS version, app version, device type, and reproduction steps; redact personal device names. Translations have automated consistency checks but have not all been reviewed by native speakers.
 

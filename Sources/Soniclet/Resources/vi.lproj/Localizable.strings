@@ -53,4 +53,5 @@
 "Could not check for updates. Try again later." = "Không thể kiểm tra bản cập nhật. Hãy thử lại sau.";
 "Version %@ is available…" = "Đã có phiên bản %@…";
 
-"Use app icon in menu bar" = "Dùng biểu tượng ứng dụng trên thanh menu";
+"Menu bar icon" = "Biểu tượng thanh menu";
+"System icon" = "Biểu tượng hệ thống";

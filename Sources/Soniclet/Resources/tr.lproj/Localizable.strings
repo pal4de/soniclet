@@ -53,4 +53,5 @@
 "Could not check for updates. Try again later." = "Güncellemeler denetlenemedi. Daha sonra yeniden deneyin.";
 "Version %@ is available…" = "%@ sürümü kullanılabilir…";
 
-"Use app icon in menu bar" = "Menü çubuğunda uygulama simgesini kullan";
+"Menu bar icon" = "Menü çubuğu simgesi";
+"System icon" = "Sistem simgesi";

@@ -53,4 +53,5 @@
 "Could not check for updates. Try again later." = "No se pudieron buscar actualizaciones. Inténtalo más tarde.";
 "Version %@ is available…" = "La versión %@ está disponible…";
 
-"Use app icon in menu bar" = "Usar el icono de la app en la barra de menús";
+"Menu bar icon" = "Icono de la barra de menús";
+"System icon" = "Icono del sistema";

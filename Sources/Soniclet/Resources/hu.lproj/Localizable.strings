@@ -53,4 +53,5 @@
 "Could not check for updates. Try again later." = "Nem sikerült frissítéseket keresni. Próbáld újra később.";
 "Version %@ is available…" = "A(z) %@ verzió elérhető…";
 
-"Use app icon in menu bar" = "Az alkalmazásikon használata a menüsoron";
+"Menu bar icon" = "Menüsorikon";
+"System icon" = "Rendszerikon";

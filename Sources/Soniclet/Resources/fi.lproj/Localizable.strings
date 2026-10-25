@@ -53,4 +53,5 @@
 "Could not check for updates. Try again later." = "Päivitysten tarkistus epäonnistui. Yritä myöhemmin uudelleen.";
 "Version %@ is available…" = "Versio %@ on saatavilla…";
 
-"Use app icon in menu bar" = "Käytä apin kuvaketta valikkorivillä";
+"Menu bar icon" = "Valikkorivin kuvake";
+"System icon" = "Järjestelmän kuvake";

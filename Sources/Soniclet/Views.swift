@@ -10,15 +10,15 @@ struct SoundMenuContent: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             Text(L10n.text("Sound")).font(.headline)
-                .padding(.horizontal, 14).padding(.top, 13).padding(.bottom, 8)
-            volumeControl.padding(.horizontal, 14).padding(.bottom, 10)
+                .padding(.horizontal, 12).padding(.top, 10).padding(.bottom, 6)
+            volumeControl.padding(.horizontal, 12).padding(.bottom, 8)
             Divider().padding(.horizontal, 12)
             ScrollView {
                 VStack(alignment: .leading, spacing: 0) {
                     deviceSection(.output)
-                    Divider().padding(.horizontal, 12).padding(.top, 7)
+                    Divider().padding(.horizontal, 12).padding(.top, 5)
                     deviceSection(.input)
-                }.padding(.bottom, 8)
+                }.padding(.bottom, 6)
             }.scrollBounceBehavior(.basedOnSize)
                 .frame(maxHeight: 400)
                 .fixedSize(horizontal: false, vertical: true)
@@ -38,17 +38,17 @@ struct SoundMenuContent: View {
                 Button(action: updateAction) {
                     Text(updates.menuTitle).font(.callout)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.horizontal, 8).padding(.vertical, 6)
+                        .padding(.horizontal, 8).padding(.vertical, 4)
                         .contentShape(Rectangle())
                 }.disabled(!updates.actionIsEnabled)
-                Divider().padding(.horizontal, 6).padding(.vertical, 4)
+                Divider().padding(.horizontal, 6).padding(.vertical, 3)
                 Button { NSApplication.shared.terminate(nil) } label: { footerLabel("Quit Soniclet") }
                     .keyboardShortcut("q", modifiers: .command)
             }
             .buttonStyle(MenuRowButtonStyle())
-            .padding(.horizontal, 6).padding(.vertical, 5)
+            .padding(.horizontal, 6).padding(.vertical, 4)
         }
-        .frame(width: 320)
+        .frame(width: 304)
         .onAppear { model.refresh() }
     }
 
@@ -56,7 +56,7 @@ struct SoundMenuContent: View {
         Text(L10n.text(key)).font(.callout)
             .multilineTextAlignment(.leading)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.horizontal, 8).padding(.vertical, 6)
+            .padding(.horizontal, 8).padding(.vertical, 4)
             .contentShape(Rectangle())
     }
 
@@ -64,7 +64,7 @@ struct SoundMenuContent: View {
         HStack(spacing: 8) {
             Button { model.stepVolume(up: false) } label: {
                 Image(systemName: "speaker.fill").foregroundStyle(.secondary)
-                    .frame(width: 24, height: 28)
+                    .frame(width: 24, height: 24)
             }
             .buttonStyle(MenuRowButtonStyle())
             .disabled(!model.outputVolume.canAdjust)
@@ -73,6 +73,7 @@ struct SoundMenuContent: View {
             Slider(value: Binding(get: { Double(model.outputVolume.muted ? 0 : model.outputVolume.value) },
                                   set: { model.changeVolume(Float($0)) }), in: 0...1)
                 .controlSize(.large)
+                .tint(Color(nsColor: .controlAccentColor))
                 .disabled(!model.outputVolume.canAdjust)
                 .accessibilityLabel(L10n.text("Output volume"))
                 .accessibilityValue(model.outputVolume.canAdjust
@@ -80,8 +81,8 @@ struct SoundMenuContent: View {
                     : L10n.text("Volume cannot be adjusted for this device"))
                 .help(model.outputVolume.canAdjust ? L10n.format("Volume for %@", model.outputName) : L10n.text("Adjust the volume on the device"))
             Button { model.stepVolume(up: true) } label: {
-                Image(systemName: model.outputSymbol).foregroundStyle(.secondary)
-                    .frame(width: 24, height: 28)
+                Image(systemName: model.outputSymbol, variableValue: model.outputSymbolValue).foregroundStyle(.secondary)
+                    .frame(width: 24, height: 24)
             }
             .buttonStyle(MenuRowButtonStyle())
             .disabled(!model.outputVolume.canAdjust)
@@ -89,7 +90,7 @@ struct SoundMenuContent: View {
             .help(L10n.text("Increase volume"))
         }
         .font(.system(size: 15))
-        .frame(height: 28)
+        .frame(height: 24)
     }
     private func openSystemSettings() {
         dismissPanel()
@@ -101,12 +102,12 @@ struct SoundMenuContent: View {
     private func deviceSection(_ direction: AudioDirection) -> some View {
         VStack(alignment: .leading, spacing: 2) {
             Text(direction.title).font(.caption.weight(.medium)).foregroundStyle(.secondary)
-                .padding(.horizontal, 14).padding(.top, 10).padding(.bottom, 3)
+                .padding(.horizontal, 12).padding(.top, 8).padding(.bottom, 3)
             let devices = model.visibleDevices(direction)
             if devices.isEmpty {
                 Text(L10n.text(direction == .output ? "No output devices to show" : "No input devices to show"))
                     .font(.callout).foregroundStyle(.secondary)
-                    .padding(.horizontal, 14).padding(.vertical, 7)
+                    .padding(.horizontal, 12).padding(.vertical, 7)
             }
             ForEach(devices) { device in
                 DeviceRow(device: device, selected: model.selected(device),
@@ -116,14 +117,14 @@ struct SoundMenuContent: View {
             if let hidden = model.hiddenCurrentDevice(direction) {
                 Text(L10n.format("Current: %@", hidden.name))
                     .font(.caption).foregroundStyle(.secondary)
-                    .padding(.horizontal, 14).padding(.top, 5)
+                    .padding(.horizontal, 12).padding(.top, 5)
                     .help(L10n.text("The current device is hidden in settings"))
             }
             if direction == .output {
                 Text(L10n.text("Connect AirPlay devices in System Sound Settings first."))
                     .font(.caption).foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
-                    .padding(.horizontal, 14).padding(.top, 5)
+                    .padding(.horizontal, 12).padding(.top, 5)
             }
         }
     }
@@ -151,7 +152,7 @@ private struct DeviceRow: View {
                 Text(device.name).font(.body).lineLimit(1)
                 Spacer(minLength: 4)
             }
-            .padding(.horizontal, 8).padding(.vertical, 3)
+            .padding(.horizontal, 8).padding(.vertical, 2)
             .contentShape(Rectangle())
         }
         .buttonStyle(MenuRowButtonStyle())
@@ -165,7 +166,7 @@ private struct DeviceRow: View {
 struct DeviceSettingsView: View {
     @ObservedObject var model: AudioModel
     @StateObject private var loginItem = LoginItemModel()
-    @AppStorage("useAppIconInMenuBar") private var useAppIconInMenuBar = false
+    @AppStorage(MenuBarIconStyle.preferenceKey) private var menuBarIconStyle = MenuBarIconStyle.system
     var body: some View {
         Form {
             Section {
@@ -174,8 +175,19 @@ struct DeviceSettingsView: View {
                     .font(.callout).foregroundStyle(.secondary)
             }
             Section(L10n.text("General")) {
-                Toggle(L10n.text("Use app icon in menu bar"), isOn: $useAppIconInMenuBar)
-                    .toggleStyle(.checkbox)
+                Picker(L10n.text("Menu bar icon"), selection: $menuBarIconStyle) {
+                    Label {
+                        Text(L10n.text("System icon"))
+                    } icon: {
+                        Image(systemName: "speaker.wave.3.fill", variableValue: 0.5)
+                    }.labelStyle(.titleAndIcon).tag(MenuBarIconStyle.system)
+                    Label {
+                        Text("Soniclet")
+                    } icon: {
+                        Image(nsImage: StatusMark.image(volume: 0.5, muted: false) ?? NSImage())
+                            .renderingMode(.template)
+                    }.labelStyle(.titleAndIcon).tag(MenuBarIconStyle.soniclet)
+                }.pickerStyle(.menu)
                 Toggle(L10n.text("Launch at login"), isOn: Binding(
                     get: { loginItem.isRequested }, set: { loginItem.setEnabled($0) }
                 )).toggleStyle(.checkbox)

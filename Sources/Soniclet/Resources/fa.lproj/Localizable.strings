@@ -53,4 +53,5 @@
 "Could not check for updates. Try again later." = "بررسی به‌روزرسانی‌ها ممکن نشد. بعداً دوباره تلاش کنید.";
 "Version %@ is available…" = "نسخهٔ %@ در دسترس است…";
 
-"Use app icon in menu bar" = "استفاده از نماد برنامه در نوار منو";
+"Menu bar icon" = "نماد نوار منو";
+"System icon" = "نماد سیستم";

@@ -53,4 +53,5 @@
 "Could not check for updates. Try again later." = "Tidak dapat menyemak kemas kini. Cuba lagi kemudian.";
 "Version %@ is available…" = "Versi %@ tersedia…";
 
-"Use app icon in menu bar" = "Gunakan ikon app dalam bar menu";
+"Menu bar icon" = "Ikon bar menu";
+"System icon" = "Ikon sistem";

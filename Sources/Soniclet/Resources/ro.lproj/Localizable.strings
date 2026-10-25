@@ -53,4 +53,5 @@
 "Could not check for updates. Try again later." = "Nu s-au putut căuta actualizări. Încearcă din nou mai târziu.";
 "Version %@ is available…" = "Versiunea %@ este disponibilă…";
 
-"Use app icon in menu bar" = "Folosește pictograma aplicației în bara de meniu";
+"Menu bar icon" = "Pictograma din bara de meniu";
+"System icon" = "Pictograma sistemului";

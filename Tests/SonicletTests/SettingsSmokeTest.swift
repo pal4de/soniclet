@@ -21,8 +21,8 @@ enum SettingsSmokeTest {
         print("PASS: background reopening and settings window reuse")
         second.performClose(nil)
 
-        let originalStyle = UserDefaults.standard.object(forKey: StatusMark.preferenceKey)
-        UserDefaults.standard.set(false, forKey: StatusMark.preferenceKey)
+        let originalStyle = UserDefaults.standard.object(forKey: MenuBarIconStyle.preferenceKey)
+        UserDefaults.standard.set(MenuBarIconStyle.system.rawValue, forKey: MenuBarIconStyle.preferenceKey)
         controller.update()
         try? await Task.sleep(nanoseconds: 50_000_000)
         let requestedWidth = controller.statusItem.length
@@ -38,13 +38,13 @@ enum SettingsSmokeTest {
                 fail("Status item width changed for \(name): \(controller.statusItem.button?.frame.width ?? 0) vs \(expectedWidth), requested \(requestedWidth)")
             }
         }
-        UserDefaults.standard.set(true, forKey: StatusMark.preferenceKey)
+        UserDefaults.standard.set(MenuBarIconStyle.soniclet.rawValue, forKey: MenuBarIconStyle.preferenceKey)
         controller.update()
         guard controller.statusItem.button?.image?.isTemplate == true,
               controller.statusItem.button?.image?.size == NSSize(width: 18, height: 18),
               controller.statusItem.length == requestedWidth,
               abs((controller.statusItem.button?.frame.width ?? 0) - expectedWidth) <= pixelTolerance else {
-            fail("App-icon style: template=\(controller.statusItem.button?.image?.isTemplate ?? false), size=\(String(describing: controller.statusItem.button?.image?.size)), width=\(controller.statusItem.button?.frame.width ?? 0), expected=\(expectedWidth), pref=\(UserDefaults.standard.bool(forKey: StatusMark.preferenceKey))")
+            fail("App-icon style: template=\(controller.statusItem.button?.image?.isTemplate ?? false), size=\(String(describing: controller.statusItem.button?.image?.size)), width=\(controller.statusItem.button?.frame.width ?? 0), expected=\(expectedWidth), pref=\(MenuBarIconStyle.current().rawValue)")
         }
         let markWidth = controller.statusItem.button?.frame.width ?? 0
         for level in 0...3 {
@@ -55,8 +55,8 @@ enum SettingsSmokeTest {
                 fail("Waveform levels changed the status item width")
             }
         }
-        if let originalStyle { UserDefaults.standard.set(originalStyle, forKey: StatusMark.preferenceKey) }
-        else { UserDefaults.standard.removeObject(forKey: StatusMark.preferenceKey) }
+        if let originalStyle { UserDefaults.standard.set(originalStyle, forKey: MenuBarIconStyle.preferenceKey) }
+        else { UserDefaults.standard.removeObject(forKey: MenuBarIconStyle.preferenceKey) }
         controller.update()
         print("PASS: fixed status item width across volume symbols and both icon styles")
 
@@ -76,30 +76,40 @@ enum SettingsSmokeTest {
         }
         print("PASS: native context menu, read-only summaries, mute availability, settings/quit, tooltip")
 
-        var inspected = false
-        let timer = Timer(timeInterval: 0.25, repeats: false) { _ in
-            MainActor.assumeIsolated {
-                guard controller.menuIsOpen,
-                      let window = controller.currentMenu?.items.first?.view?.window,
-                      let button = controller.statusItem.button,
-                      let statusWindow = button.window,
-                      let screen = statusWindow.screen else { fail("Native device menu did not open") }
-                let anchor = statusWindow.convertToScreen(button.convert(button.bounds, to: nil))
-                guard window.frame.maxY <= anchor.minY + 12,
-                      window.frame.minY >= screen.visibleFrame.minY,
-                      window.frame.minX >= screen.frame.minX,
-                      window.frame.maxX <= screen.frame.maxX else {
-                    fail("Menu positioning: menu=\(window.frame), anchor=\(anchor), screen=\(screen.frame)")
+        for context in [false, true, false] {
+            var inspected = false
+            let timer = Timer(timeInterval: 0.25, repeats: false) { _ in
+                MainActor.assumeIsolated {
+                    guard controller.menuIsOpen, let menu = controller.currentMenu,
+                          controller.statusItem.menu === menu else { fail("Native menu lost its permanent attachment") }
+                    if context {
+                        guard menu.items.count == 9, menu.items.first?.view == nil,
+                              menu.items.first?.title == controller.summaryLines[0] else { fail("Wrong right-click menu") }
+                    } else {
+                        guard let window = menu.items.first?.view?.window,
+                              let button = controller.statusItem.button,
+                              let statusWindow = button.window,
+                              let screen = statusWindow.screen else { fail("Native device menu did not open") }
+                        let anchor = statusWindow.convertToScreen(button.convert(button.bounds, to: nil))
+                        guard window.frame.maxY <= anchor.minY + 12,
+                              window.frame.minY >= screen.visibleFrame.minY,
+                              window.frame.minX >= screen.frame.minX,
+                              window.frame.maxX <= screen.frame.maxX else {
+                            fail("Menu positioning: menu=\(window.frame), anchor=\(anchor), screen=\(screen.frame)")
+                        }
+                    }
+                    inspected = true
+                    controller.dismissMenu()
                 }
-                inspected = true
-                controller.dismissMenu()
+            }
+            RunLoop.main.add(timer, forMode: .eventTracking)
+            RunLoop.main.add(timer, forMode: .common)
+            if context { controller.showContextMenu() } else { controller.showMenu() }
+            guard inspected, !controller.menuIsOpen, controller.statusItem.menu != nil else {
+                fail("Native menu did not finish tracking or keep its attachment")
             }
         }
-        RunLoop.main.add(timer, forMode: .eventTracking)
-        RunLoop.main.add(timer, forMode: .common)
-        controller.showMenu()
-        guard inspected, !controller.menuIsOpen else { fail("Native menu did not finish tracking") }
-        print("PASS: native NSMenu presentation, on-screen positioning, and dismissal without NSPopover")
+        print("PASS: permanent NSMenu attachment, primary/context switching, on-screen positioning and repeated dismissal/reopening")
         fflush(stdout)
         NSApplication.shared.terminate(nil)
     }

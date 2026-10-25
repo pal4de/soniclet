@@ -53,4 +53,5 @@
 "Could not check for updates. Try again later." = "अपडेट नहीं देखे जा सके। कृपया बाद में फिर कोशिश करें।";
 "Version %@ is available…" = "संस्करण %@ उपलब्ध है…";
 
-"Use app icon in menu bar" = "मेनू बार में ऐप का आइकन इस्तेमाल करें";
+"Menu bar icon" = "मेनू बार आइकन";
+"System icon" = "सिस्टम आइकन";

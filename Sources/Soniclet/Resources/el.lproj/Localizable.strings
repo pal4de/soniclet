@@ -53,4 +53,5 @@
 "Could not check for updates. Try again later." = "Δεν ήταν δυνατός ο έλεγχος ενημερώσεων. Δοκιμάστε ξανά αργότερα.";
 "Version %@ is available…" = "Η έκδοση %@ είναι διαθέσιμη…";
 
-"Use app icon in menu bar" = "Χρήση εικονιδίου εφαρμογής στη γραμμή μενού";
+"Menu bar icon" = "Εικονίδιο γραμμής μενού";
+"System icon" = "Εικονίδιο συστήματος";

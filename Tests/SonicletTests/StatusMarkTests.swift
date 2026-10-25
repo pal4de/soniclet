@@ -8,6 +8,14 @@ struct StatusMarkTests {
     @MainActor
     static func main() {
         let bundle = Bundle(path: CommandLine.arguments[1])!
+        let domain = "Soniclet.icon-style-tests.\(UUID().uuidString)"
+        let defaults = UserDefaults(suiteName: domain)!
+        defer { defaults.removePersistentDomain(forName: domain) }
+        require(MenuBarIconStyle.current(in: defaults) == .system, "System icon is the initial choice")
+        defaults.set("unknown", forKey: MenuBarIconStyle.preferenceKey)
+        require(MenuBarIconStyle.current(in: defaults) == .system, "Invalid style falls back to system")
+        defaults.set(MenuBarIconStyle.soniclet.rawValue, forKey: MenuBarIconStyle.preferenceKey)
+        require(MenuBarIconStyle.current(in: defaults) == .soniclet, "Persist the selected style")
         let levels: [(Float, Int)] = [(0, 0), (0.01, 1), (1.0 / 3.0, 1), (0.5, 2), (2.0 / 3.0, 2), (1, 3)]
         for (volume, expected) in levels {
             require(StatusMark.level(volume: volume, muted: false) == expected, "Volume level \(volume)")
@@ -24,12 +32,12 @@ struct StatusMarkTests {
             NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: bitmap)
             image.draw(in: NSRect(x: 0, y: 0, width: 180, height: 180))
             NSGraphicsContext.restoreGraphicsState()
-            for (index, x) in [73, 90, 107].enumerated() {
+            for (index, x) in [69, 90, 111].enumerated() {
                 let alpha = bitmap.colorAt(x: x, y: 90)!.alphaComponent
                 let expected: CGFloat = index < level ? 1 : 0.3
                 require(abs(alpha - expected) < 0.08, "Waveform opacity at level \(level), bar \(index): \(alpha)")
             }
-            require(bitmap.colorAt(x: 26, y: 90)!.alphaComponent > 0.95, "Routing arrows stay opaque")
+            require(bitmap.colorAt(x: 29, y: 90)!.alphaComponent > 0.95, "Routing arrows stay opaque")
         }
         print("PASS: menu-bar template size, stepped waveform opacity, muted state, and opaque routing arrows")
     }

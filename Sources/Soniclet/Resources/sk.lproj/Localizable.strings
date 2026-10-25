@@ -53,4 +53,5 @@
 "Could not check for updates. Try again later." = "Aktualizácie sa nepodarilo vyhľadať. Skúste to neskôr.";
 "Version %@ is available…" = "Verzia %@ je k dispozícii…";
 
-"Use app icon in menu bar" = "Použiť ikonu aplikácie v lište";
+"Menu bar icon" = "Ikona v lište";
+"System icon" = "Systémová ikona";

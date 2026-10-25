@@ -53,4 +53,5 @@
 "Could not check for updates. Try again later." = "Kunde inte söka efter uppdateringar. Försök igen senare.";
 "Version %@ is available…" = "Version %@ är tillgänglig…";
 
-"Use app icon in menu bar" = "Använd appsymbolen i menyraden";
+"Menu bar icon" = "Symbol i menyraden";
+"System icon" = "Systemsymbol";

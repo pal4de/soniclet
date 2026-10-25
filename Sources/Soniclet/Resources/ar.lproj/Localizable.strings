@@ -53,4 +53,5 @@
 "Could not check for updates. Try again later." = "تعذر التحقق من التحديثات. حاول مرة أخرى لاحقاً.";
 "Version %@ is available…" = "الإصدار %@ متاح…";
 
-"Use app icon in menu bar" = "استخدام أيقونة التطبيق في شريط القوائم";
+"Menu bar icon" = "أيقونة شريط القوائم";
+"System icon" = "أيقونة النظام";

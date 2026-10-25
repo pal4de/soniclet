@@ -53,4 +53,5 @@
 "Could not check for updates. Try again later." = "업데이트를 확인할 수 없습니다. 나중에 다시 시도하세요.";
 "Version %@ is available…" = "버전 %@을(를) 사용할 수 있습니다…";
 
-"Use app icon in menu bar" = "메뉴 막대에 앱 아이콘 사용";
+"Menu bar icon" = "메뉴 막대 아이콘";
+"System icon" = "시스템 아이콘";

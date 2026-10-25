@@ -5,7 +5,7 @@ Keep this a small, native macOS audio-device switcher. Prefer public Apple APIs 
 
 ## Implementation
 - Use AppKit for status items, NSMenu tracking/placement, and window lifecycle; SwiftUI for view content and native settings scenes. Retain the small availability fallback for older macOS.
-- Host the device controls with NSMenuItem.view. Do not reintroduce NSPopover arrows or custom positioning/event monitors when NSStatusItem can present the menu.
+- Keep the device menu permanently assigned to NSStatusItem.menu. Let AppKit handle mouse-down tracking, outside clicks, Escape, keyboard navigation, positioning, and square status-item sizing. Host custom controls with NSMenuItem.view; use menuNeedsUpdate to prepare content rather than synthetic click routing or event monitors.
 - Prefer standard controls, semantic styles, SF Symbols, accessibility, keyboard behavior, and automatic locale/direction handling. Do not imitate inaccessible private Control Center UI.
 - Let Core Audio own device/default/volume state and ServiceManagement own login-item state. Observe and read back system state; do not maintain competing sources of truth.
 - Persist only user preferences. Identify devices by UID and direction, never transient AudioObjectID. Preserve stored settings compatibility. Do not retain disconnected AirPlay session endpoints.

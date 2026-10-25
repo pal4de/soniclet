@@ -1,9 +1,16 @@
 import AppKit
 
+enum MenuBarIconStyle: String, CaseIterable {
+    case system, soniclet
+    static let preferenceKey = "menuBarIconStyle"
+    static func current(in defaults: UserDefaults = .standard) -> Self {
+        defaults.string(forKey: preferenceKey).flatMap(Self.init(rawValue:)) ?? .system
+    }
+}
+
 /// A template image lets AppKit choose the correct light/dark menu-bar tint.
 @MainActor
 enum StatusMark {
-    static let preferenceKey = "useAppIconInMenuBar"
     private static let images = (0...3).map { makeImage(level: $0) }
 
     static func level(volume: Float?, muted: Bool) -> Int {
@@ -30,7 +37,7 @@ enum StatusMark {
         guard let source = NSImage(data: Data(svg.utf8)) else { return nil }
         let result = NSImage(size: NSSize(width: 18, height: 18), flipped: false) { rect in
             // Crop only the artwork's square silhouette, excluding app-icon padding.
-            source.draw(in: rect, from: NSRect(x: 187, y: 187, width: 650, height: 650),
+            source.draw(in: rect, from: NSRect(x: 172, y: 172, width: 680, height: 680),
                         operation: .sourceOver, fraction: 1)
             return true
         }

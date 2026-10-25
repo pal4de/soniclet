@@ -53,4 +53,5 @@
 "Could not check for updates. Try again later." = "アップデートを確認できませんでした。後でもう一度お試しください。";
 "Version %@ is available…" = "バージョン %@ が利用可能です…";
 
-"Use app icon in menu bar" = "メニューバーにアプリアイコンを使う";
+"Menu bar icon" = "メニューバーのアイコン";
+"System icon" = "システムアイコン";

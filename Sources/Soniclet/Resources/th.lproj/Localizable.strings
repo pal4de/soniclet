@@ -53,4 +53,5 @@
 "Could not check for updates. Try again later." = "ไม่สามารถตรวจสอบรายการอัปเดตได้ โปรดลองอีกครั้งภายหลัง";
 "Version %@ is available…" = "มีเวอร์ชัน %@ ให้ใช้งาน…";
 
-"Use app icon in menu bar" = "ใช้ไอคอนแอปในแถบเมนู";
+"Menu bar icon" = "ไอคอนแถบเมนู";
+"System icon" = "ไอคอนระบบ";

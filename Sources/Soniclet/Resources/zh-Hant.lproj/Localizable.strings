@@ -53,4 +53,5 @@
 "Could not check for updates. Try again later." = "無法檢查更新。請稍後再試。";
 "Version %@ is available…" = "版本 %@ 現已可用…";
 
-"Use app icon in menu bar" = "在選單列中使用App圖像";
+"Menu bar icon" = "選單列圖像";
+"System icon" = "系統圖像";

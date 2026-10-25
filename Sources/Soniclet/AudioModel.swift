@@ -111,14 +111,12 @@ final class AudioModel: ObservableObject {
         refresh()
     }
     var outputSymbol: String {
-        if outputVolume.muted { return "speaker.slash.fill" }
-        guard outputVolume.canAdjust else { return "speaker.wave.3.fill" }
-        switch outputVolume.value {
-        case ...0: return "speaker.slash.fill"
-        case ...Float(1.0 / 3.0): return "speaker.wave.1.fill"
-        case ...Float(2.0 / 3.0): return "speaker.wave.2.fill"
-        default: return "speaker.wave.3.fill"
-        }
+        outputVolume.muted || (outputVolume.canAdjust && outputVolume.value <= 0)
+            ? "speaker.slash.fill" : "speaker.wave.3.fill"
+    }
+    var outputSymbolValue: Double {
+        guard outputVolume.canAdjust, outputVolume.value.isFinite else { return 1 }
+        return Double(max(0, min(1, outputVolume.value)))
     }
     var outputName: String { devices.first { $0.key.direction == .output && $0.objectID == outputID }?.name ?? L10n.text("Not connected") }
     var inputName: String { devices.first { $0.key.direction == .input && $0.objectID == inputID }?.name ?? L10n.text("Not connected") }

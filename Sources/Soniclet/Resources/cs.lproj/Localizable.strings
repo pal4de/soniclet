@@ -53,4 +53,5 @@
 "Could not check for updates. Try again later." = "Aktualizace nelze zkontrolovat. Zkuste to později.";
 "Version %@ is available…" = "Verze %@ je k dispozici…";
 
-"Use app icon in menu bar" = "Použít ikonu aplikace v řádku nabídek";
+"Menu bar icon" = "Ikona v řádku nabídek";
+"System icon" = "Systémová ikona";
