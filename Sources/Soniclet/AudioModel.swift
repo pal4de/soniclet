@@ -31,7 +31,7 @@ final class AudioModel: ObservableObject {
     private let defaults: UserDefaults
     @Published private(set) var automaticDirections: Set<AudioDirection> = []
     @Published private(set) var routingPrompts: [AudioDirection: RoutingPrompt] = [:]
-    @Published private(set) var automaticSelectionEvent: UUID?
+    let automaticSelections = PassthroughSubject<AutomaticSelectionEvent, Never>()
     // Use the installed volume-key sound without bundling Apple's audio asset.
     // Its location is not a public API contract; omit feedback if unavailable.
     private let feedbackSound = NSSound(contentsOf: URL(fileURLWithPath:
@@ -265,6 +265,8 @@ final class AudioModel: ObservableObject {
             let snapshot = routingSnapshot(direction)
             let decision = routing[direction, default: AutomaticRouting()].evaluate(snapshot)
             if routingPrompts[direction] != decision.prompt { routingPrompts[direction] = decision.prompt }
+            if let key = decision.observedAutomaticSelection,
+               let device = devices.first(where: { $0.key == key }) { reportAutomaticSelection(device) }
             if let key = decision.selection, let device = devices.first(where: { $0.key == key }) {
                 select(device, automatically: decision.isAutomatic, userInitiated: false)
             }
@@ -277,7 +279,11 @@ final class AudioModel: ObservableObject {
         if device.key.direction == .output {
             routing[.input, default: AutomaticRouting()].observed(routingSnapshot(.input))
         }
-        if automatically { automaticSelectionEvent = UUID() }
+        if automatically { reportAutomaticSelection(device) }
+    }
+    private func reportAutomaticSelection(_ device: AudioDevice) {
+        automaticSelections.send(AutomaticSelectionEvent(direction: device.key.direction,
+            device: device.key, symbol: device.key.direction == .output ? symbol(for: device) : volumeSymbol))
     }
     private func failSelection(_ device: AudioDevice) {
         selectionRequests.removeValue(forKey: device.key.direction)

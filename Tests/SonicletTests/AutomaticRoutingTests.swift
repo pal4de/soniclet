@@ -80,6 +80,18 @@ struct AutomaticRoutingTests {
         coordinated.observed(failedSnapshot)
         require(coordinated.evaluate(failedSnapshot).selection == external && coordinated.manual == nil,
                 "Input changes caused by output negotiation are observed without inventing manual intent")
+        var osCompleted = AutomaticRouting()
+        var osSnapshot = RoutingSnapshot(connected: [builtIn], priority: [external, builtIn], current: builtIn)
+        require(osCompleted.evaluate(osSnapshot).observedAutomaticSelection == nil, "Initial state must not invent a connection transition")
+        osSnapshot.connected.insert(external)
+        osSnapshot.current = external
+        let observed = osCompleted.evaluate(osSnapshot)
+        require(observed.selection == nil && observed.observedAutomaticSelection == external,
+                "OS-completed selection on connection still reports the destination without another write")
+        require(osCompleted.evaluate(osSnapshot).observedAutomaticSelection == nil, "Unchanged refresh must not repeat the preview")
+        osSnapshot.current = builtIn
+        require(osCompleted.evaluate(osSnapshot).observedAutomaticSelection == nil && osCompleted.manual == builtIn,
+                "An external manual choice must not be reported as automatic feedback")
         print("PASS: automatic priority, manual preservation, external defaults, prompts, decline, reconnect, hidden choices and no-candidate behavior")
     }
 }

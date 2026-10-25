@@ -27,3 +27,9 @@ After installing 0.7.1, a live readback showed the configured Bluetooth output r
 ## 0.7.2 menu refresh regression
 
 A live readback confirmed the preferred USB input even though an already-open menu retained the former hidden input label. Hidden-current rows now remain native placeholders, with title and visibility recomputed on every menu update. The GUI regression injects stale input/output labels into an open menu and checks they are refreshed without audio writes or replacing native menu tracking.
+
+## 0.7.3 destination preview regression
+
+The native GUI test renders a synthetic AirPods Pro output event without changing audio routing, compares the actual displayed image to the AirPods symbol, applies a following input event and model update, and checks that the output preview remains until restoring the chosen icon after two seconds. Physical connection timing remains separately observable.
+
+Policy regressions also cover a connection where macOS has already selected the preferred route: it reports destination feedback without writing the default again, and does not repeat on unchanged refreshes or manual default-only changes. Combine delivers distinct output/input events in order so an input adjustment cannot replace an unseen output event.

@@ -24,8 +24,7 @@ final class StatusBarController: NSObject, NSMenuDelegate {
         let family: String?
     }
     private var displayedContext: IconContext?
-    private var lastAutomaticEvent: UUID?
-    private var automaticFeedback = false
+    private var automaticFeedback: AutomaticSelectionEvent?
     private var feedbackWork: DispatchWorkItem?
     private var routingAlert: NSAlert?
     private var routingAlertPrompt: RoutingPrompt?
@@ -61,6 +60,9 @@ final class StatusBarController: NSObject, NSMenuDelegate {
         model.objectWillChange.sink { [weak self] _ in
             DispatchQueue.main.async { self?.update() }
         }.store(in: &observations)
+        model.automaticSelections.sink { [weak self] event in
+            self?.showAutomaticSelectionFeedback(event)
+        }.store(in: &observations)
         updates.objectWillChange.sink { [weak self] _ in
             DispatchQueue.main.async { self?.update() }
         }.store(in: &observations)
@@ -79,17 +81,13 @@ final class StatusBarController: NSObject, NSMenuDelegate {
 
     func update() {
         updateRoutingPrompt()
-        if let event = model.automaticSelectionEvent, event != lastAutomaticEvent {
-            lastAutomaticEvent = event
-            showAutomaticSelectionFeedback()
-        }
         let style = MenuBarIconStyle.current()
         let context = IconContext(output: model.outputID, muted: model.outputVolume.muted, style: style,
                                   family: model.devices.first { $0.key.direction == .output && $0.objectID == model.outputID }.map { model.symbol(for: $0) })
         let transition = displayedContext != context
         displayedContext = context
-        if automaticFeedback {
-            displaySymbol(model.volumeSymbol, value: model.outputSymbolValue, animated: false)
+        if let automaticFeedback {
+            displaySymbol(feedbackSymbol(for: automaticFeedback), value: model.outputSymbolValue, animated: false)
         } else if style == .soniclet,
            let image = StatusMark.image(volume: model.outputVolume.canAdjust ? model.outputVolume.value : nil,
                                         muted: model.outputVolume.muted) {
@@ -140,18 +138,28 @@ final class StatusBarController: NSObject, NSMenuDelegate {
         }
     }
 
-    func showAutomaticSelectionFeedback() {
-        automaticFeedback = true
+    private func feedbackSymbol(for event: AutomaticSelectionEvent) -> String {
+        guard event.direction == .output else { return model.volumeSymbol }
+        if let key = event.device, let device = model.devices.first(where: { $0.key == key }) {
+            return model.symbol(for: device)
+        }
+        return event.symbol
+    }
+
+    func showAutomaticSelectionFeedback(_ event: AutomaticSelectionEvent) {
+        // A following input adjustment must not overwrite the output destination preview.
+        guard automaticFeedback?.direction != .output || event.direction == .output else { return }
+        automaticFeedback = event
         feedbackWork?.cancel()
         let work = DispatchWorkItem { [weak self] in
-            self?.automaticFeedback = false
+            self?.automaticFeedback = nil
             self?.displayedContext = nil
             self?.update()
         }
         feedbackWork = work
         DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: work)
-        displaySymbol(model.volumeSymbol, value: model.outputSymbolValue, animated: true)
-        if !NSWorkspace.shared.accessibilityDisplayShouldReduceMotion {
+        displaySymbol(feedbackSymbol(for: event), value: model.outputSymbolValue, animated: true)
+        if event.direction == .input, !NSWorkspace.shared.accessibilityDisplayShouldReduceMotion {
             iconView.addSymbolEffect(.bounce, options: .nonRepeating)
         }
     }

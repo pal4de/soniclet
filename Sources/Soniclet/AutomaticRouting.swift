@@ -16,6 +16,7 @@ struct RoutingDecision: Equatable {
     var selection: DeviceKey?
     var isAutomatic = true
     var prompt: RoutingPrompt?
+    var observedAutomaticSelection: DeviceKey?
 }
 struct AutomaticRouting {
     private(set) var manual: DeviceKey?
@@ -48,6 +49,8 @@ struct AutomaticRouting {
             return RoutingDecision(selection: nil, isAutomatic: manual == nil)
         }
         failedContext = nil
+        let priorCurrent = previous?.current
+        let hadSnapshot = previous != nil
         if let previous, previous.available != snapshot.available { declined = nil }
         // Core Audio exposes the default, not who changed it. Treat default-only
         // changes outside Soniclet conservatively as manual selections.
@@ -60,7 +63,13 @@ struct AutomaticRouting {
         guard let candidate = snapshot.available.first else {
             return RoutingDecision(selection: manual != snapshot.current ? manual : nil, isAutomatic: false)
         }
-        guard let manual else { return RoutingDecision(selection: candidate == snapshot.current ? nil : candidate) }
+        guard let manual else {
+            var decision = RoutingDecision(selection: candidate == snapshot.current ? nil : candidate)
+            if hadSnapshot, priorCurrent != snapshot.current, snapshot.current == candidate {
+                decision.observedAutomaticSelection = candidate
+            }
+            return decision
+        }
         var decision = RoutingDecision(selection: manual == snapshot.current ? nil : manual, isAutomatic: false)
         if let rank = snapshot.priority.firstIndex(of: manual),
            let candidateRank = snapshot.priority.firstIndex(of: candidate), candidateRank < rank {
@@ -69,4 +78,11 @@ struct AutomaticRouting {
         }
         return decision
     }
+}
+
+/// A completed automatic selection carries its destination into the temporary icon preview.
+struct AutomaticSelectionEvent {
+    let direction: AudioDirection
+    let device: DeviceKey?
+    let symbol: String
 }

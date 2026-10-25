@@ -73,8 +73,17 @@ enum SettingsSmokeTest {
         UserDefaults.standard.set(MenuBarIconStyle.soniclet.rawValue, forKey: MenuBarIconStyle.preferenceKey)
         controller.update()
         let expectedArtwork = controller.iconView.image
-        controller.showAutomaticSelectionFeedback()
-        guard controller.iconView.image != nil, controller.iconView.image !== expectedArtwork else { fail("Automatic selection feedback must show a standard speaker") }
+        let outputEvent = AutomaticSelectionEvent(direction: .output, device: nil, symbol: "airpodspro")
+        controller.model.automaticSelections.send(outputEvent)
+        let airpods = NSImage(systemSymbolName: "airpodspro", variableValue: 1, accessibilityDescription: nil)!
+        guard controller.iconView.image?.tiffRepresentation == airpods.tiffRepresentation else {
+            fail("Output feedback must render the AirPods destination rather than a volume speaker")
+        }
+        controller.model.automaticSelections.send(AutomaticSelectionEvent(direction: .input, device: nil, symbol: controller.model.volumeSymbol))
+        controller.update()
+        guard controller.iconView.image?.tiffRepresentation == airpods.tiffRepresentation else {
+            fail("A following input update overwrote the output destination preview")
+        }
         try? await Task.sleep(nanoseconds: 2_300_000_000)
         guard controller.iconView.image === expectedArtwork,
               MenuBarIconStyle.current() == .soniclet,
@@ -82,7 +91,7 @@ enum SettingsSmokeTest {
         if let originalStyle { UserDefaults.standard.set(originalStyle, forKey: MenuBarIconStyle.preferenceKey) }
         else { UserDefaults.standard.removeObject(forKey: MenuBarIconStyle.preferenceKey) }
         controller.update()
-        print("PASS: temporary speaker feedback restores selected icon after two seconds without routing audio")
+        print("PASS: AirPods destination preview survives input updates and restores the selected icon after two seconds without routing audio")
 
         let primary = controller.makeDeviceMenu()
         let deviceItems = primary.items.filter { $0.representedObject is DeviceKey }
