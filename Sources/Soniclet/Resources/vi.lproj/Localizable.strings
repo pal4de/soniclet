@@ -45,3 +45,12 @@
 "Increase volume" = "Tăng âm lượng";
 
 "Connect AirPlay devices in System Sound Settings first." = "Trước tiên, hãy kết nối thiết bị AirPlay trong cài đặt âm thanh hệ thống.";
+
+/* GitHub Releases update notification. */
+"Check for Updates…" = "Kiểm tra bản cập nhật…";
+"Checking for Updates…" = "Đang kiểm tra bản cập nhật…";
+"No newer release is available." = "Không có bản phát hành mới hơn.";
+"Could not check for updates. Try again later." = "Không thể kiểm tra bản cập nhật. Hãy thử lại sau.";
+"Version %@ is available…" = "Đã có phiên bản %@…";
+
+"Use app icon in menu bar" = "Dùng biểu tượng ứng dụng trên thanh menu";

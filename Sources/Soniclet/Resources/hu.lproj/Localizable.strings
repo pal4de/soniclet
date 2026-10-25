@@ -45,3 +45,12 @@
 "Increase volume" = "Hangerő növelése";
 
 "Connect AirPlay devices in System Sound Settings first." = "Először csatlakoztasd az AirPlay-eszközöket a rendszer hangbeállításaiban.";
+
+/* GitHub Releases update notification. */
+"Check for Updates…" = "Frissítések keresése…";
+"Checking for Updates…" = "Frissítések keresése folyamatban…";
+"No newer release is available." = "Nincs elérhető újabb kiadás.";
+"Could not check for updates. Try again later." = "Nem sikerült frissítéseket keresni. Próbáld újra később.";
+"Version %@ is available…" = "A(z) %@ verzió elérhető…";
+
+"Use app icon in menu bar" = "Az alkalmazásikon használata a menüsoron";

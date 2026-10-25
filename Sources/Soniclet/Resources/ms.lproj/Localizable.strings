@@ -45,3 +45,12 @@
 "Increase volume" = "Naikkan kelantangan";
 
 "Connect AirPlay devices in System Sound Settings first." = "Sambungkan peranti AirPlay dahulu dalam tetapan bunyi sistem.";
+
+/* GitHub Releases update notification. */
+"Check for Updates…" = "Semak Kemas Kini…";
+"Checking for Updates…" = "Menyemak kemas kini…";
+"No newer release is available." = "Tiada keluaran yang lebih baharu tersedia.";
+"Could not check for updates. Try again later." = "Tidak dapat menyemak kemas kini. Cuba lagi kemudian.";
+"Version %@ is available…" = "Versi %@ tersedia…";
+
+"Use app icon in menu bar" = "Gunakan ikon app dalam bar menu";

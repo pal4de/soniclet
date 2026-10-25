@@ -45,3 +45,12 @@
 "Increase volume" = "वॉल्यूम बढ़ाएँ";
 
 "Connect AirPlay devices in System Sound Settings first." = "पहले सिस्टम की ध्वनि सेटिंग में AirPlay डिवाइस कनेक्ट करें।";
+
+/* GitHub Releases update notification. */
+"Check for Updates…" = "अपडेट देखें…";
+"Checking for Updates…" = "अपडेट देखे जा रहे हैं…";
+"No newer release is available." = "कोई नया संस्करण उपलब्ध नहीं है।";
+"Could not check for updates. Try again later." = "अपडेट नहीं देखे जा सके। कृपया बाद में फिर कोशिश करें।";
+"Version %@ is available…" = "संस्करण %@ उपलब्ध है…";
+
+"Use app icon in menu bar" = "मेनू बार में ऐप का आइकन इस्तेमाल करें";

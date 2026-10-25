@@ -61,10 +61,16 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         let menu = NSMenu()
         let appItem = NSMenuItem()
         let appMenu = NSMenu(title: "Soniclet")
+        appMenu.autoenablesItems = false
         let settingsItem = NSMenuItem(title: L10n.text("Soniclet Settings…"),
                                       action: #selector(StatusBarController.showSettings), keyEquivalent: ",")
         settingsItem.target = statusController
         appMenu.addItem(settingsItem)
+        let update = NSMenuItem(title: L10n.text("Check for Updates…"),
+                                action: #selector(StatusBarController.checkForUpdates), keyEquivalent: "")
+        update.tag = 104
+        update.target = statusController
+        appMenu.addItem(update)
         appMenu.addItem(.separator())
         appMenu.addItem(withTitle: L10n.text("Quit Soniclet"), action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
         appItem.submenu = appMenu
@@ -75,8 +81,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         windowItem.submenu = windowMenu
         menu.addItem(windowItem)
         NSApplication.shared.mainMenu = menu
+        statusController.update()
         if CommandLine.arguments.contains("--show-settings") { statusController.showSettings() }
-        if CommandLine.arguments.contains("--show-panel") { statusController.showPopover() }
+        if CommandLine.arguments.contains("--show-panel") {
+            DispatchQueue.main.async { self.statusController.showMenu() }
+        }
         if CommandLine.arguments.contains("--show-context-menu") {
             DispatchQueue.main.async { self.statusController.showContextMenu() }
         }
@@ -86,11 +95,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
+        // Existing windows and menus keep their native activation/tracking behavior.
+        if flag || statusController.menuIsOpen { return true }
         if CommandLine.arguments.contains("--show-panel") {
-            if !statusController.popover.isShown { statusController.showPopover() }
-            return true
-        }
-        if !statusController.popover.isShown && !statusController.contextMenuIsOpen { statusController.showSettings() }
+            DispatchQueue.main.async { self.statusController.showMenu() }
+        } else { statusController.showSettings() }
         return true
     }
 }

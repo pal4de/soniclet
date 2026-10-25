@@ -45,3 +45,12 @@
 "Increase volume" = "Αύξηση έντασης";
 
 "Connect AirPlay devices in System Sound Settings first." = "Συνδέστε πρώτα τις συσκευές AirPlay στις ρυθμίσεις ήχου του συστήματος.";
+
+/* GitHub Releases update notification. */
+"Check for Updates…" = "Έλεγχος για ενημερώσεις…";
+"Checking for Updates…" = "Γίνεται έλεγχος για ενημερώσεις…";
+"No newer release is available." = "Δεν υπάρχει νεότερη έκδοση.";
+"Could not check for updates. Try again later." = "Δεν ήταν δυνατός ο έλεγχος ενημερώσεων. Δοκιμάστε ξανά αργότερα.";
+"Version %@ is available…" = "Η έκδοση %@ είναι διαθέσιμη…";
+
+"Use app icon in menu bar" = "Χρήση εικονιδίου εφαρμογής στη γραμμή μενού";

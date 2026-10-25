@@ -45,3 +45,12 @@
 "Increase volume" = "음량 높이기";
 
 "Connect AirPlay devices in System Sound Settings first." = "먼저 시스템 사운드 설정에서 AirPlay 기기를 연결하세요.";
+
+/* GitHub Releases update notification. */
+"Check for Updates…" = "업데이트 확인…";
+"Checking for Updates…" = "업데이트 확인 중…";
+"No newer release is available." = "새로운 릴리스가 없습니다.";
+"Could not check for updates. Try again later." = "업데이트를 확인할 수 없습니다. 나중에 다시 시도하세요.";
+"Version %@ is available…" = "버전 %@을(를) 사용할 수 있습니다…";
+
+"Use app icon in menu bar" = "메뉴 막대에 앱 아이콘 사용";

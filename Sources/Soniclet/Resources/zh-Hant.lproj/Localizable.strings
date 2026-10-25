@@ -45,3 +45,12 @@
 "Increase volume" = "提高音量";
 
 "Connect AirPlay devices in System Sound Settings first." = "請先在系統聲音設定中連接 AirPlay 裝置。";
+
+/* GitHub Releases update notification. */
+"Check for Updates…" = "檢查更新…";
+"Checking for Updates…" = "正在檢查更新…";
+"No newer release is available." = "目前沒有更新的版本。";
+"Could not check for updates. Try again later." = "無法檢查更新。請稍後再試。";
+"Version %@ is available…" = "版本 %@ 現已可用…";
+
+"Use app icon in menu bar" = "在選單列中使用App圖像";

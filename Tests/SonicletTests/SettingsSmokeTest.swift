@@ -31,39 +31,59 @@ enum SettingsSmokeTest {
                 fail("Status item width changed for \(name): \(controller.statusItem.button?.frame.width ?? 0) vs \(expectedWidth), requested \(requestedWidth)")
             }
         }
+        let originalStyle = UserDefaults.standard.object(forKey: StatusMark.preferenceKey)
+        UserDefaults.standard.set(true, forKey: StatusMark.preferenceKey)
         controller.update()
-        print("PASS: fixed status item width across all volume symbols")
+        guard controller.statusItem.button?.image?.isTemplate == true,
+              controller.statusItem.button?.image?.size == NSSize(width: 18, height: 18),
+              abs((controller.statusItem.button?.frame.width ?? 0) - expectedWidth) < 0.5 else {
+            fail("App-icon style is not a fixed-width native template")
+        }
+        if let originalStyle { UserDefaults.standard.set(originalStyle, forKey: StatusMark.preferenceKey) }
+        else { UserDefaults.standard.removeObject(forKey: StatusMark.preferenceKey) }
+        controller.update()
+        print("PASS: fixed status item width across volume symbols and both icon styles")
 
         let menu = controller.makeContextMenu()
-        guard menu.items.count == 7,
+        guard menu.items.count == 9,
               !menu.items[0].isEnabled, menu.items[0].action == nil,
               !menu.items[1].isEnabled, menu.items[1].action == nil,
               menu.items[0].title == controller.summaryLines[0],
               menu.items[1].title == controller.summaryLines[1],
               menu.items[3].isEnabled == (controller.model.outputVolume.muteElement != nil),
               menu.items[5].action == #selector(StatusBarController.showSettings),
-              menu.items[6].action == #selector(NSApplication.terminate(_:)),
+              menu.items[6].action == #selector(StatusBarController.checkForUpdates),
+              menu.items[7].isSeparatorItem,
+              menu.items[8].action == #selector(NSApplication.terminate(_:)),
               controller.statusItem.button?.toolTip == controller.summaryLines.joined(separator: "\n") else {
             fail("Context menu or tooltip mismatch")
         }
         print("PASS: native context menu, read-only summaries, mute availability, settings/quit, tooltip")
 
-        controller.showPopover()
-        try? await Task.sleep(nanoseconds: 400_000_000)
-        guard controller.popover.isShown,
-              let panel = controller.popover.contentViewController?.view.window,
-              let button = controller.statusItem.button,
-              let statusWindow = button.window,
-              let screen = statusWindow.screen else { fail("Popover did not open") }
-        let anchor = statusWindow.convertToScreen(button.convert(button.bounds, to: nil))
-        guard panel.frame.maxY <= anchor.minY + 2,
-              panel.frame.minY >= screen.visibleFrame.minY,
-              panel.frame.minX >= screen.frame.minX,
-              panel.frame.maxX <= screen.frame.maxX else {
-            fail("Popover positioning: panel=\(panel.frame), anchor=\(anchor), screen=\(screen.frame)")
+        var inspected = false
+        let timer = Timer(timeInterval: 0.25, repeats: false) { _ in
+            MainActor.assumeIsolated {
+                guard controller.menuIsOpen,
+                      let window = controller.currentMenu?.items.first?.view?.window,
+                      let button = controller.statusItem.button,
+                      let statusWindow = button.window,
+                      let screen = statusWindow.screen else { fail("Native device menu did not open") }
+                let anchor = statusWindow.convertToScreen(button.convert(button.bounds, to: nil))
+                guard window.frame.maxY <= anchor.minY + 12,
+                      window.frame.minY >= screen.visibleFrame.minY,
+                      window.frame.minX >= screen.frame.minX,
+                      window.frame.maxX <= screen.frame.maxX else {
+                    fail("Menu positioning: menu=\(window.frame), anchor=\(anchor), screen=\(screen.frame)")
+                }
+                inspected = true
+                controller.dismissMenu()
+            }
         }
-        print("PASS: popover is below the menu bar and within the screen")
-        controller.popover.performClose(nil)
+        RunLoop.main.add(timer, forMode: .eventTracking)
+        RunLoop.main.add(timer, forMode: .common)
+        controller.showMenu()
+        guard inspected, !controller.menuIsOpen else { fail("Native menu did not finish tracking") }
+        print("PASS: native NSMenu presentation, on-screen positioning, and dismissal without NSPopover")
         fflush(stdout)
         NSApplication.shared.terminate(nil)
     }

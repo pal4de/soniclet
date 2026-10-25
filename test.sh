@@ -15,3 +15,17 @@ swiftc -parse-as-library \
   "$project_dir/Tests/SonicletTests/LocalizationChecks.swift" \
   -o "$build_dir/LocalizationChecks"
 "$build_dir/LocalizationChecks" "$project_dir/Soniclet.app"
+
+swiftc -parse-as-library \
+  "$project_dir/Sources/Soniclet/ReleaseFeed.swift" \
+  "$project_dir/Sources/Soniclet/UpdateChecker.swift" \
+  "$project_dir/Sources/Soniclet/Localization.swift" \
+  "$project_dir/Tests/SonicletTests/ReleaseFeedTests.swift" \
+  -o "$build_dir/ReleaseFeedTests"
+"$build_dir/ReleaseFeedTests"
+
+swiftc -parse-as-library \
+  "$project_dir/Sources/Soniclet/StatusMark.swift" \
+  "$project_dir/Tests/SonicletTests/StatusMarkTests.swift" \
+  -o "$build_dir/StatusMarkTests"
+"$build_dir/StatusMarkTests" "$project_dir/Soniclet.app"

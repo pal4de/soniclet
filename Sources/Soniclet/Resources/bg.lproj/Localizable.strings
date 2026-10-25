@@ -45,3 +45,12 @@
 "Increase volume" = "Увеличаване на звука";
 
 "Connect AirPlay devices in System Sound Settings first." = "Първо свържете устройствата AirPlay в системните настройки за звук.";
+
+/* GitHub Releases update notification. */
+"Check for Updates…" = "Проверка за актуализации…";
+"Checking for Updates…" = "Проверява се за актуализации…";
+"No newer release is available." = "Няма налична по-нова версия.";
+"Could not check for updates. Try again later." = "Неуспешна проверка за актуализации. Опитайте отново по-късно.";
+"Version %@ is available…" = "Налична е версия %@…";
+
+"Use app icon in menu bar" = "Използване на иконата на приложението в лентата с менюта";

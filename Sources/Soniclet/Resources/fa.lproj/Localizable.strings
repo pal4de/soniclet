@@ -45,3 +45,12 @@
 "Increase volume" = "افزایش بلندی صدا";
 
 "Connect AirPlay devices in System Sound Settings first." = "ابتدا دستگاه‌های AirPlay را در تنظیمات صدای سیستم متصل کنید.";
+
+/* GitHub Releases update notification. */
+"Check for Updates…" = "بررسی به‌روزرسانی‌ها…";
+"Checking for Updates…" = "در حال بررسی به‌روزرسانی‌ها…";
+"No newer release is available." = "نسخهٔ جدیدتری در دسترس نیست.";
+"Could not check for updates. Try again later." = "بررسی به‌روزرسانی‌ها ممکن نشد. بعداً دوباره تلاش کنید.";
+"Version %@ is available…" = "نسخهٔ %@ در دسترس است…";
+
+"Use app icon in menu bar" = "استفاده از نماد برنامه در نوار منو";

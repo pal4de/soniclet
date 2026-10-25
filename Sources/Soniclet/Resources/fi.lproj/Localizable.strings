@@ -45,3 +45,12 @@
 "Increase volume" = "Lisää äänenvoimakkuutta";
 
 "Connect AirPlay devices in System Sound Settings first." = "Yhdistä AirPlay-laitteet ensin järjestelmän ääniasetuksissa.";
+
+/* GitHub Releases update notification. */
+"Check for Updates…" = "Tarkista päivitykset…";
+"Checking for Updates…" = "Tarkistetaan päivityksiä…";
+"No newer release is available." = "Uudempaa versiota ei ole saatavilla.";
+"Could not check for updates. Try again later." = "Päivitysten tarkistus epäonnistui. Yritä myöhemmin uudelleen.";
+"Version %@ is available…" = "Versio %@ on saatavilla…";
+
+"Use app icon in menu bar" = "Käytä apin kuvaketta valikkorivillä";

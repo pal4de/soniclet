@@ -45,3 +45,12 @@
 "Increase volume" = "เพิ่มระดับเสียง";
 
 "Connect AirPlay devices in System Sound Settings first." = "เชื่อมต่ออุปกรณ์ AirPlay ในการตั้งค่าเสียงของระบบก่อน";
+
+/* GitHub Releases update notification. */
+"Check for Updates…" = "ตรวจสอบรายการอัปเดต…";
+"Checking for Updates…" = "กำลังตรวจสอบรายการอัปเดต…";
+"No newer release is available." = "ไม่มีรุ่นใหม่กว่านี้";
+"Could not check for updates. Try again later." = "ไม่สามารถตรวจสอบรายการอัปเดตได้ โปรดลองอีกครั้งภายหลัง";
+"Version %@ is available…" = "มีเวอร์ชัน %@ ให้ใช้งาน…";
+
+"Use app icon in menu bar" = "ใช้ไอคอนแอปในแถบเมนู";

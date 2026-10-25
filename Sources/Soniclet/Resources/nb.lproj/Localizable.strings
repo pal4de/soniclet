@@ -45,3 +45,12 @@
 "Increase volume" = "Øk volumet";
 
 "Connect AirPlay devices in System Sound Settings first." = "Koble først til AirPlay-enheter i systemets lydinnstillinger.";
+
+/* GitHub Releases update notification. */
+"Check for Updates…" = "Se etter oppdateringer…";
+"Checking for Updates…" = "Ser etter oppdateringer…";
+"No newer release is available." = "Ingen nyere versjon er tilgjengelig.";
+"Could not check for updates. Try again later." = "Kunne ikke se etter oppdateringer. Prøv igjen senere.";
+"Version %@ is available…" = "Versjon %@ er tilgjengelig…";
+
+"Use app icon in menu bar" = "Bruk appsymbolet i menylinjen";

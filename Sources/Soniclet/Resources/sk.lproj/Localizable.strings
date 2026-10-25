@@ -45,3 +45,12 @@
 "Increase volume" = "Zvýšiť hlasitosť";
 
 "Connect AirPlay devices in System Sound Settings first." = "Zariadenia AirPlay najprv pripojte v systémových nastaveniach zvuku.";
+
+/* GitHub Releases update notification. */
+"Check for Updates…" = "Vyhľadať aktualizácie…";
+"Checking for Updates…" = "Vyhľadávajú sa aktualizácie…";
+"No newer release is available." = "Novšia verzia nie je k dispozícii.";
+"Could not check for updates. Try again later." = "Aktualizácie sa nepodarilo vyhľadať. Skúste to neskôr.";
+"Version %@ is available…" = "Verzia %@ je k dispozícii…";
+
+"Use app icon in menu bar" = "Použiť ikonu aplikácie v lište";

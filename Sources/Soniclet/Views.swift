@@ -1,11 +1,11 @@
 import SwiftUI
 
-struct SoundPopover: View {
+struct SoundMenuContent: View {
     @ObservedObject var model: AudioModel
-    var settingsAction: (() -> Void)? = nil
-    var dismissPanel: (() -> Void)? = nil
-    @Environment(\.dismiss) private var dismiss
-    @Environment(\.openSettings) private var openSettings
+    @ObservedObject var updates: UpdateChecker
+    var updateAction: () -> Void
+    var settingsAction: () -> Void
+    var dismissPanel: () -> Void
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -33,12 +33,14 @@ struct SoundPopover: View {
             Divider().padding(.horizontal, 12)
             VStack(alignment: .leading, spacing: 0) {
                 Button(action: openSystemSettings) { footerLabel("System Sound Settings…") }
-                Button {
-                    dismiss()
-                    if let settingsAction { settingsAction() }
-                    else { SettingsPresentation.open(openSettings) }
-                } label: { footerLabel("Soniclet Settings…") }
+                Button(action: settingsAction) { footerLabel("Soniclet Settings…") }
                     .keyboardShortcut(",", modifiers: .command)
+                Button(action: updateAction) {
+                    Text(updates.menuTitle).font(.callout)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.horizontal, 8).padding(.vertical, 6)
+                        .contentShape(Rectangle())
+                }.disabled(!updates.actionIsEnabled)
                 Divider().padding(.horizontal, 6).padding(.vertical, 4)
                 Button { NSApplication.shared.terminate(nil) } label: { footerLabel("Quit Soniclet") }
                     .keyboardShortcut("q", modifiers: .command)
@@ -90,8 +92,7 @@ struct SoundPopover: View {
         .frame(height: 28)
     }
     private func openSystemSettings() {
-        dismissPanel?()
-        dismiss()
+        dismissPanel()
         guard let url = URL(string: "x-apple.systempreferences:com.apple.Sound-Settings.extension") else { return }
         if !NSWorkspace.shared.open(url) {
             NSWorkspace.shared.open(URL(fileURLWithPath: "/System/Applications/System Settings.app"))
@@ -164,6 +165,7 @@ private struct DeviceRow: View {
 struct DeviceSettingsView: View {
     @ObservedObject var model: AudioModel
     @StateObject private var loginItem = LoginItemModel()
+    @AppStorage("useAppIconInMenuBar") private var useAppIconInMenuBar = false
     var body: some View {
         Form {
             Section {
@@ -172,6 +174,8 @@ struct DeviceSettingsView: View {
                     .font(.callout).foregroundStyle(.secondary)
             }
             Section(L10n.text("General")) {
+                Toggle(L10n.text("Use app icon in menu bar"), isOn: $useAppIconInMenuBar)
+                    .toggleStyle(.checkbox)
                 Toggle(L10n.text("Launch at login"), isOn: Binding(
                     get: { loginItem.isRequested }, set: { loginItem.setEnabled($0) }
                 )).toggleStyle(.checkbox)
@@ -213,7 +217,7 @@ struct DeviceSettingsView: View {
     }
 }
 
-/// MenuBarExtra's window style contains ordinary views, not NSMenuItems.
+/// NSMenu's custom content contains ordinary SwiftUI controls.
 /// Use SwiftUI's hover tracking and semantic system shading for a shared row style.
 private struct MenuRowButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
@@ -236,13 +240,5 @@ private struct MenuRowHighlight: ViewModifier {
             }
             .onHover { hovered = $0 }
             .onDisappear { hovered = false }
-    }
-}
-
-@MainActor
-enum SettingsPresentation {
-    static func open(_ action: OpenSettingsAction) {
-        NSApplication.shared.activate(ignoringOtherApps: true)
-        action()
     }
 }

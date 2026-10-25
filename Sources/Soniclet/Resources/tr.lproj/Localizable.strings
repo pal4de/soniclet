@@ -45,3 +45,12 @@
 "Increase volume" = "Sesi artır";
 
 "Connect AirPlay devices in System Sound Settings first." = "Önce sistem ses ayarlarından AirPlay aygıtlarını bağlayın.";
+
+/* GitHub Releases update notification. */
+"Check for Updates…" = "Güncellemeleri Denetle…";
+"Checking for Updates…" = "Güncellemeler denetleniyor…";
+"No newer release is available." = "Daha yeni bir sürüm yok.";
+"Could not check for updates. Try again later." = "Güncellemeler denetlenemedi. Daha sonra yeniden deneyin.";
+"Version %@ is available…" = "%@ sürümü kullanılabilir…";
+
+"Use app icon in menu bar" = "Menü çubuğunda uygulama simgesini kullan";

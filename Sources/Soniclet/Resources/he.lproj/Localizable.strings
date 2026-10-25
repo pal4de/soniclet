@@ -45,3 +45,12 @@
 "Increase volume" = "הגברת עוצמת הקול";
 
 "Connect AirPlay devices in System Sound Settings first." = "יש לחבר תחילה מכשירי AirPlay בהגדרות הצליל של המערכת.";
+
+/* GitHub Releases update notification. */
+"Check for Updates…" = "בדיקת עדכונים…";
+"Checking for Updates…" = "מתבצעת בדיקת עדכונים…";
+"No newer release is available." = "אין גרסה חדשה יותר.";
+"Could not check for updates. Try again later." = "לא ניתן לבדוק עדכונים. יש לנסות שוב מאוחר יותר.";
+"Version %@ is available…" = "גרסה %@ זמינה…";
+
+"Use app icon in menu bar" = "שימוש בסמל היישום בשורת התפריטים";

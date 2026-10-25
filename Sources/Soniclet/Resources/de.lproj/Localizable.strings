@@ -45,3 +45,12 @@
 "Increase volume" = "Lautstärke erhöhen";
 
 "Connect AirPlay devices in System Sound Settings first." = "Verbinde AirPlay-Geräte zuerst in den Systemeinstellungen für Ton.";
+
+/* GitHub Releases update notification. */
+"Check for Updates…" = "Nach Updates suchen…";
+"Checking for Updates…" = "Updates werden gesucht…";
+"No newer release is available." = "Keine neuere Version verfügbar.";
+"Could not check for updates. Try again later." = "Updates konnten nicht geprüft werden. Bitte später erneut versuchen.";
+"Version %@ is available…" = "Version %@ ist verfügbar…";
+
+"Use app icon in menu bar" = "App-Symbol in der Menüleiste verwenden";
