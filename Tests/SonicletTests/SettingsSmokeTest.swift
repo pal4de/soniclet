@@ -128,6 +128,23 @@ enum SettingsSmokeTest {
                               let button = controller.statusItem.button,
                               let statusWindow = button.window,
                               let screen = statusWindow.screen else { fail("Native device menu did not open") }
+                        for direction in AudioDirection.allCases {
+                            guard let row = menu.item(withTag: direction == .output ? 112 : 113) else {
+                                fail("Missing native hidden-current placeholder")
+                            }
+                            row.title = "stale hidden-current fixture"
+                            row.isHidden = false
+                        }
+                        controller.update()
+                        for direction in AudioDirection.allCases {
+                            let row = menu.item(withTag: direction == .output ? 112 : 113)!
+                            let hidden = controller.model.hiddenCurrentDevice(direction)
+                            guard row.isHidden == (hidden == nil),
+                                  row.title == (hidden.map { L10n.format("Current: %@", $0.name) } ?? "") else {
+                                fail("Hidden-current label remained stale while the device menu was open")
+                            }
+                        }
+                        print("PASS: hidden-current rows refresh title and visibility while the native menu remains open")
                         capture(window.contentView, name: "menu-test-render.png")
                         let anchor = statusWindow.convertToScreen(button.convert(button.bounds, to: nil))
                         guard window.frame.maxY <= anchor.minY + 12,

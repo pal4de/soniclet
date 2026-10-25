@@ -131,6 +131,7 @@ final class StatusBarController: NSObject, NSMenuDelegate {
                     item.title = SystemSettingsLinks.headphoneTitle(accessory: model.appleHeadphones)
                 }
             }
+            updateHiddenCurrentRows(in: menu)
             for view in menu.items.compactMap(\.view) {
                 view.layoutSubtreeIfNeeded()
                 view.setFrameSize(view.fittingSize)
@@ -228,12 +229,13 @@ final class StatusBarController: NSObject, NSMenuDelegate {
                 configureDevice(item, device: device)
                 menu.addItem(item)
             }
-            if let hidden = model.hiddenCurrentDevice(direction) {
-                let current = NSMenuItem(title: L10n.format("Current: %@", hidden.name), action: nil, keyEquivalent: "")
-                current.isEnabled = false
-                current.toolTip = L10n.text("The current device is hidden in settings")
-                menu.addItem(current)
-            }
+            // Keep a native placeholder so default-only changes can update it
+            // without rebuilding the menu or disturbing its tracking.
+            let current = NSMenuItem(title: "", action: nil, keyEquivalent: "")
+            current.tag = direction == .output ? 112 : 113
+            current.isEnabled = false
+            current.toolTip = L10n.text("The current device is hidden in settings")
+            menu.addItem(current)
             if direction == .output && !model.outputIsAirPlay {
                 let hint = NSMenuItem()
                 hint.tag = 110
@@ -263,7 +265,17 @@ final class StatusBarController: NSObject, NSMenuDelegate {
         let quit = NSMenuItem(title: L10n.text("Quit Soniclet"), action: #selector(NSApplication.terminate(_:)), keyEquivalent: "")
         quit.target = NSApplication.shared
         menu.addItem(quit)
+        updateHiddenCurrentRows(in: menu)
         return menu
+    }
+
+    private func updateHiddenCurrentRows(in menu: NSMenu) {
+        for direction in AudioDirection.allCases {
+            guard let item = menu.item(withTag: direction == .output ? 112 : 113) else { continue }
+            let hidden = model.hiddenCurrentDevice(direction)
+            item.title = hidden.map { L10n.format("Current: %@", $0.name) } ?? ""
+            item.isHidden = hidden == nil
+        }
     }
 
     private func command(_ title: String, _ action: Selector) -> NSMenuItem {

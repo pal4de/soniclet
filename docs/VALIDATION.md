@@ -23,3 +23,7 @@ Updated 2026-10-26. User observations and automated checks are separate evidence
 Pure tests cover reflection beyond one second, a transient target overwritten by another route, stable confirmation, five-second timeout, disconnection and confirmation near the deadline. Policy tests verify that failure and late reflection never invent manual selection, explicit manual targets survive failure, repeated default notifications cannot restart failed writes, and new connection contexts allow reevaluation. Physical Bluetooth negotiation remains a separate observation.
 
 After installing 0.7.1, a live readback showed the configured Bluetooth output retained and the preferred USB input selected. Both automatic-selection switches remained enabled and no manual-mode resume control was present. This verifies the current startup path, not every physical reconnect or Bluetooth negotiation sequence.
+
+## 0.7.2 menu refresh regression
+
+A live readback confirmed the preferred USB input even though an already-open menu retained the former hidden input label. Hidden-current rows now remain native placeholders, with title and visibility recomputed on every menu update. The GUI regression injects stale input/output labels into an open menu and checks they are refreshed without audio writes or replacing native menu tracking.
