@@ -55,3 +55,8 @@
 
 "Menu bar icon" = "Ikon bar menu";
 "System icon" = "Ikon sistem";
+
+/* Connected audio accessory metadata and native settings. */
+"Battery: %@" = "Baterai: %@";
+"Headphone Settings…" = "Pengaturan Headphone…";
+"Bluetooth Settings…" = "Pengaturan Bluetooth…";

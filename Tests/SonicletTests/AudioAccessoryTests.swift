@@ -1,0 +1,38 @@
+import Foundation
+
+@main
+struct AudioAccessoryTests {
+    static func require(_ condition: Bool, _ message: String) {
+        guard condition else { fputs("FAIL: \(message)\n", stderr); exit(1) }
+    }
+    static func main() throws {
+        let data = Data(#"""
+        {"SPBluetoothDataType":[{"device_connected":[
+          {"Studio Headset":{"device_minorType":"Headset","device_address":"AA-BB-CC-DD-EE-FF","device_vendorID":"0x054C","device_batteryLevelMain":"60%"}},
+          {"Wireless Buds":{"device_minorType":"Headphones","device_address":"11:22:33:44:55:66","device_vendorID":"0x004C","device_batteryLevelLeft":"20%","device_batteryLevelRight":"80%","device_batteryLevelCase":"100%"}},
+          {"Unknown Headset":{"device_minorType":"Headset","device_batteryLevelMain":"invalid"}},
+          {"Keyboard":{"device_minorType":"Keyboard","device_batteryLevelMain":"100%"}}
+        ],"device_not_connected":[{"Disconnected":{"device_minorType":"Headphones","device_batteryLevelMain":"100%"}}]}]}
+        """#.utf8)
+        let entries = try AudioAccessory.parseConnected(data)
+        require(entries.count == 3, "Only connected audio accessories")
+        let headset = AudioAccessory.match(uid: "Bluetooth-AABBCCDDEEFF-output", name: "Renamed", in: entries)
+        require(headset?.batteryPercent == 60 && headset?.isApple == false, "Match stable hardware address before name")
+        let earbuds = AudioAccessory.match(uid: "opaque-uid", name: "Wireless Buds", in: entries)
+        require(earbuds?.isApple == true && earbuds?.batteryPercent == 20, "Use lower earbud value, not charging case")
+        require(entries.first { $0.name == "Unknown Headset" }?.batteryPercent == nil, "Unknown is never fabricated as zero")
+        require(AudioAccessory.match(uid: "AA:BB:CC:DD:EE:FF:output", name: "Wireless Buds", in: [earbuds!]) == nil,
+                "Conflicting address must not fall back to the same name")
+        let duplicates = [AudioAccessory(name: "Same", address: "aabbccddeeff", isApple: false, batteryPercent: 60),
+                          AudioAccessory(name: "Same", address: "112233445566", isApple: true, batteryPercent: 20)]
+        require(AudioAccessory.match(uid: "opaque", name: "Same", in: duplicates) == nil, "Ambiguous names must not cross-match")
+        require(AudioAccessory.match(uid: "11:22:33:44:55:66:output", name: "Same", in: duplicates)?.batteryPercent == 20, "Address disambiguates duplicate names")
+        let bounds: [(String, Int?)] = [("0%", 0), ("100%", 100), ("101%", nil), ("-1%", nil)]
+        for (value, expected) in bounds {
+            let fixture = try JSONSerialization.data(withJSONObject: ["SPBluetoothDataType": [["device_connected": [["Test": ["device_minorType": "Headset", "device_batteryLevelMain": value]]]]]])
+            require(try AudioAccessory.parseConnected(fixture).first?.batteryPercent == expected, "Battery bounds: \(value)")
+        }
+        require(try AudioAccessory.parseConnected(Data("{}".utf8)).isEmpty, "Missing report degrades gracefully")
+        print("PASS: connected-only accessory data, address matching, duplicate names, valid battery bounds and lower-earbud aggregation")
+    }
+}

@@ -29,3 +29,9 @@ swiftc -parse-as-library \
   "$project_dir/Tests/SonicletTests/StatusMarkTests.swift" \
   -o "$build_dir/StatusMarkTests"
 "$build_dir/StatusMarkTests" "$project_dir/Soniclet.app"
+
+swiftc -parse-as-library \
+  "$project_dir/Sources/Soniclet/AudioAccessories.swift" \
+  "$project_dir/Tests/SonicletTests/AudioAccessoryTests.swift" \
+  -o "$build_dir/AudioAccessoryTests"
+"$build_dir/AudioAccessoryTests"

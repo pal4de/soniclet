@@ -55,3 +55,8 @@
 
 "Menu bar icon" = "Menubalksymbool";
 "System icon" = "Systeemsymbool";
+
+/* Connected audio accessory metadata and native settings. */
+"Battery: %@" = "Batterij: %@";
+"Headphone Settings…" = "Koptelefooninstellingen…";
+"Bluetooth Settings…" = "Bluetooth-instellingen…";

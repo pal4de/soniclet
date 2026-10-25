@@ -55,3 +55,8 @@
 
 "Menu bar icon" = "نماد نوار منو";
 "System icon" = "نماد سیستم";
+
+/* Connected audio accessory metadata and native settings. */
+"Battery: %@" = "باتری: %@";
+"Headphone Settings…" = "تنظیمات هدفون…";
+"Bluetooth Settings…" = "تنظیمات Bluetooth…";

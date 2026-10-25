@@ -55,3 +55,8 @@
 
 "Menu bar icon" = "סמל שורת התפריטים";
 "System icon" = "סמל מערכת";
+
+/* Connected audio accessory metadata and native settings. */
+"Battery: %@" = "סוללה: %@";
+"Headphone Settings…" = "הגדרות אוזניות…";
+"Bluetooth Settings…" = "הגדרות Bluetooth…";

@@ -77,6 +77,8 @@ final class CoreAudioService {
                 let symbol: String
                 if direction == .input {
                     symbol = transport == kAudioDeviceTransportTypeBuiltIn ? "laptopcomputer" : "mic.fill"
+                } else if hasHeadphoneStream(id) {
+                    symbol = "headphones"
                 } else {
                     switch transport {
                     case kAudioDeviceTransportTypeBuiltIn: symbol = "laptopcomputer"
@@ -93,6 +95,20 @@ final class CoreAudioService {
         return result.sorted {
             if $0.isBuiltIn != $1.isBuiltIn { return $0.isBuiltIn }
             return $0.name.localizedStandardCompare($1.name) == .orderedAscending
+        }
+    }
+
+    private func hasHeadphoneStream(_ device: AudioDeviceID) -> Bool {
+        var property = Self.address(kAudioDevicePropertyStreams, scope: kAudioObjectPropertyScopeOutput)
+        var size: UInt32 = 0
+        guard AudioObjectGetPropertyDataSize(device, &property, 0, nil, &size) == noErr, size >= MemoryLayout<AudioStreamID>.size else { return false }
+        var streams = [AudioStreamID](repeating: 0, count: Int(size) / MemoryLayout<AudioStreamID>.size)
+        let status = streams.withUnsafeMutableBytes {
+            AudioObjectGetPropertyData(device, &property, 0, nil, &size, $0.baseAddress!)
+        }
+        guard status == noErr else { return false }
+        return streams.contains {
+            scalar($0, Self.address(kAudioStreamPropertyTerminalType), initial: UInt32(0)) == kAudioStreamTerminalTypeHeadphones
         }
     }
 
@@ -173,6 +189,8 @@ final class CoreAudioService {
                 properties.append(AudioProperty(object: outputID, address: Self.address(kAudioDevicePropertyVolumeScalar, scope: kAudioObjectPropertyScopeOutput, element: element)))
             }
             properties.append(AudioProperty(object: outputID, address: Self.address(kAudioDevicePropertyMute, scope: kAudioObjectPropertyScopeOutput)))
+            properties.append(AudioProperty(object: outputID, address: Self.address(kAudioDevicePropertyDataSource, scope: kAudioObjectPropertyScopeOutput)))
+            properties.append(AudioProperty(object: outputID, address: Self.address(kAudioDevicePropertyJackIsConnected, scope: kAudioObjectPropertyScopeOutput)))
         }
         for var property in properties {
             guard AudioObjectHasProperty(property.object, &property.address) else { continue }

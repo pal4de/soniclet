@@ -55,3 +55,8 @@
 
 "Menu bar icon" = "Икона в лентата с менюта";
 "System icon" = "Системна икона";
+
+/* Connected audio accessory metadata and native settings. */
+"Battery: %@" = "Батерия: %@";
+"Headphone Settings…" = "Настройки на слушалките…";
+"Bluetooth Settings…" = "Настройки за Bluetooth…";

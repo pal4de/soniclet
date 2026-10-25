@@ -55,3 +55,8 @@
 
 "Menu bar icon" = "메뉴 막대 아이콘";
 "System icon" = "시스템 아이콘";
+
+/* Connected audio accessory metadata and native settings. */
+"Battery: %@" = "배터리: %@";
+"Headphone Settings…" = "헤드폰 설정…";
+"Bluetooth Settings…" = "Bluetooth 설정…";

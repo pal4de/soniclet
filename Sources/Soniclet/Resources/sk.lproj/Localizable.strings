@@ -55,3 +55,8 @@
 
 "Menu bar icon" = "Ikona v lište";
 "System icon" = "Systémová ikona";
+
+/* Connected audio accessory metadata and native settings. */
+"Battery: %@" = "Batéria: %@";
+"Headphone Settings…" = "Nastavenia slúchadiel…";
+"Bluetooth Settings…" = "Nastavenia Bluetooth…";

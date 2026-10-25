@@ -10,6 +10,10 @@ final class AudioModel: ObservableObject {
     @Published private(set) var outputVolume = OutputVolume(value: 0, channels: [], muteElement: nil, muted: false)
     @Published var errorMessage: String?
     @Published private(set) var pendingSelection: DeviceKey?
+    @Published private(set) var accessories: [AudioAccessory] = []
+    private var accessoryRefresh: Task<Void, Never>?
+    private var accessoryRefreshDate = Date.distantPast
+    private var accessorySignature = Set<String>()
     private let service = CoreAudioService()
     private let store: DevicePreferences
     private var observedOutput: UInt32?
@@ -40,7 +44,35 @@ final class AudioModel: ObservableObject {
                     DispatchQueue.main.async { self?.scheduleRefresh() }
                 }
             }
+            refreshAccessoriesIfNeeded()
         } catch { errorMessage = error.localizedDescription }
+    }
+
+    var bluetoothOutputs: [AudioDevice] {
+        devices.filter { $0.key.direction == .output && $0.isBluetooth }
+    }
+    func accessory(for device: AudioDevice) -> AudioAccessory? {
+        guard device.isBluetooth else { return nil }
+        return AudioAccessory.match(uid: device.key.uid, name: device.name, in: accessories)
+    }
+    var hasAppleHeadphones: Bool {
+        bluetoothOutputs.contains { accessory(for: $0)?.isApple == true }
+    }
+    func refreshAccessoriesIfNeeded() {
+        #if !SETTINGS_SMOKE_TEST
+        guard !bluetoothOutputs.isEmpty else { accessories = []; return }
+        let signature = Set(bluetoothOutputs.map { $0.key.uid }).union(["output:\(outputID)"])
+        guard accessoryRefresh == nil,
+              signature != accessorySignature || Date().timeIntervalSince(accessoryRefreshDate) >= 60 else { return }
+        accessorySignature = signature
+        accessoryRefreshDate = Date()
+        accessoryRefresh = Task { [weak self] in
+            let entries = await Task.detached(priority: .utility) { (try? AudioAccessory.readConnected()) ?? [] }.value
+            guard let self else { return }
+            self.accessories = entries
+            self.accessoryRefresh = nil
+        }
+        #endif
     }
 
     private func scheduleRefresh() {
@@ -111,7 +143,9 @@ final class AudioModel: ObservableObject {
         refresh()
     }
     var outputSymbol: String {
-        outputVolume.muted || (outputVolume.canAdjust && outputVolume.value <= 0)
+        if let output = devices.first(where: { $0.key.direction == .output && $0.objectID == outputID }),
+           output.symbol == "headphones" { return "headphones" }
+        return outputVolume.muted || (outputVolume.canAdjust && outputVolume.value <= 0)
             ? "speaker.slash.fill" : "speaker.wave.3.fill"
     }
     var outputSymbolValue: Double {

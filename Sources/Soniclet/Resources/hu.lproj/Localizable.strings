@@ -55,3 +55,8 @@
 
 "Menu bar icon" = "Menüsorikon";
 "System icon" = "Rendszerikon";
+
+/* Connected audio accessory metadata and native settings. */
+"Battery: %@" = "Akkumulátor: %@";
+"Headphone Settings…" = "Fejhallgató-beállítások…";
+"Bluetooth Settings…" = "Bluetooth-beállítások…";

@@ -55,3 +55,8 @@
 
 "Menu bar icon" = "Valikkorivin kuvake";
 "System icon" = "Järjestelmän kuvake";
+
+/* Connected audio accessory metadata and native settings. */
+"Battery: %@" = "Akku: %@";
+"Headphone Settings…" = "Kuulokeasetukset…";
+"Bluetooth Settings…" = "Bluetooth-asetukset…";

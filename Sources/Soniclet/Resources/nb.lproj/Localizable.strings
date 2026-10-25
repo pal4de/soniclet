@@ -55,3 +55,8 @@
 
 "Menu bar icon" = "Symbol i menylinjen";
 "System icon" = "Systemsymbol";
+
+/* Connected audio accessory metadata and native settings. */
+"Battery: %@" = "Batteri: %@";
+"Headphone Settings…" = "Hodetelefoninnstillinger…";
+"Bluetooth Settings…" = "Bluetooth-innstillinger…";

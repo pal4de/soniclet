@@ -55,3 +55,8 @@
 
 "Menu bar icon" = "मेनू बार आइकन";
 "System icon" = "सिस्टम आइकन";
+
+/* Connected audio accessory metadata and native settings. */
+"Battery: %@" = "बैटरी: %@";
+"Headphone Settings…" = "हेडफ़ोन सेटिंग…";
+"Bluetooth Settings…" = "Bluetooth सेटिंग…";

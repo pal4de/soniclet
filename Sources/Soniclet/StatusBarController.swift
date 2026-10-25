@@ -69,7 +69,10 @@ final class StatusBarController: NSObject, NSMenuDelegate {
         menu.item(withTag: 104)?.isEnabled = updates.actionIsEnabled
         if let view = menu.items.first?.view {
             let height = view.fittingSize.height
-            if abs(view.frame.height - height) > 0.5 { view.setFrameSize(NSSize(width: 304, height: height)) }
+            if abs(view.frame.height - height) > 0.5 {
+                view.setFrameSize(NSSize(width: 304, height: height))
+                menu.update() // Re-layout only; menuNeedsUpdate leaves open contents intact.
+            }
         }
     }
 
@@ -151,6 +154,7 @@ final class StatusBarController: NSObject, NSMenuDelegate {
         let context = forcedContext ?? (event?.type == .rightMouseDown || event?.type == .rightMouseUp ||
                                         event?.modifierFlags.contains(.control) == true)
         updates.checkIfDue()
+        model.refreshAccessoriesIfNeeded()
         let content = context ? makeContextMenu() : makeDeviceMenu()
         menu.removeAllItems()
         for item in content.items {

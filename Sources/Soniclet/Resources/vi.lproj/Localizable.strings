@@ -55,3 +55,8 @@
 
 "Menu bar icon" = "Biểu tượng thanh menu";
 "System icon" = "Biểu tượng hệ thống";
+
+/* Connected audio accessory metadata and native settings. */
+"Battery: %@" = "Pin: %@";
+"Headphone Settings…" = "Cài đặt tai nghe…";
+"Bluetooth Settings…" = "Cài đặt Bluetooth…";

@@ -55,3 +55,8 @@
 
 "Menu bar icon" = "選單列圖像";
 "System icon" = "系統圖像";
+
+/* Connected audio accessory metadata and native settings. */
+"Battery: %@" = "電池：%@";
+"Headphone Settings…" = "耳機設定…";
+"Bluetooth Settings…" = "藍牙設定…";

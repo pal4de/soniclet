@@ -25,6 +25,7 @@ struct AudioDevice: Identifiable {
     let isBuiltIn: Bool
     var transport: UInt32 = 0
     var id: DeviceKey { key }
+    var isBluetooth: Bool { transport == kAudioDeviceTransportTypeBluetooth || transport == kAudioDeviceTransportTypeBluetoothLE }
 }
 
 struct DevicePreference: Identifiable, Codable {

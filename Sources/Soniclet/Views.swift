@@ -35,6 +35,11 @@ struct SoundMenuContent: View {
                 Button(action: openSystemSettings) { footerLabel("System Sound Settings…") }
                 Button(action: settingsAction) { footerLabel("Soniclet Settings…") }
                     .keyboardShortcut(",", modifiers: .command)
+                if !model.bluetoothOutputs.isEmpty {
+                    Button(action: openHeadphoneSettings) {
+                        footerLabel(model.hasAppleHeadphones && Self.hasHeadphonePanel ? "Headphone Settings…" : "Bluetooth Settings…")
+                    }
+                }
                 Button(action: updateAction) {
                     Text(updates.menuTitle).font(.callout)
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -92,6 +97,17 @@ struct SoundMenuContent: View {
         .font(.system(size: 15))
         .frame(height: 24)
     }
+    private static let hasHeadphonePanel = FileManager.default.fileExists(
+        atPath: "/System/Library/ExtensionKit/Extensions/HeadphoneSettingsExtension.appex")
+
+    private func openHeadphoneSettings() {
+        dismissPanel()
+        let pane = model.hasAppleHeadphones && Self.hasHeadphonePanel
+            ? "com.apple.HeadphoneSettings" : "com.apple.BluetoothSettings"
+        if let url = URL(string: "x-apple.systempreferences:\(pane)"), NSWorkspace.shared.open(url) { return }
+        NSWorkspace.shared.open(URL(fileURLWithPath: "/System/Applications/System Settings.app"))
+    }
+
     private func openSystemSettings() {
         dismissPanel()
         guard let url = URL(string: "x-apple.systempreferences:com.apple.Sound-Settings.extension") else { return }
@@ -111,7 +127,8 @@ struct SoundMenuContent: View {
             }
             ForEach(devices) { device in
                 DeviceRow(device: device, selected: model.selected(device),
-                          pending: model.pendingSelection == device.key) { model.select(device) }
+                          pending: model.pendingSelection == device.key,
+                          batteryPercent: direction == .output ? model.accessory(for: device)?.batteryPercent : nil) { model.select(device) }
                     .padding(.horizontal, 6)
             }
             if let hidden = model.hiddenCurrentDevice(direction) {
@@ -134,6 +151,7 @@ private struct DeviceRow: View {
     let device: AudioDevice
     let selected: Bool
     let pending: Bool
+    let batteryPercent: Int?
     let action: () -> Void
     var body: some View {
         Button(action: action) {
@@ -151,6 +169,16 @@ private struct DeviceRow: View {
                 .background(!pending && selected ? Color.accentColor : Color.primary.opacity(0.07), in: Circle())
                 Text(device.name).font(.body).lineLimit(1)
                 Spacer(minLength: 4)
+                if let batteryPercent {
+                    let percent = (Double(batteryPercent) / 100).formatted(.percent.precision(.fractionLength(0)))
+                    HStack(spacing: 3) {
+                        Text(percent).monospacedDigit()
+                        Image(systemName: "battery.\(min(100, ((batteryPercent + 12) / 25) * 25))percent")
+                    }.font(.caption).foregroundStyle(.secondary)
+                        .accessibilityElement(children: .ignore)
+                        .accessibilityLabel(L10n.format("Battery: %@", percent))
+                        .help(L10n.format("Battery: %@", percent))
+                }
             }
             .padding(.horizontal, 8).padding(.vertical, 2)
             .contentShape(Rectangle())

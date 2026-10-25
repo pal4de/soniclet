@@ -55,3 +55,8 @@
 
 "Menu bar icon" = "ไอคอนแถบเมนู";
 "System icon" = "ไอคอนระบบ";
+
+/* Connected audio accessory metadata and native settings. */
+"Battery: %@" = "แบตเตอรี่: %@";
+"Headphone Settings…" = "การตั้งค่าหูฟัง…";
+"Bluetooth Settings…" = "การตั้งค่า Bluetooth…";

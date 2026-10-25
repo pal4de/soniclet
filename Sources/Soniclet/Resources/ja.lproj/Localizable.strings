@@ -55,3 +55,8 @@
 
 "Menu bar icon" = "メニューバーのアイコン";
 "System icon" = "システムアイコン";
+
+/* Connected audio accessory metadata and native settings. */
+"Battery: %@" = "バッテリー: %@";
+"Headphone Settings…" = "ヘッドフォンの設定…";
+"Bluetooth Settings…" = "Bluetooth設定…";

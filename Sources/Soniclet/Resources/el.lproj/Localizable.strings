@@ -55,3 +55,8 @@
 
 "Menu bar icon" = "Εικονίδιο γραμμής μενού";
 "System icon" = "Εικονίδιο συστήματος";
+
+/* Connected audio accessory metadata and native settings. */
+"Battery: %@" = "Μπαταρία: %@";
+"Headphone Settings…" = "Ρυθμίσεις ακουστικών…";
+"Bluetooth Settings…" = "Ρυθμίσεις Bluetooth…";

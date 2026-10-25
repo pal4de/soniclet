@@ -55,3 +55,8 @@
 
 "Menu bar icon" = "Pictograma din bara de meniu";
 "System icon" = "Pictograma sistemului";
+
+/* Connected audio accessory metadata and native settings. */
+"Battery: %@" = "Baterie: %@";
+"Headphone Settings…" = "Configurări căști…";
+"Bluetooth Settings…" = "Configurări Bluetooth…";

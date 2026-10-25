@@ -55,3 +55,8 @@
 
 "Menu bar icon" = "Іконка в смузі меню";
 "System icon" = "Системна іконка";
+
+/* Connected audio accessory metadata and native settings. */
+"Battery: %@" = "Заряд: %@";
+"Headphone Settings…" = "Параметри навушників…";
+"Bluetooth Settings…" = "Параметри Bluetooth…";

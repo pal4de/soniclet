@@ -55,3 +55,8 @@
 
 "Menu bar icon" = "Menü çubuğu simgesi";
 "System icon" = "Sistem simgesi";
+
+/* Connected audio accessory metadata and native settings. */
+"Battery: %@" = "Pil: %@";
+"Headphone Settings…" = "Kulaklık Ayarları…";
+"Bluetooth Settings…" = "Bluetooth Ayarları…";

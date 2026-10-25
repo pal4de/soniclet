@@ -14,6 +14,7 @@ A small, native macOS menu-bar utility for choosing audio input and output devic
 - Launch at login using macOS ServiceManagement.
 - Follow macOS language preferences, with 34 bundled translations.
 - See new stable GitHub Releases in the menu, with manual update checking.
+- Use a headphone symbol for headphone outputs; show reported Bluetooth battery levels and a native settings link when available.
 
 Device visibility only changes this app's list. It does not remove devices from macOS or change another app's explicit device selection. This app uses public Core Audio APIs; it does not record audio, install a driver, or process audio streams.
 
@@ -40,6 +41,16 @@ Output volume and mute depend on hardware support. For fixed-volume outputs, adj
 ### AirPlay
 
 Connect an AirPlay device through **System Sound Settings…** first. This app lists devices exposed by Core Audio; it cannot discover or connect all unconnected AirPlay destinations such as HomePod. An active AirPlay endpoint may appear with a generic name. Disconnected AirPlay session endpoints are not retained as permanent devices.
+
+### Headphones and battery information
+
+In system-icon mode, headphone outputs use the native headphone symbol. Soniclet-icon mode keeps the chosen app mark.
+
+Bluetooth accessory metadata comes from macOS’s documented `system_profiler SPBluetoothDataType -json` utility, read off the main thread with a five-second report timeout. A refresh is requested on audio-device changes or menu opening, at most once per minute for an unchanged connection. Reports stay in memory and are never logged or sent to GitHub. Only connected entries are used. Hardware addresses take precedence over names; ambiguous names are not matched.
+
+A battery value appears only when macOS reports one. For earbuds, the lower known left/right value is displayed; a charging-case value is never substituted. Some devices, including WH-1000XM3 in current testing, show a percentage in Apple's menu but do not expose it through this standard report. They remain blank here; no private battery selectors are used.
+
+Connected Apple headphones get a link to the OS headphone settings panel when that panel is present; other Bluetooth audio devices get a Bluetooth Settings link. Noise control, spatial audio, and Conversation Awareness stay in Apple's settings instead of being reimplemented through private APIs.
 
 ## Validation
 
