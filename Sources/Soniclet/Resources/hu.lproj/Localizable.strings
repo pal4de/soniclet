@@ -44,7 +44,7 @@
 "Decrease volume" = "Hangerő csökkentése";
 "Increase volume" = "Hangerő növelése";
 
-"Connect AirPlay devices in System Sound Settings first." = "Először csatlakoztasd az AirPlay-eszközöket a [rendszer hangbeállításaiban](soniclet://sound-settings).";
+"Select AirPlay devices in System Sound Settings." = "Az AirPlay-eszközöket a [rendszer hangbeállításaiban](soniclet://sound-settings) választhatod ki.";
 
 /* GitHub Releases update notification. */
 "Check for Updates…" = "Frissítések keresése…";

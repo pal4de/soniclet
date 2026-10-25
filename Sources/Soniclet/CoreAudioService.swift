@@ -50,6 +50,21 @@ final class CoreAudioService {
         return value.takeRetainedValue() as String
     }
 
+    private func iconFileName(_ object: AudioObjectID) -> String {
+        var property = Self.address(kAudioDevicePropertyIcon)
+        var value: Unmanaged<CFURL>?
+        var size = UInt32(MemoryLayout<Unmanaged<CFURL>?>.size)
+        guard AudioObjectGetPropertyData(object, &property, 0, nil, &size, &value) == noErr,
+              let value else { return "" }
+        return (value.takeRetainedValue() as URL).lastPathComponent
+    }
+
+    private func headphoneSymbol(_ device: AudioDeviceID) -> String {
+        let model = [string(device, kAudioObjectPropertyModelName), string(device, kAudioDevicePropertyModelUID)]
+            .compactMap { $0 }.joined(separator: " ")
+        return DeviceSymbols.headphones(modelName: model, iconFileName: iconFileName(device))
+    }
+
     func defaultDevice(_ direction: AudioDirection) -> AudioDeviceID {
         scalar(AudioObjectID(kAudioObjectSystemObject), Self.address(direction.defaultSelector), initial: AudioDeviceID(0)) ?? 0
     }
@@ -78,12 +93,12 @@ final class CoreAudioService {
                 if direction == .input {
                     symbol = transport == kAudioDeviceTransportTypeBuiltIn ? "laptopcomputer" : "mic.fill"
                 } else if hasHeadphoneStream(id) {
-                    symbol = "headphones"
+                    symbol = headphoneSymbol(id)
                 } else {
                     switch transport {
                     case kAudioDeviceTransportTypeBuiltIn: symbol = "laptopcomputer"
                     case kAudioDeviceTransportTypeDisplayPort, kAudioDeviceTransportTypeHDMI: symbol = "display"
-                    case kAudioDeviceTransportTypeBluetooth, kAudioDeviceTransportTypeBluetoothLE: symbol = "headphones"
+                    case kAudioDeviceTransportTypeBluetooth, kAudioDeviceTransportTypeBluetoothLE: symbol = headphoneSymbol(id)
                     case kAudioDeviceTransportTypeAirPlay: symbol = "airplay.audio"
                     default: symbol = "speaker.wave.2.fill"
                     }

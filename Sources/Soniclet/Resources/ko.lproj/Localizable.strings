@@ -44,7 +44,7 @@
 "Decrease volume" = "음량 낮추기";
 "Increase volume" = "음량 높이기";
 
-"Connect AirPlay devices in System Sound Settings first." = "먼저 [시스템 사운드 설정](soniclet://sound-settings)에서 AirPlay 기기를 연결하세요.";
+"Select AirPlay devices in System Sound Settings." = "[시스템 사운드 설정](soniclet://sound-settings)에서 AirPlay 기기를 선택할 수 있습니다.";
 
 /* GitHub Releases update notification. */
 "Check for Updates…" = "업데이트 확인…";

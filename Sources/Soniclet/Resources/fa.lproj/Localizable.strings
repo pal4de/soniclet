@@ -44,7 +44,7 @@
 "Decrease volume" = "کاهش بلندی صدا";
 "Increase volume" = "افزایش بلندی صدا";
 
-"Connect AirPlay devices in System Sound Settings first." = "ابتدا دستگاه‌های AirPlay را در [تنظیمات صدای سیستم](soniclet://sound-settings) متصل کنید.";
+"Select AirPlay devices in System Sound Settings." = "می‌توانید دستگاه‌های AirPlay را از [تنظیمات صدای سیستم](soniclet://sound-settings) انتخاب کنید.";
 
 /* GitHub Releases update notification. */
 "Check for Updates…" = "بررسی به‌روزرسانی‌ها…";

@@ -44,7 +44,7 @@
 "Decrease volume" = "Sänk volymen";
 "Increase volume" = "Höj volymen";
 
-"Connect AirPlay devices in System Sound Settings first." = "Anslut först AirPlay-enheter i [systemets ljudinställningar](soniclet://sound-settings).";
+"Select AirPlay devices in System Sound Settings." = "Du kan välja AirPlay-enheter i [systemets ljudinställningar](soniclet://sound-settings).";
 
 /* GitHub Releases update notification. */
 "Check for Updates…" = "Sök efter uppdateringar…";

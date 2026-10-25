@@ -5,7 +5,7 @@ Keep this a small, native macOS audio-device switcher. Prefer public Apple APIs 
 
 ## Implementation
 - Use AppKit for status items, NSMenu tracking/placement, and window lifecycle; SwiftUI for view content and native settings scenes. Retain the small availability fallback for older macOS.
-- Keep the device menu permanently assigned to NSStatusItem.menu. Let AppKit handle mouse-down tracking, outside clicks, Escape, keyboard navigation, positioning, and square status-item sizing. Host custom controls with NSMenuItem.view; use menuNeedsUpdate to prepare content rather than synthetic click routing or event monitors.
+- Keep the device menu permanently assigned to NSStatusItem.menu. Let AppKit handle mouse-down tracking, outside clicks, Escape, keyboard navigation, positioning, and square status-item sizing. Use real target/action NSMenuItems for selectable devices and commands so AppKit handles press-drag-release selection. Use NSMenuItem.view only for controls and explanatory text; use menuNeedsUpdate to prepare content rather than synthetic click routing or event monitors.
 - Prefer standard controls, semantic styles, SF Symbols, accessibility, keyboard behavior, and automatic locale/direction handling. Do not imitate inaccessible private Control Center UI.
 - Let Core Audio own device/default/volume state and ServiceManagement own login-item state. Observe and read back system state; do not maintain competing sources of truth.
 - Use the public NSImageView SF Symbols appear/replace effects for system-symbol transitions; keep the status button and its menu responsible for interaction. Respect Reduce Motion. App artwork is a template image and has no SF Symbol animation layers.

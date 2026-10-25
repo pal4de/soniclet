@@ -44,7 +44,7 @@
 "Decrease volume" = "Зменшити гучність";
 "Increase volume" = "Збільшити гучність";
 
-"Connect AirPlay devices in System Sound Settings first." = "Спочатку підключіть пристрої AirPlay в [системних параметрах звуку](soniclet://sound-settings).";
+"Select AirPlay devices in System Sound Settings." = "Пристрої AirPlay можна вибрати в [системних параметрах звуку](soniclet://sound-settings).";
 
 /* GitHub Releases update notification. */
 "Check for Updates…" = "Перевірити оновлення…";

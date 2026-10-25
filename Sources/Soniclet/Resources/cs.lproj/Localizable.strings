@@ -44,7 +44,7 @@
 "Decrease volume" = "Snížit hlasitost";
 "Increase volume" = "Zvýšit hlasitost";
 
-"Connect AirPlay devices in System Sound Settings first." = "Zařízení AirPlay nejprve připojte v [systémovém nastavení zvuku](soniclet://sound-settings).";
+"Select AirPlay devices in System Sound Settings." = "Zařízení AirPlay můžete vybrat v [systémovém nastavení zvuku](soniclet://sound-settings).";
 
 /* GitHub Releases update notification. */
 "Check for Updates…" = "Zkontrolovat aktualizace…";

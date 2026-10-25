@@ -26,6 +26,11 @@ struct LocalizationChecks {
             for (key, englishText) in base {
                 let value = localizedBundle.localizedString(forKey: key, value: "__MISSING__", table: nil)
                 require(!value.isEmpty && value != "__MISSING__", "Empty translation: \(language): \(key)")
+                if key == "Select AirPlay devices in System Sound Settings." {
+                    let richText = try AttributedString(markdown: value)
+                    let links = richText.runs.compactMap { $0.link?.absoluteString }
+                    require(links == ["soniclet://sound-settings"], "AirPlay settings link: \(language)")
+                }
                 func placeholders(_ string: String) -> [String] {
                     specifier.matches(in: string, range: NSRange(string.startIndex..., in: string)).map {
                         String(string[Range($0.range, in: string)!])

@@ -44,7 +44,7 @@
 "Decrease volume" = "वॉल्यूम घटाएँ";
 "Increase volume" = "वॉल्यूम बढ़ाएँ";
 
-"Connect AirPlay devices in System Sound Settings first." = "पहले [सिस्टम की ध्वनि सेटिंग](soniclet://sound-settings) में AirPlay डिवाइस कनेक्ट करें।";
+"Select AirPlay devices in System Sound Settings." = "आप [सिस्टम की ध्वनि सेटिंग](soniclet://sound-settings) से AirPlay डिवाइस चुन सकते हैं।";
 
 /* GitHub Releases update notification. */
 "Check for Updates…" = "अपडेट देखें…";

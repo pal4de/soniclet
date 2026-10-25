@@ -48,6 +48,9 @@ final class AudioModel: ObservableObject {
         } catch { errorMessage = error.localizedDescription }
     }
 
+    var outputIsAirPlay: Bool {
+        devices.contains { $0.key.direction == .output && $0.objectID == outputID && $0.isAirPlay }
+    }
     var bluetoothOutputs: [AudioDevice] {
         devices.filter { $0.key.direction == .output && $0.isBluetooth }
     }
@@ -126,7 +129,7 @@ final class AudioModel: ObservableObject {
         do {
             try service.setDefault(device)
             pendingSelection = device.key
-            // Core Audio property writes are asynchronous. Read back instead of showing an optimistic checkmark.
+            // Core Audio property writes are asynchronous. Read back before completing the progress indicator.
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
                 guard let self, self.selectionRequest == request else { return }
                 self.refresh()
@@ -161,7 +164,7 @@ final class AudioModel: ObservableObject {
     }
     var outputSymbol: String {
         if let output = devices.first(where: { $0.key.direction == .output && $0.objectID == outputID }),
-           output.symbol == "headphones" { return "headphones" }
+           (output.symbol == "headphones" || output.symbol.hasPrefix("airpods")) { return output.symbol }
         return volumeSymbol
     }
     var volumeSymbol: String {

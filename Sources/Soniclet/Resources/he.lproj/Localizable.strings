@@ -44,7 +44,7 @@
 "Decrease volume" = "הנמכת עוצמת הקול";
 "Increase volume" = "הגברת עוצמת הקול";
 
-"Connect AirPlay devices in System Sound Settings first." = "יש לחבר תחילה מכשירי AirPlay ב[הגדרות הצליל של המערכת](soniclet://sound-settings).";
+"Select AirPlay devices in System Sound Settings." = "ניתן לבחור מכשירי AirPlay דרך [הגדרות הצליל של המערכת](soniclet://sound-settings).";
 
 /* GitHub Releases update notification. */
 "Check for Updates…" = "בדיקת עדכונים…";

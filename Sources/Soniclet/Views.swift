@@ -1,77 +1,9 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
-struct SoundMenuContent: View {
+struct VolumeMenuContent: View {
     @ObservedObject var model: AudioModel
-    @ObservedObject var updates: UpdateChecker
-    var updateAction: () -> Void
-    var settingsAction: () -> Void
-    var dismissPanel: () -> Void
-
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            Text("Soniclet").font(.headline)
-                .padding(.horizontal, 12).padding(.top, 10).padding(.bottom, 6)
-            volumeControl.padding(.horizontal, 12).padding(.bottom, 8)
-            Divider().padding(.horizontal, 12)
-            ScrollView {
-                VStack(alignment: .leading, spacing: 0) {
-                    deviceSection(.output)
-                    Divider().padding(.horizontal, 12).padding(.top, 5)
-                    deviceSection(.input)
-                }.padding(.bottom, 6)
-            }.scrollBounceBehavior(.basedOnSize)
-                .frame(maxHeight: 400)
-                .fixedSize(horizontal: false, vertical: true)
-            if let message = model.errorMessage {
-                HStack(alignment: .top, spacing: 6) {
-                    Image(systemName: "exclamationmark.triangle.fill").foregroundStyle(.orange)
-                    Text(message).font(.caption).fixedSize(horizontal: false, vertical: true)
-                    Button { model.errorMessage = nil } label: { Image(systemName: "xmark") }
-                        .buttonStyle(.borderless).accessibilityLabel(L10n.text("Close error"))
-                }.padding(12)
-            }
-            Divider().padding(.horizontal, 12)
-            VStack(alignment: .leading, spacing: 0) {
-                Text(L10n.text("System Settings")).font(.caption.weight(.medium)).foregroundStyle(.secondary)
-                    .padding(.horizontal, 6).padding(.top, 4).padding(.bottom, 3)
-                Button(action: openSystemSettings) { footerLabel("Sound Settings…") }
-                if !model.bluetoothOutputs.isEmpty {
-                    Button(action: openHeadphoneSettings) {
-                        Text(SystemSettingsLinks.headphoneTitle(accessory: model.appleHeadphones)).font(.callout)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.horizontal, 8).padding(.vertical, 4)
-                            .contentShape(Rectangle())
-                    }
-                }
-                Divider().padding(.horizontal, 6).padding(.vertical, 3)
-                Button(action: settingsAction) { footerLabel("Soniclet Settings…") }
-                    .keyboardShortcut(",", modifiers: .command)
-                Button(action: updateAction) {
-                    Text(updates.menuTitle).font(.callout)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.horizontal, 8).padding(.vertical, 4)
-                        .contentShape(Rectangle())
-                }.disabled(!updates.actionIsEnabled)
-                Button { NSApplication.shared.terminate(nil) } label: { footerLabel("Quit Soniclet") }
-                    .keyboardShortcut("q", modifiers: .command)
-            }
-            .buttonStyle(MenuRowButtonStyle())
-            .padding(.horizontal, 6).padding(.vertical, 4)
-        }
-        .frame(width: 304)
-        .onAppear { model.refresh() }
-    }
-
-    private func footerLabel(_ key: String) -> some View {
-        Text(L10n.text(key)).font(.callout)
-            .multilineTextAlignment(.leading)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.horizontal, 8).padding(.vertical, 4)
-            .contentShape(Rectangle())
-    }
-
-    private var volumeControl: some View {
         HStack(spacing: 8) {
             Button { model.stepVolume(up: false) } label: {
                 Image(systemName: "speaker.fill").foregroundStyle(.secondary)
@@ -102,94 +34,49 @@ struct SoundMenuContent: View {
         }
         .font(.system(size: 15))
         .frame(height: 24)
+        .padding(.horizontal, 12).padding(.vertical, 8)
+        .frame(width: 304)
     }
-    private func openHeadphoneSettings() {
-        dismissPanel()
-        SystemSettingsLinks.openHeadphones(accessory: model.appleHeadphones)
-    }
+}
 
-    private func openSystemSettings() {
-        dismissPanel()
-        SystemSettingsLinks.openSound()
+struct AirPlayMenuHint: View {
+    let openSettings: () -> Void
+    var body: some View {
+        Text(LocalizedStringKey(L10n.text("Select AirPlay devices in System Sound Settings.")))
+            .font(.caption).foregroundStyle(.secondary)
+            .fixedSize(horizontal: false, vertical: true)
+            .frame(width: 280, alignment: .leading)
+            .padding(.horizontal, 12).padding(.vertical, 4)
+            .environment(\.openURL, OpenURLAction { url in
+                guard url.absoluteString == "soniclet://sound-settings" else { return .discarded }
+                openSettings()
+                return .handled
+            })
     }
-    private func deviceSection(_ direction: AudioDirection) -> some View {
-        VStack(alignment: .leading, spacing: 2) {
-            Text(direction.title).font(.caption.weight(.medium)).foregroundStyle(.secondary)
-                .padding(.horizontal, 12).padding(.top, 8).padding(.bottom, 3)
-            let devices = model.visibleDevices(direction)
-            if devices.isEmpty {
-                Text(L10n.text(direction == .output ? "No output devices to show" : "No input devices to show"))
-                    .font(.callout).foregroundStyle(.secondary)
-                    .padding(.horizontal, 12).padding(.vertical, 7)
-            }
-            ForEach(devices) { device in
-                DeviceRow(device: device, selected: model.selected(device),
-                          pending: model.pendingSelection == device.key,
-                          batteryPercent: direction == .output ? model.accessory(for: device)?.batteryPercent : nil) { model.select(device) }
-                    .padding(.horizontal, 6)
-            }
-            if let hidden = model.hiddenCurrentDevice(direction) {
-                Text(L10n.format("Current: %@", hidden.name))
-                    .font(.caption).foregroundStyle(.secondary)
-                    .padding(.horizontal, 12).padding(.top, 5)
-                    .help(L10n.text("The current device is hidden in settings"))
-            }
-            if direction == .output {
-                Text(LocalizedStringKey(L10n.text("Connect AirPlay devices in System Sound Settings first.")))
-                    .environment(\.openURL, OpenURLAction { url in
-                        guard url.absoluteString == "soniclet://sound-settings" else { return .discarded }
-                        openSystemSettings()
-                        return .handled
-                    })
-                    .font(.caption).foregroundStyle(.secondary)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .padding(.horizontal, 12).padding(.top, 5)
-            }
+}
+
+struct AudioErrorMenuContent: View {
+    @ObservedObject var model: AudioModel
+    var body: some View {
+        if let message = model.errorMessage {
+            HStack(alignment: .top, spacing: 6) {
+                Image(systemName: "exclamationmark.triangle.fill").foregroundStyle(.orange)
+                Text(message).font(.caption).fixedSize(horizontal: false, vertical: true)
+                Button { model.errorMessage = nil } label: { Image(systemName: "xmark") }
+                    .buttonStyle(.borderless).accessibilityLabel(L10n.text("Close error"))
+            }.padding(12).frame(width: 304)
         }
     }
 }
 
-private struct DeviceRow: View {
-    let device: AudioDevice
-    let selected: Bool
-    let pending: Bool
-    let batteryPercent: Int?
-    let action: () -> Void
+struct PendingDeviceMenuRow: View {
+    let name: String
     var body: some View {
-        Button(action: action) {
-            HStack(spacing: 9) {
-                Group {
-                    if pending {
-                        ProgressView().controlSize(.small)
-                    } else {
-                        Image(systemName: device.symbol)
-                            .font(.system(size: 13, weight: .medium))
-                            .foregroundStyle(selected ? Color.white : Color.secondary)
-                    }
-                }
-                .frame(width: 26, height: 26)
-                .background(!pending && selected ? Color.accentColor : Color.primary.opacity(0.07), in: Circle())
-                Text(device.name).font(.body).lineLimit(1)
-                Spacer(minLength: 4)
-                if let batteryPercent {
-                    let percent = (Double(batteryPercent) / 100).formatted(.percent.precision(.fractionLength(0)))
-                    HStack(spacing: 3) {
-                        Text(percent).monospacedDigit()
-                        Image(systemName: "battery.\(min(100, ((batteryPercent + 12) / 25) * 25))percent")
-                    }.font(.caption).foregroundStyle(.secondary)
-                        .accessibilityElement(children: .ignore)
-                        .accessibilityLabel(L10n.format("Battery: %@", percent))
-                        .help(L10n.format("Battery: %@", percent))
-                }
-            }
-            .padding(.horizontal, 8).padding(.vertical, 2)
-            .contentShape(Rectangle())
-        }
-        .buttonStyle(MenuRowButtonStyle())
-        .help(device.name)
-        .accessibilityLabel(device.name)
-        .accessibilityValue(L10n.text(pending ? "Switching" : selected ? "Selected" : "Not selected"))
-        .accessibilityAddTraits(selected ? [.isSelected] : [])
+        HStack(spacing: 9) {
+            ProgressView().controlSize(.small).frame(width: 26, height: 26)
+            Text(name).font(.body).lineLimit(1)
+            Spacer()
+        }.padding(.horizontal, 12).frame(width: 304, height: 30)
     }
 }
 

@@ -16,6 +16,14 @@ final class StatusBarController: NSObject, NSMenuDelegate {
     private let attachedMenu = NSMenu()
     private var forcedContext: Bool?
     private var displayedIconKey: String?
+    private var displayedSymbolName: String?
+    private struct IconContext: Equatable {
+        let output: UInt32
+        let muted: Bool
+        let style: MenuBarIconStyle
+        let family: String?
+    }
+    private var displayedContext: IconContext?
     var currentMenu: NSMenu? { menuIsOpen ? attachedMenu : nil }
     private(set) var menuIsOpen = false
 
@@ -64,12 +72,17 @@ final class StatusBarController: NSObject, NSMenuDelegate {
     }
 
     func update() {
-        if MenuBarIconStyle.current() == .soniclet,
+        let style = MenuBarIconStyle.current()
+        let context = IconContext(output: model.outputID, muted: model.outputVolume.muted, style: style,
+                                  family: model.devices.first { $0.key.direction == .output && $0.objectID == model.outputID }?.symbol)
+        let transition = displayedContext != context
+        displayedContext = context
+        if style == .soniclet,
            let image = StatusMark.image(volume: model.outputVolume.canAdjust ? model.outputVolume.value : nil,
                                         muted: model.outputVolume.muted) {
             let level = StatusMark.level(volume: model.outputVolume.canAdjust ? model.outputVolume.value : nil, muted: model.outputVolume.muted)
-            setStatusImage(image, key: "soniclet:\(level)")
-        } else { displaySymbol(model.outputSymbol, value: model.outputSymbolValue) }
+            setStatusImage(image, key: "soniclet:\(level)", allowTransition: transition)
+        } else { displaySymbol(model.outputSymbol, value: model.outputSymbolValue, animated: transition) }
         var tooltip = summaryLines
         if updates.release != nil { tooltip.append(updates.menuTitle) }
         statusItem.button?.toolTip = tooltip.joined(separator: "\n")
@@ -88,32 +101,52 @@ final class StatusBarController: NSObject, NSMenuDelegate {
         menu.item(withTag: 103)?.isEnabled = model.outputVolume.muteElement != nil
         menu.item(withTag: 104)?.title = updates.menuTitle
         menu.item(withTag: 104)?.isEnabled = updates.actionIsEnabled
-        if let view = menu.items.first?.view {
-            let height = view.fittingSize.height
-            if abs(view.frame.height - height) > 0.5 {
-                view.setFrameSize(NSSize(width: 304, height: height))
-                menu.update() // Re-layout only; menuNeedsUpdate leaves open contents intact.
+        if menu.item(withTag: 900) != nil {
+            let expected = AudioDirection.allCases.flatMap { model.visibleDevices($0).map(\.key) }
+            let actual = menu.items.compactMap { $0.representedObject as? DeviceKey }
+            if actual != expected {
+                replaceContents(of: menu, with: makeDeviceMenu())
+            } else {
+                for item in menu.items {
+                    guard let key = item.representedObject as? DeviceKey,
+                          let device = model.devices.first(where: { $0.key == key }) else { continue }
+                    configureDevice(item, device: device)
+                }
+                menu.item(withTag: 110)?.isHidden = model.outputIsAirPlay
+                menu.item(withTag: 111)?.isHidden = model.errorMessage == nil
+                menu.item(withTag: 107)?.title = SystemSettingsLinks.headphoneTitle(accessory: model.appleHeadphones)
             }
+            for view in menu.items.compactMap(\.view) {
+                view.layoutSubtreeIfNeeded()
+                view.setFrameSize(view.fittingSize)
+            }
+            menu.update()
         }
     }
 
     // The item's length is fixed once; every symbol is centered by NSStatusBarButton.
-    func displaySymbol(_ name: String, value: Double = 1) {
+    func displaySymbol(_ name: String, value: Double = 1, animated: Bool = true) {
         let renderedValue = name.hasPrefix("speaker.wave.") ? value : 1
         let image = NSImage(systemSymbolName: name, variableValue: renderedValue, accessibilityDescription: nil)
         image?.isTemplate = true
-        setStatusImage(image, key: "symbol:\(name):\(renderedValue)")
+        setStatusImage(image, key: "symbol:\(name):\(renderedValue)", symbolName: name, allowTransition: animated)
     }
 
-    private func setStatusImage(_ image: NSImage?, key: String) {
+    private func setStatusImage(_ image: NSImage?, key: String, symbolName: String? = nil, allowTransition: Bool = true) {
         guard let image, displayedIconKey != key else { return }
-        let animate = !NSWorkspace.shared.accessibilityDisplayShouldReduceMotion
-        let isSymbol = key.hasPrefix("symbol:")
+        let isSymbol = symbolName != nil
+        let sameShape = isSymbol ? displayedSymbolName == symbolName : displayedIconKey?.hasPrefix("soniclet:") == true
+        let animate = allowTransition && !sameShape && !NSWorkspace.shared.accessibilityDisplayShouldReduceMotion
         let wasSymbol = displayedIconKey?.hasPrefix("symbol:") == true
         iconView.removeAllSymbolEffects(animated: false)
         if animate && isSymbol && wasSymbol {
             // Public SF Symbols transition: outgoing layers shrink, incoming layers grow.
-            iconView.setSymbolImage(image, contentTransition: .replace.downUp.byLayer)
+            if #available(macOS 15.0, *) {
+                // Related symbols (including mute slashes) use Apple's Magic Replace.
+                iconView.setSymbolImage(image, contentTransition: .replace.magic(fallback: .replace.downUp.byLayer))
+            } else {
+                iconView.setSymbolImage(image, contentTransition: .replace.downUp.byLayer)
+            }
         } else {
             iconView.image = image
             if animate && isSymbol {
@@ -134,23 +167,104 @@ final class StatusBarController: NSObject, NSMenuDelegate {
             }
         }
         displayedIconKey = key
+        displayedSymbolName = symbolName
     }
 
     func makeDeviceMenu() -> NSMenu {
-        model.refresh()
         let menu = baseMenu()
-        let content = NSHostingView(rootView: SoundMenuContent(
-            model: model, updates: updates,
-            updateAction: { [weak self] in self?.checkForUpdates() },
-            settingsAction: { [weak self] in self?.showSettings() },
-            dismissPanel: { [weak self] in self?.dismissMenu() }
-        ).environment(\.controlActiveState, .active))
-        content.sizingOptions = [.intrinsicContentSize]
-        content.setFrameSize(content.fittingSize)
-        let item = NSMenuItem()
-        item.view = content
-        menu.addItem(item)
+        menu.minimumWidth = 304
+        let heading = NSMenuItem.sectionHeader(title: "Soniclet")
+        heading.tag = 900
+        menu.addItem(heading)
+        let volume = NSMenuItem()
+        volume.view = hosted(VolumeMenuContent(model: model).environment(\.controlActiveState, .active))
+        menu.addItem(volume)
+        menu.addItem(.separator())
+        for direction in AudioDirection.allCases {
+            menu.addItem(NSMenuItem.sectionHeader(title: direction.title))
+            let devices = model.visibleDevices(direction)
+            if devices.isEmpty {
+                let empty = NSMenuItem(title: L10n.text(direction == .output ? "No output devices to show" : "No input devices to show"), action: nil, keyEquivalent: "")
+                empty.isEnabled = false
+                menu.addItem(empty)
+            }
+            for device in devices {
+                let item = NSMenuItem(title: device.name, action: #selector(selectDevice(_:)), keyEquivalent: "")
+                item.target = self
+                item.representedObject = device.key
+                configureDevice(item, device: device)
+                menu.addItem(item)
+            }
+            if let hidden = model.hiddenCurrentDevice(direction) {
+                let current = NSMenuItem(title: L10n.format("Current: %@", hidden.name), action: nil, keyEquivalent: "")
+                current.isEnabled = false
+                current.toolTip = L10n.text("The current device is hidden in settings")
+                menu.addItem(current)
+            }
+            if direction == .output && !model.outputIsAirPlay {
+                let hint = NSMenuItem()
+                hint.tag = 110
+                hint.view = hosted(AirPlayMenuHint { [weak self] in self?.showSystemSoundSettings() })
+                menu.addItem(hint)
+            }
+            menu.addItem(.separator())
+        }
+        let error = NSMenuItem()
+        error.tag = 111
+        error.view = hosted(AudioErrorMenuContent(model: model))
+        error.isHidden = model.errorMessage == nil
+        menu.addItem(error)
+        menu.addItem(NSMenuItem.sectionHeader(title: L10n.text("System Settings")))
+        menu.addItem(command(L10n.text("Sound Settings…"), #selector(showSystemSoundSettings)))
+        if !model.bluetoothOutputs.isEmpty {
+            let item = command(SystemSettingsLinks.headphoneTitle(accessory: model.appleHeadphones), #selector(showHeadphoneSettings))
+            item.tag = 107
+            menu.addItem(item)
+        }
+        menu.addItem(.separator())
+        menu.addItem(command(L10n.text("Soniclet Settings…"), #selector(showSettings), key: ","))
+        let update = command(updates.menuTitle, #selector(checkForUpdates))
+        update.tag = 104
+        update.isEnabled = updates.actionIsEnabled
+        menu.addItem(update)
+        let quit = NSMenuItem(title: L10n.text("Quit Soniclet"), action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
+        quit.target = NSApplication.shared
+        menu.addItem(quit)
         return menu
+    }
+
+    private func command(_ title: String, _ action: Selector, key: String = "") -> NSMenuItem {
+        let item = NSMenuItem(title: title, action: action, keyEquivalent: key)
+        item.target = self
+        return item
+    }
+
+    private func hosted<Content: View>(_ content: Content) -> NSView {
+        let view = NSHostingView(rootView: content)
+        view.sizingOptions = [.intrinsicContentSize]
+        view.setFrameSize(view.fittingSize)
+        return view
+    }
+
+    private func configureDevice(_ item: NSMenuItem, device: AudioDevice) {
+        let pending = model.pendingSelection == device.key
+        item.title = device.name
+        item.state = .off // Selection is shown by the left icon, without a right checkmark.
+        item.toolTip = device.name
+        item.isEnabled = !pending
+        item.view = pending ? hosted(PendingDeviceMenuRow(name: device.name)) : nil
+        item.image = DeviceMenuIcon.image(symbol: device.symbol, selected: model.selected(device))
+        if device.key.direction == .output, let battery = model.accessory(for: device)?.batteryPercent {
+            let percent = (Double(battery) / 100).formatted(.percent.precision(.fractionLength(0)))
+            item.badge = NSMenuItemBadge(string: percent)
+            item.toolTip = L10n.format("Battery: %@", percent)
+        } else { item.badge = nil }
+    }
+
+    @objc private func selectDevice(_ sender: NSMenuItem) {
+        guard let key = sender.representedObject as? DeviceKey,
+              let device = model.devices.first(where: { $0.key == key }) else { return }
+        model.select(device)
     }
 
     func makeContextMenu() -> NSMenu {
@@ -207,7 +321,11 @@ final class StatusBarController: NSObject, NSMenuDelegate {
                                         event?.modifierFlags.contains(.control) == true)
         updates.checkIfDue()
         model.refreshAccessoriesIfNeeded()
-        let content = context ? makeContextMenu() : makeDeviceMenu()
+        model.refresh()
+        replaceContents(of: menu, with: context ? makeContextMenu() : makeDeviceMenu())
+    }
+
+    private func replaceContents(of menu: NSMenu, with content: NSMenu) {
         menu.removeAllItems()
         for item in content.items {
             content.removeItem(item)

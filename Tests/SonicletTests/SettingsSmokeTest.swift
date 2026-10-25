@@ -8,6 +8,7 @@ enum SettingsSmokeTest {
         guard NSApplication.shared.activationPolicy() == .accessory else { fail("Not an accessory app") }
         controller.showSettings()
         guard let first = await settingsWindow() else { fail("Settings did not become visible, key, and active") }
+        capture(first.contentView, name: "settings-test-render.png")
         print("PASS: first settings presentation")
         first.performClose(nil)
         NSApplication.shared.hide(nil)
@@ -60,6 +61,14 @@ enum SettingsSmokeTest {
         controller.update()
         print("PASS: fixed status item width across volume symbols and both icon styles")
 
+        let primary = controller.makeDeviceMenu()
+        guard primary.items.filter({ $0.action != nil }).allSatisfy({ $0.view == nil }),
+              primary.items.filter({ $0.representedObject is DeviceKey }).allSatisfy({ $0.target === controller && $0.state == .off && $0.image?.isValid == true }),
+              primary.item(withTag: 900)?.title == "Soniclet" else {
+            fail("Selectable items must use native NSMenuItem tracking without a custom view")
+        }
+        print("PASS: native actionable menu rows and selection icons without checkmarks")
+
         let menu = controller.makeContextMenu()
         guard menu.items.count == 8,
               !menu.items[0].isEnabled, menu.items[0].action == nil,
@@ -85,10 +94,11 @@ enum SettingsSmokeTest {
                         guard menu.items.count == 8, menu.items.first?.view == nil,
                               menu.items.first?.title == controller.summaryLines[0] else { fail("Wrong right-click menu") }
                     } else {
-                        guard let window = menu.items.first?.view?.window,
+                        guard let window = menu.items.compactMap({ $0.view?.window }).first,
                               let button = controller.statusItem.button,
                               let statusWindow = button.window,
                               let screen = statusWindow.screen else { fail("Native device menu did not open") }
+                        capture(window.contentView, name: "menu-test-render.png")
                         let anchor = statusWindow.convertToScreen(button.convert(button.bounds, to: nil))
                         guard window.frame.maxY <= anchor.minY + 12,
                               window.frame.minY >= screen.visibleFrame.minY,
@@ -112,6 +122,14 @@ enum SettingsSmokeTest {
         fflush(stdout)
         NSApplication.shared.terminate(nil)
     }
+    private static func capture(_ view: NSView?, name: String) {
+        guard let directory = ProcessInfo.processInfo.environment["SONICLET_CAPTURE_DIR"], let view,
+              let bitmap = view.bitmapImageRepForCachingDisplay(in: view.bounds) else { return }
+        view.cacheDisplay(in: view.bounds, to: bitmap)
+        guard let data = bitmap.representation(using: .png, properties: [:]) else { return }
+        try? data.write(to: URL(fileURLWithPath: directory).appendingPathComponent(name))
+    }
+
     private static func settingsWindow() async -> NSWindow? {
         for _ in 0..<40 {
             if let window = NSApplication.shared.windows.first(where: {

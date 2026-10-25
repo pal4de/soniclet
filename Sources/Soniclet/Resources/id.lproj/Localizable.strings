@@ -44,7 +44,7 @@
 "Decrease volume" = "Kecilkan volume";
 "Increase volume" = "Besarkan volume";
 
-"Connect AirPlay devices in System Sound Settings first." = "Hubungkan perangkat AirPlay terlebih dahulu di [pengaturan suara sistem](soniclet://sound-settings).";
+"Select AirPlay devices in System Sound Settings." = "Anda dapat memilih perangkat AirPlay di [pengaturan suara sistem](soniclet://sound-settings).";
 
 /* GitHub Releases update notification. */
 "Check for Updates…" = "Periksa Pembaruan…";

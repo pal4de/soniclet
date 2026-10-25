@@ -25,7 +25,22 @@ struct AudioDevice: Identifiable {
     let isBuiltIn: Bool
     var transport: UInt32 = 0
     var id: DeviceKey { key }
+    var isAirPlay: Bool { transport == kAudioDeviceTransportTypeAirPlay }
     var isBluetooth: Bool { transport == kAudioDeviceTransportTypeBluetooth || transport == kAudioDeviceTransportTypeBluetoothLE }
+}
+
+/// Use canonical OS model/icon metadata, never the user-editable device name.
+enum DeviceSymbols {
+    static func headphones(modelName: String, iconFileName: String) -> String {
+        let identity = (modelName + " " + iconFileName).lowercased().filter { $0.isLetter || $0.isNumber }
+        guard identity.contains("airpods") else { return "headphones" }
+        if identity.contains("max") { return "airpodsmax" }
+        if identity.contains("pro") { return "airpodspro" }
+        if ["gen3", "gen4", "3rdgeneration", "4thgeneration"].contains(where: identity.contains) || modelName.lowercased().contains("airpods 3") || modelName.lowercased().contains("airpods 4") {
+            return "airpods.gen3"
+        }
+        return "airpods"
+    }
 }
 
 struct DevicePreference: Identifiable, Codable {

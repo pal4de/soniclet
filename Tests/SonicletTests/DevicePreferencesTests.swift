@@ -142,6 +142,13 @@ struct DevicePreferencesTests {
         store.move(.output, from: IndexSet(integer: 99), to: 0)
         expectEqual(store.orderedDevices(.output).map { $0.key.uid }, ["c", "a", "b"])
     }
+    static func testCanonicalHeadphoneSymbols() {
+        expectEqual(DeviceSymbols.headphones(modelName: "AirPods Pro 2", iconFileName: ""), "airpodspro")
+        expectEqual(DeviceSymbols.headphones(modelName: "Bluetooth Audio", iconFileName: "com.apple.airpodsmax.icns"), "airpodsmax")
+        expectEqual(DeviceSymbols.headphones(modelName: "AirPods (3rd generation)", iconFileName: ""), "airpods.gen3")
+        expectEqual(DeviceSymbols.headphones(modelName: "AirPods", iconFileName: ""), "airpods")
+        expectEqual(DeviceSymbols.headphones(modelName: "Bluetooth Headset", iconFileName: "headphones.icns"), "headphones")
+    }
     private static func expectTrue(_ value: Bool, _ message: String = "Expected true") {
         if !value { fputs("FAIL: \(message)\n", stderr); exit(1) }
     }
@@ -162,6 +169,7 @@ struct DevicePreferencesTests {
         testOrderSurvivesRestartReconnectAndRename()
         testOrderingIsIndependentByDirectionAndNewDevicesAppend()
         testMultirowMovesAndInvalidOffsets()
-        print("PASS: 12 device preference and ordering tests")
+        testCanonicalHeadphoneSymbols()
+        print("PASS: 13 device preference, ordering and canonical symbol tests")
     }
 }

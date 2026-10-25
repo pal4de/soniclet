@@ -44,7 +44,7 @@
 "Decrease volume" = "Sesi azalt";
 "Increase volume" = "Sesi artır";
 
-"Connect AirPlay devices in System Sound Settings first." = "Önce [sistem ses ayarlarından](soniclet://sound-settings) AirPlay aygıtlarını bağlayın.";
+"Select AirPlay devices in System Sound Settings." = "AirPlay aygıtlarını [sistem ses ayarlarından](soniclet://sound-settings) seçebilirsiniz.";
 
 /* GitHub Releases update notification. */
 "Check for Updates…" = "Güncellemeleri Denetle…";
