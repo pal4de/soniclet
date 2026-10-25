@@ -58,5 +58,5 @@
 
 /* Connected audio accessory metadata and native settings. */
 "Battery: %@" = "배터리: %@";
-"Headphone Settings…" = "헤드폰 설정…";
+"“%@” Settings…" = "“%@” 설정…";
 "Bluetooth Settings…" = "Bluetooth 설정…";

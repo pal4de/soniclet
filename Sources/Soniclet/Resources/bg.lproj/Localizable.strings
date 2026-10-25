@@ -58,5 +58,5 @@
 
 /* Connected audio accessory metadata and native settings. */
 "Battery: %@" = "Батерия: %@";
-"Headphone Settings…" = "Настройки на слушалките…";
+"“%@” Settings…" = "Настройки на „%@“…";
 "Bluetooth Settings…" = "Настройки за Bluetooth…";

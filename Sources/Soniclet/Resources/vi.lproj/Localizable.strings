@@ -58,5 +58,5 @@
 
 /* Connected audio accessory metadata and native settings. */
 "Battery: %@" = "Pin: %@";
-"Headphone Settings…" = "Cài đặt tai nghe…";
+"“%@” Settings…" = "Cài đặt “%@”…";
 "Bluetooth Settings…" = "Cài đặt Bluetooth…";

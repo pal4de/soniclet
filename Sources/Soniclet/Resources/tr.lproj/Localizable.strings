@@ -58,5 +58,5 @@
 
 /* Connected audio accessory metadata and native settings. */
 "Battery: %@" = "Pil: %@";
-"Headphone Settings…" = "Kulaklık Ayarları…";
+"“%@” Settings…" = "“%@” Ayarları…";
 "Bluetooth Settings…" = "Bluetooth Ayarları…";

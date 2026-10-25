@@ -58,5 +58,5 @@
 
 /* Connected audio accessory metadata and native settings. */
 "Battery: %@" = "बैटरी: %@";
-"Headphone Settings…" = "हेडफ़ोन सेटिंग…";
+"“%@” Settings…" = "“%@” की सेटिंग्ज़…";
 "Bluetooth Settings…" = "Bluetooth सेटिंग…";

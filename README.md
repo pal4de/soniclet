@@ -50,7 +50,7 @@ Bluetooth accessory metadata comes from macOS’s documented `system_profiler SP
 
 A battery value appears only when macOS reports one. For earbuds, the lower known left/right value is displayed; a charging-case value is never substituted. Some devices, including WH-1000XM3 in current testing, show a percentage in Apple's menu but do not expose it through this standard report. They remain blank here; no private battery selectors are used.
 
-Connected Apple headphones get a link to the OS headphone settings panel when that panel is present; other Bluetooth audio devices get a Bluetooth Settings link. Noise control, spatial audio, and Conversation Awareness stay in Apple's settings instead of being reimplemented through private APIs.
+Connected Apple headphones get a device-name settings link to their individual OS headphone settings panel when that panel is present; other Bluetooth audio devices get a Bluetooth Settings link. These settings URL destinations depend on macOS behavior and may change between OS versions. Noise control, spatial audio, and Conversation Awareness stay in Apple's settings instead of being reimplemented through private APIs.
 
 ## Validation
 

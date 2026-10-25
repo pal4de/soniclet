@@ -58,5 +58,5 @@
 
 /* Connected audio accessory metadata and native settings. */
 "Battery: %@" = "Bateri: %@";
-"Headphone Settings…" = "Tetapan Fon Kepala…";
+"“%@” Settings…" = "Seting “%@”…";
 "Bluetooth Settings…" = "Tetapan Bluetooth…";

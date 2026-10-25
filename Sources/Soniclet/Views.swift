@@ -37,7 +37,7 @@ struct SoundMenuContent: View {
                     .keyboardShortcut(",", modifiers: .command)
                 if !model.bluetoothOutputs.isEmpty {
                     Button(action: openHeadphoneSettings) {
-                        Text(SystemSettingsLinks.headphoneTitle(isApple: model.hasAppleHeadphones)).font(.callout)
+                        Text(SystemSettingsLinks.headphoneTitle(accessory: model.appleHeadphones)).font(.callout)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.horizontal, 8).padding(.vertical, 4)
                             .contentShape(Rectangle())
@@ -102,7 +102,7 @@ struct SoundMenuContent: View {
     }
     private func openHeadphoneSettings() {
         dismissPanel()
-        SystemSettingsLinks.openHeadphones(isApple: model.hasAppleHeadphones)
+        SystemSettingsLinks.openHeadphones(accessory: model.appleHeadphones)
     }
 
     private func openSystemSettings() {

@@ -58,5 +58,5 @@
 
 /* Connected audio accessory metadata and native settings. */
 "Battery: %@" = "Bateria: %@";
-"Headphone Settings…" = "Definições dos auscultadores…";
+"“%@” Settings…" = "Definições de “%@”…";
 "Bluetooth Settings…" = "Definições de Bluetooth…";

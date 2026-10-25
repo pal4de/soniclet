@@ -58,5 +58,5 @@
 
 /* Connected audio accessory metadata and native settings. */
 "Battery: %@" = "Μπαταρία: %@";
-"Headphone Settings…" = "Ρυθμίσεις ακουστικών…";
+"“%@” Settings…" = "Ρυθμίσεις «%@»…";
 "Bluetooth Settings…" = "Ρυθμίσεις Bluetooth…";

@@ -58,5 +58,5 @@
 
 /* Connected audio accessory metadata and native settings. */
 "Battery: %@" = "バッテリー: %@";
-"Headphone Settings…" = "ヘッドフォンの設定…";
+"“%@” Settings…" = "“%@”の設定…";
 "Bluetooth Settings…" = "Bluetooth設定…";

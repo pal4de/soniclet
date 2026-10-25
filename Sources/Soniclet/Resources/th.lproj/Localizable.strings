@@ -58,5 +58,5 @@
 
 /* Connected audio accessory metadata and native settings. */
 "Battery: %@" = "แบตเตอรี่: %@";
-"Headphone Settings…" = "การตั้งค่าหูฟัง…";
+"“%@” Settings…" = "การตั้งค่า “%@”…";
 "Bluetooth Settings…" = "การตั้งค่า Bluetooth…";

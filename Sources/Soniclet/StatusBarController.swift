@@ -61,7 +61,7 @@ final class StatusBarController: NSObject, NSMenuDelegate {
             item.isEnabled = updates.actionIsEnabled
         }
         if let item = NSApplication.shared.mainMenu?.items.first?.submenu?.item(withTag: 107) {
-            item.title = SystemSettingsLinks.headphoneTitle(isApple: model.hasAppleHeadphones)
+            item.title = SystemSettingsLinks.headphoneTitle(accessory: model.appleHeadphones)
             item.isHidden = model.bluetoothOutputs.isEmpty
         }
         guard let menu = currentMenu else { return }
@@ -180,7 +180,7 @@ final class StatusBarController: NSObject, NSMenuDelegate {
         dismissMenu()
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
-            SystemSettingsLinks.openHeadphones(isApple: self.model.hasAppleHeadphones)
+            SystemSettingsLinks.openHeadphones(accessory: self.model.appleHeadphones)
         }
     }
 

@@ -55,8 +55,12 @@ final class AudioModel: ObservableObject {
         guard device.isBluetooth else { return nil }
         return AudioAccessory.match(uid: device.key.uid, name: device.name, in: accessories)
     }
-    var hasAppleHeadphones: Bool {
-        bluetoothOutputs.contains { accessory(for: $0)?.isApple == true }
+    var appleHeadphones: AudioAccessory? {
+        let ordered = bluetoothOutputs.sorted {
+            if selected($0) != selected($1) { return selected($0) }
+            return $0.name.localizedStandardCompare($1.name) == .orderedAscending
+        }
+        return ordered.compactMap { accessory(for: $0) }.first { $0.isApple && $0.address != nil }
     }
     func refreshAccessoriesIfNeeded() {
         #if !SETTINGS_SMOKE_TEST
