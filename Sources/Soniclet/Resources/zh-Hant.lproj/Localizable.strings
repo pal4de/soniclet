@@ -66,3 +66,10 @@
 "Move Down" = "下移";
 "Connected device" = "連接的裝置";
 "Speaker" = "揚聲器";
+
+/* Automatic device selection. */
+"Automatically select devices" = "自動選擇裝置";
+"Devices higher in the list take priority; hidden devices are excluded." = "優先選擇列表中較上方的裝置；隱藏的裝置不參與自動選擇。";
+"Resume Automatic Selection" = "恢復自動選擇";
+"Keep Manual Selection" = "保留手動選擇";
+"Switch %@ from %@ to %@?" = "將%@從%@切換至%@？";

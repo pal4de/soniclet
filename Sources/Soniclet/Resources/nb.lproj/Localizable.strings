@@ -66,3 +66,10 @@
 "Move Down" = "Flytt ned";
 "Connected device" = "Tilkoblet enhet";
 "Speaker" = "Høyttaler";
+
+/* Automatic device selection. */
+"Automatically select devices" = "Velg enheter automatisk";
+"Devices higher in the list take priority; hidden devices are excluded." = "Enheter høyere i listen prioriteres. Skjulte enheter utelates.";
+"Resume Automatic Selection" = "Gjenoppta automatisk valg";
+"Keep Manual Selection" = "Behold manuelt valg";
+"Switch %@ from %@ to %@?" = "Bytt %@ fra %@ til %@?";

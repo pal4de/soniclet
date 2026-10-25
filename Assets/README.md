@@ -4,6 +4,8 @@
 
 Edit the material and appearances with Apple's Icon Composer. `Tools/build-icon.sh` calls Apple's `actool` to compile both the adaptive asset catalog and the `.icns` fallback for macOS 14–25. The menu-bar speaker remains a native SF Symbol.
 
+`StatusMark.svg` is the menu-bar-specific variant, with thinner arrows and heavier, separated volume bars. The app draws it at the same width with a shorter, vertically centered silhouette. Its three named bars receive runtime opacity changes; this does not change the full-size app icon.
+
 `Preview.png` is a documentation preview; the app uses the compiled Icon Composer document, not this PNG. Regenerate the preview using Icon Composer's export feature, or its bundled `ictool`:
 
 ```sh

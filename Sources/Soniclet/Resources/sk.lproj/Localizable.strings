@@ -66,3 +66,10 @@
 "Move Down" = "Presunúť nadol";
 "Connected device" = "Pripojené zariadenie";
 "Speaker" = "Reproduktor";
+
+/* Automatic device selection. */
+"Automatically select devices" = "Vyberať zariadenia automaticky";
+"Devices higher in the list take priority; hidden devices are excluded." = "Zariadenia vyššie v zozname majú prednosť. Skryté zariadenia sa vynechajú.";
+"Resume Automatic Selection" = "Obnoviť automatický výber";
+"Keep Manual Selection" = "Ponechať ručný výber";
+"Switch %@ from %@ to %@?" = "Prepnúť %@ z %@ na %@?";

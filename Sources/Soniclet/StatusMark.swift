@@ -37,8 +37,9 @@ enum StatusMark {
         }
         guard let source = NSImage(data: Data(svg.utf8)) else { return nil }
         let result = NSImage(size: NSSize(width: 19, height: 19), flipped: false) { rect in
-            // Crop only the artwork's square silhouette, excluding app-icon padding.
-            source.draw(in: rect, from: NSRect(x: 172, y: 172, width: 680, height: 680),
+            // Keep the full width and native image alignment; shorten only the artwork's height.
+            let artwork = NSRect(x: rect.minX, y: rect.midY - 7.75, width: rect.width, height: 15.5)
+            source.draw(in: artwork, from: NSRect(origin: .zero, size: source.size),
                         operation: .sourceOver, fraction: 1)
             return true
         }

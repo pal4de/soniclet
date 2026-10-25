@@ -66,3 +66,10 @@
 "Move Down" = "Преместване надолу";
 "Connected device" = "Свързано устройство";
 "Speaker" = "Високоговорител";
+
+/* Automatic device selection. */
+"Automatically select devices" = "Автоматичен избор на устройства";
+"Devices higher in the list take priority; hidden devices are excluded." = "Устройствата по-горе имат предимство; скритите са изключени.";
+"Resume Automatic Selection" = "Възобновяване на автоматичния избор";
+"Keep Manual Selection" = "Запазване на ръчния избор";
+"Switch %@ from %@ to %@?" = "Превключване на %@ от %@ към %@?";

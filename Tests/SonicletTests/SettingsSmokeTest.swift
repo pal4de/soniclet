@@ -70,6 +70,19 @@ enum SettingsSmokeTest {
         else { UserDefaults.standard.removeObject(forKey: MenuBarIconStyle.preferenceKey) }
         controller.update()
         print("PASS: fixed status item width across volume symbols and all three icon styles")
+        UserDefaults.standard.set(MenuBarIconStyle.soniclet.rawValue, forKey: MenuBarIconStyle.preferenceKey)
+        controller.update()
+        let expectedArtwork = controller.iconView.image
+        controller.showAutomaticSelectionFeedback()
+        guard controller.iconView.image != nil, controller.iconView.image !== expectedArtwork else { fail("Automatic selection feedback must show a standard speaker") }
+        try? await Task.sleep(nanoseconds: 2_300_000_000)
+        guard controller.iconView.image === expectedArtwork,
+              MenuBarIconStyle.current() == .soniclet,
+              controller.statusItem.length == requestedWidth else { fail("Automatic feedback must restore artwork without changing preference or width") }
+        if let originalStyle { UserDefaults.standard.set(originalStyle, forKey: MenuBarIconStyle.preferenceKey) }
+        else { UserDefaults.standard.removeObject(forKey: MenuBarIconStyle.preferenceKey) }
+        controller.update()
+        print("PASS: temporary speaker feedback restores selected icon after two seconds without routing audio")
 
         let primary = controller.makeDeviceMenu()
         let deviceItems = primary.items.filter { $0.representedObject is DeviceKey }
@@ -85,7 +98,6 @@ enum SettingsSmokeTest {
         }
         print("PASS: native selectable menu rows, device image visibility and no checkmarks")
         await verifyVolumeButtons()
-        await verifyDragPayload()
 
         let menu = controller.makeContextMenu()
         guard menu.items.count == 8,
@@ -164,20 +176,6 @@ enum SettingsSmokeTest {
         guard calls == 1 else { fail("Native volume endpoint did not send its action") }
         window.close()
         print("PASS: native volume endpoint action, press-only highlight, continuous repetition configuration and disabled state")
-    }
-
-    private static func verifyDragPayload() async {
-        let key = DeviceKey(uid: "drag-fixture", direction: .output)
-        let provider = DeviceDragItem(key: key).itemProvider()
-        let loaded: DeviceKey? = await withCheckedContinuation { continuation in
-            DeviceDragItem.load(from: provider, direction: .output) { continuation.resume(returning: $0) }
-        }
-        guard loaded == key else { fail("Native drag item provider did not round-trip the device key") }
-        let rejected: DeviceKey? = await withCheckedContinuation { continuation in
-            DeviceDragItem.load(from: provider, direction: .input) { continuation.resume(returning: $0) }
-        }
-        guard rejected == nil else { fail("Input and output drag payloads must stay separate") }
-        print("PASS: native drag data transfer and cross-direction rejection")
     }
 
     private static func capture(_ view: NSView?, name: String) {

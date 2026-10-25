@@ -66,3 +66,10 @@
 "Move Down" = "Di chuyển xuống";
 "Connected device" = "Thiết bị đã kết nối";
 "Speaker" = "Loa";
+
+/* Automatic device selection. */
+"Automatically select devices" = "Tự động chọn thiết bị";
+"Devices higher in the list take priority; hidden devices are excluded." = "Ưu tiên thiết bị ở phía trên; loại trừ thiết bị bị ẩn.";
+"Resume Automatic Selection" = "Tiếp tục chọn tự động";
+"Keep Manual Selection" = "Giữ lựa chọn thủ công";
+"Switch %@ from %@ to %@?" = "Chuyển %@ từ %@ sang %@?";

@@ -66,3 +66,10 @@
 "Move Down" = "Перемістити вниз";
 "Connected device" = "Підключений пристрій";
 "Speaker" = "Динамік";
+
+/* Automatic device selection. */
+"Automatically select devices" = "Вибирати пристрої автоматично";
+"Devices higher in the list take priority; hidden devices are excluded." = "Пристрої вище в списку мають пріоритет; приховані пристрої виключено.";
+"Resume Automatic Selection" = "Відновити автовибір";
+"Keep Manual Selection" = "Зберегти ручний вибір";
+"Switch %@ from %@ to %@?" = "Перемкнути %@ з %@ на %@?";

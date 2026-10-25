@@ -66,3 +66,10 @@
 "Move Down" = "העברה למטה";
 "Connected device" = "התקן מחובר";
 "Speaker" = "רמקול";
+
+/* Automatic device selection. */
+"Automatically select devices" = "בחירת התקנים אוטומטית";
+"Devices higher in the list take priority; hidden devices are excluded." = "להתקנים בראש הרשימה יש עדיפות; התקנים מוסתרים אינם נכללים.";
+"Resume Automatic Selection" = "חזרה לבחירה אוטומטית";
+"Keep Manual Selection" = "שמירת הבחירה הידנית";
+"Switch %@ from %@ to %@?" = "להעביר את %@ מ־%@ אל %@?";

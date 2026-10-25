@@ -10,10 +10,10 @@ Keep this a small, native macOS audio-device switcher. Prefer public Apple APIs 
 - Prefer standard controls, semantic styles, SF Symbols, accessibility, keyboard behavior, and automatic locale/direction handling. Do not imitate inaccessible private Control Center UI.
 - Let Core Audio own device/default/volume state and ServiceManagement own login-item state. Observe and read back system state; do not maintain competing sources of truth.
 - Use the public NSImageView SF Symbols appear/replace effects for system-symbol transitions; keep the status button and its menu responsible for interaction. Respect Reduce Motion. App artwork is a template image and has no SF Symbol animation layers.
-- Keep settings in the native grouped Form. Use declared per-direction drag data types, item-provider drag/drop with a whole-row preview and move proposal, and accessible move commands without replacing the form with a plain table. Display order and any future routing priority are separate concepts.
+- Keep settings in the native grouped Form. On macOS 27+, use SwiftUI reorderable/reorderContainer with direction collection identifiers so the system owns the lifted row and insertion placeholder. Do not replace this with item-provider previews or row DropDelegates. On older systems retain accessible Move Up/Down commands without promising drag support. When automatic selection is enabled, the existing visible-device order is its priority order. Keep routing policy pure and test it without hardware writes.
 - Persist only user preferences. Identify devices by UID and direction, never transient AudioObjectID. Preserve stored settings compatibility. Do not retain disconnected AirPlay session endpoints.
 - Keep app identity stable after publication. Renaming the app must not silently discard preferences or duplicate login items.
-- Keep errors actionable. Never silently reroute audio as a fallback. Hiding devices only affects this app's list.
+- Keep errors actionable. Automatic routing must be explicitly enabled per direction and is off by default. Respect manual selections; ask through a native alert before resuming on a higher-priority connection. Hiding a device excludes it from automatic candidates when enabled. Failed writes must not retry indefinitely.
 - Use Foundation networking for release checks. Do not download or execute updates. Validate release links before opening them.
 - Localize every user-facing string in all bundled languages. Preserve formatting placeholders. Treat translations as open to native-speaker review.
 

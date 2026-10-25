@@ -66,3 +66,10 @@
 "Move Down" = "Mozgatás lefelé";
 "Connected device" = "Csatlakoztatott eszköz";
 "Speaker" = "Hangszóró";
+
+/* Automatic device selection. */
+"Automatically select devices" = "Eszközök automatikus kiválasztása";
+"Devices higher in the list take priority; hidden devices are excluded." = "A lista felső eszközei élveznek elsőbbséget; a rejtett eszközök kimaradnak.";
+"Resume Automatic Selection" = "Automatikus kiválasztás folytatása";
+"Keep Manual Selection" = "Kézi kiválasztás megtartása";
+"Switch %@ from %@ to %@?" = "%@ átváltása erről: %@, erre: %@?";

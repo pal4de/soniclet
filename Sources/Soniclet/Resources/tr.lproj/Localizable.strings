@@ -66,3 +66,10 @@
 "Move Down" = "Aşağı Taşı";
 "Connected device" = "Bağlı aygıt";
 "Speaker" = "Hoparlör";
+
+/* Automatic device selection. */
+"Automatically select devices" = "Aygıtları otomatik seç";
+"Devices higher in the list take priority; hidden devices are excluded." = "Listedeki üst aygıtlar önceliklidir; gizli aygıtlar hariç tutulur.";
+"Resume Automatic Selection" = "Otomatik seçime dön";
+"Keep Manual Selection" = "Elle seçimi koru";
+"Switch %@ from %@ to %@?" = "%@ için %@ yerine %@ kullanılsın mı?";

@@ -66,3 +66,10 @@
 "Move Down" = "下へ移動";
 "Connected device" = "接続先";
 "Speaker" = "スピーカー";
+
+/* Automatic device selection. */
+"Automatically select devices" = "デバイスを自動選択";
+"Devices higher in the list take priority; hidden devices are excluded." = "リストの上にある機器を優先します。非表示の機器は自動選択しません。";
+"Resume Automatic Selection" = "自動選択に戻す";
+"Keep Manual Selection" = "手動選択を維持";
+"Switch %@ from %@ to %@?" = "%@を%@から%@に切り替えますか？";

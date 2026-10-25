@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="668" height="668" viewBox="178 178 668 668">
+  <!-- Menu-bar variant: lighter routes and heavier, separated volume bars. -->
+  <g fill="none" stroke="white" stroke-width="72" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M744 214 H430 C333 214 254 282 254 364 V630 M215 564 L254 630 L293 564"/>
+    <path d="M280 810 H594 C691 810 770 742 770 660 V394 M731 460 L770 394 L809 460"/>
+  </g>
+  <g fill="white">
+    <rect id="level-1" x="365" y="440" width="84" height="144" rx="42"/>
+    <rect id="level-2" x="470" y="384" width="84" height="256" rx="42"/>
+    <rect id="level-3" x="575" y="440" width="84" height="144" rx="42"/>
+  </g>
+</svg>

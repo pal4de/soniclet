@@ -66,3 +66,10 @@
 "Move Down" = "انتقال به پایین";
 "Connected device" = "دستگاه متصل";
 "Speaker" = "بلندگو";
+
+/* Automatic device selection. */
+"Automatically select devices" = "انتخاب خودکار دستگاه‌ها";
+"Devices higher in the list take priority; hidden devices are excluded." = "دستگاه‌های بالاتر در فهرست اولویت دارند؛ دستگاه‌های پنهان مستثنا هستند.";
+"Resume Automatic Selection" = "ازسرگیری انتخاب خودکار";
+"Keep Manual Selection" = "حفظ انتخاب دستی";
+"Switch %@ from %@ to %@?" = "تغییر %@ از %@ به %@؟";

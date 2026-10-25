@@ -66,3 +66,10 @@
 "Move Down" = "Μετακίνηση κάτω";
 "Connected device" = "Συνδεδεμένη συσκευή";
 "Speaker" = "Ηχείο";
+
+/* Automatic device selection. */
+"Automatically select devices" = "Αυτόματη επιλογή συσκευών";
+"Devices higher in the list take priority; hidden devices are excluded." = "Οι συσκευές ψηλότερα στη λίστα έχουν προτεραιότητα. Οι κρυφές εξαιρούνται.";
+"Resume Automatic Selection" = "Συνέχιση αυτόματης επιλογής";
+"Keep Manual Selection" = "Διατήρηση χειροκίνητης επιλογής";
+"Switch %@ from %@ to %@?" = "Αλλαγή %@ από %@ σε %@;";

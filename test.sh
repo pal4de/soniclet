@@ -36,3 +36,11 @@ swiftc -parse-as-library \
   "$project_dir/Tests/SonicletTests/AudioAccessoryTests.swift" \
   -o "$build_dir/AudioAccessoryTests"
 "$build_dir/AudioAccessoryTests"
+
+swiftc -parse-as-library \
+  "$project_dir/Sources/Soniclet/Localization.swift" \
+  "$project_dir/Sources/Soniclet/Devices.swift" \
+  "$project_dir/Sources/Soniclet/AutomaticRouting.swift" \
+  "$project_dir/Tests/SonicletTests/AutomaticRoutingTests.swift" \
+  -o "$build_dir/AutomaticRoutingTests"
+"$build_dir/AutomaticRoutingTests"

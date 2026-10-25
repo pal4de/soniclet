@@ -66,3 +66,10 @@
 "Move Down" = "아래로 이동";
 "Connected device" = "연결된 기기";
 "Speaker" = "스피커";
+
+/* Automatic device selection. */
+"Automatically select devices" = "기기 자동 선택";
+"Devices higher in the list take priority; hidden devices are excluded." = "목록 위쪽의 기기를 우선합니다. 숨긴 기기는 자동으로 선택하지 않습니다.";
+"Resume Automatic Selection" = "자동 선택으로 돌아가기";
+"Keep Manual Selection" = "수동 선택 유지";
+"Switch %@ from %@ to %@?" = "%@을(를) %@에서 %@으로 전환할까요?";

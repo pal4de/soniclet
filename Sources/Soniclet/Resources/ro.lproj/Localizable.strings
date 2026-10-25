@@ -66,3 +66,10 @@
 "Move Down" = "Mută în jos";
 "Connected device" = "Dispozitiv conectat";
 "Speaker" = "Difuzor";
+
+/* Automatic device selection. */
+"Automatically select devices" = "Selectează automat dispozitivele";
+"Devices higher in the list take priority; hidden devices are excluded." = "Dispozitivele de sus au prioritate; cele ascunse sunt excluse.";
+"Resume Automatic Selection" = "Reia selecția automată";
+"Keep Manual Selection" = "Păstrează selecția manuală";
+"Switch %@ from %@ to %@?" = "Comuți %@ de la %@ la %@?";

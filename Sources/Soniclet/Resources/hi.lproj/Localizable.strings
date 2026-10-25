@@ -66,3 +66,10 @@
 "Move Down" = "नीचे ले जाएँ";
 "Connected device" = "कनेक्ट किया गया डिवाइस";
 "Speaker" = "स्पीकर";
+
+/* Automatic device selection. */
+"Automatically select devices" = "डिवाइस अपने आप चुनें";
+"Devices higher in the list take priority; hidden devices are excluded." = "सूची में ऊपर के डिवाइस को प्राथमिकता मिलती है; छिपे डिवाइस शामिल नहीं होते।";
+"Resume Automatic Selection" = "अपने आप चुनना फिर शुरू करें";
+"Keep Manual Selection" = "मैन्युअल चयन बनाए रखें";
+"Switch %@ from %@ to %@?" = "%@ को %@ से %@ पर बदलें?";

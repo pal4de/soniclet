@@ -4,7 +4,7 @@
 
 The public repository and app identity are fixed: `pal4de/soniclet`, bundle ID `io.github.pal4de.soniclet`. The first implementation is reviewed in PR #1; `main` has only an empty bootstrap commit until that PR is merged. Do not auto-merge it.
 
-The app has original Icon Composer artwork and a GitHub Releases update notifier. Builds are **ad-hoc signed by default**. Developer ID signing and actual notarization remain unverified until a developer account and signing credentials are available. Do not publish a claim that a build is notarized based on compilation alone.
+The app has original Icon Composer artwork and a GitHub Releases update notifier. Builds are **ad-hoc signed by default**. Developer ID signing and actual notarization remain unverified until an active developer membership and signing credentials are available. The publisher has applied for membership and is awaiting the result (2026-10-26). Do not publish a claim that a build is notarized based on compilation alone.
 
 ## What Apple signing requires
 
@@ -57,3 +57,17 @@ For CI signing later, use a protected GitHub environment and secrets for the cer
 5. Inspect extracted contents, version, architectures, signature, artwork, and ticket on a separate Mac. Check upgrade behavior and existing preferences, then publish the reviewed draft manually.
 
 The update checker uses GitHub's latest stable release API. Only published, stable `vMAJOR.MINOR.PATCH` (or `MAJOR.MINOR.PATCH`) tags count. Drafts and prereleases do not trigger update notices. Until the first release is published, manual checks correctly report no newer release.
+
+## Mac App Store distribution (planned)
+
+GitHub Releases and the Mac App Store are both intended distribution channels. The current scripts prepare direct-download builds only; App Store submission is not ready.
+
+Before adding a store build:
+
+- Enable App Sandbox and test actual default-device switching and volume control under it. Revalidate Bluetooth metadata collection via system_profiler, login-item registration, settings links, preferences, and network access; existing non-sandboxed tests do not establish sandbox compatibility.
+- Prepare an App Store provisioning/signing and upload workflow, separate from Developer ID/notarization for GitHub downloads. Confirm the application identifier after membership activates.
+- Disable the GitHub update checker in the store build; let the App Store own updates.
+- Test containerized preference storage and migration between channels, and avoid running duplicate menu-bar/login-item instances.
+- Prepare App Store Connect listing, screenshots, privacy declarations, support and privacy-policy URLs, and submission metadata. Review and approval have not occurred.
+
+App Sandbox is a Mac App Store requirement: [Apple documentation](https://developer.apple.com/documentation/xcode/configuring-the-macos-app-sandbox).

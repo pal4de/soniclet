@@ -66,3 +66,10 @@
 "Move Down" = "Alih ke Bawah";
 "Connected device" = "Peranti disambungkan";
 "Speaker" = "Pembesar suara";
+
+/* Automatic device selection. */
+"Automatically select devices" = "Pilih peranti secara automatik";
+"Devices higher in the list take priority; hidden devices are excluded." = "Peranti di atas diutamakan; peranti tersembunyi dikecualikan.";
+"Resume Automatic Selection" = "Sambung pemilihan automatik";
+"Keep Manual Selection" = "Kekalkan pilihan manual";
+"Switch %@ from %@ to %@?" = "Tukar %@ daripada %@ kepada %@?";

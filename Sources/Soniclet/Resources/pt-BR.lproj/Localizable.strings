@@ -66,3 +66,10 @@
 "Move Down" = "Mover para Baixo";
 "Connected device" = "Dispositivo conectado";
 "Speaker" = "Alto-falante";
+
+/* Automatic device selection. */
+"Automatically select devices" = "Selecionar dispositivos automaticamente";
+"Devices higher in the list take priority; hidden devices are excluded." = "Dispositivos no topo têm prioridade; os ocultos são excluídos.";
+"Resume Automatic Selection" = "Retomar seleção automática";
+"Keep Manual Selection" = "Manter seleção manual";
+"Switch %@ from %@ to %@?" = "Mudar %@ de %@ para %@?";

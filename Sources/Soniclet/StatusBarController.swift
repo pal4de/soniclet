@@ -24,6 +24,12 @@ final class StatusBarController: NSObject, NSMenuDelegate {
         let family: String?
     }
     private var displayedContext: IconContext?
+    private var lastAutomaticEvent: UUID?
+    private var automaticFeedback = false
+    private var feedbackWork: DispatchWorkItem?
+    private var routingAlert: NSAlert?
+    private var routingAlertPrompt: RoutingPrompt?
+    private var routingAlertScheduled = false
     var currentMenu: NSMenu? { menuIsOpen ? attachedMenu : nil }
     private(set) var menuIsOpen = false
 
@@ -72,12 +78,19 @@ final class StatusBarController: NSObject, NSMenuDelegate {
     }
 
     func update() {
+        updateRoutingPrompt()
+        if let event = model.automaticSelectionEvent, event != lastAutomaticEvent {
+            lastAutomaticEvent = event
+            showAutomaticSelectionFeedback()
+        }
         let style = MenuBarIconStyle.current()
         let context = IconContext(output: model.outputID, muted: model.outputVolume.muted, style: style,
                                   family: model.devices.first { $0.key.direction == .output && $0.objectID == model.outputID }.map { model.symbol(for: $0) })
         let transition = displayedContext != context
         displayedContext = context
-        if style == .soniclet,
+        if automaticFeedback {
+            displaySymbol(model.volumeSymbol, value: model.outputSymbolValue, animated: false)
+        } else if style == .soniclet,
            let image = StatusMark.image(volume: model.outputVolume.canAdjust ? model.outputVolume.value : nil,
                                         muted: model.outputVolume.muted) {
             let level = StatusMark.level(volume: model.outputVolume.canAdjust ? model.outputVolume.value : nil, muted: model.outputVolume.muted)
@@ -123,6 +136,22 @@ final class StatusBarController: NSObject, NSMenuDelegate {
                 view.setFrameSize(view.fittingSize)
             }
             menu.update()
+        }
+    }
+
+    func showAutomaticSelectionFeedback() {
+        automaticFeedback = true
+        feedbackWork?.cancel()
+        let work = DispatchWorkItem { [weak self] in
+            self?.automaticFeedback = false
+            self?.displayedContext = nil
+            self?.update()
+        }
+        feedbackWork = work
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: work)
+        displaySymbol(model.volumeSymbol, value: model.outputSymbolValue, animated: true)
+        if !NSWorkspace.shared.accessibilityDisplayShouldReduceMotion {
+            iconView.addSymbolEffect(.bounce, options: .nonRepeating)
         }
     }
 
@@ -372,5 +401,48 @@ final class StatusBarController: NSObject, NSMenuDelegate {
     }
 
     func menuWillOpen(_ menu: NSMenu) { menuIsOpen = true }
-    func menuDidClose(_ menu: NSMenu) { menuIsOpen = false; forcedContext = nil }
+    func menuDidClose(_ menu: NSMenu) {
+        menuIsOpen = false; forcedContext = nil
+        DispatchQueue.main.async { [weak self] in self?.updateRoutingPrompt() }
+    }
+
+    private func updateRoutingPrompt() {
+        if let alert = routingAlert, let prompt = routingAlertPrompt,
+           model.routingPrompts[prompt.manual.direction] != prompt, NSApp.modalWindow === alert.window {
+            NSApp.abortModal()
+            return
+        }
+        guard routingAlert == nil, !routingAlertScheduled, !menuIsOpen,
+              !model.routingPrompts.isEmpty else { return }
+        routingAlertScheduled = true
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            self.routingAlertScheduled = false
+            guard self.routingAlert == nil, !self.menuIsOpen, NSApp.modalWindow == nil,
+                  let direction = AudioDirection.allCases.first(where: { self.model.routingPrompts[$0] != nil }),
+                  let prompt = self.model.routingPrompts[direction],
+                  let current = self.model.devices.first(where: { $0.key == prompt.manual }),
+                  let candidate = self.model.devices.first(where: { $0.key == prompt.candidate }) else { return }
+            let alert = NSAlert()
+            alert.messageText = L10n.text("Resume Automatic Selection")
+            alert.informativeText = L10n.format("Switch %@ from %@ to %@?", direction.title, current.name, candidate.name)
+            alert.alertStyle = .informational
+            alert.addButton(withTitle: L10n.text("Keep Manual Selection"))
+            alert.addButton(withTitle: L10n.text("Resume Automatic Selection"))
+            alert.buttons[0].keyEquivalent = "\u{1b}"
+            alert.window.defaultButtonCell = alert.buttons[0].cell as? NSButtonCell
+            alert.buttons[1].keyEquivalent = ""
+            self.routingAlert = alert
+            self.routingAlertPrompt = prompt
+            NSApp.activate(ignoringOtherApps: true)
+            let response = alert.runModal()
+            alert.window.orderOut(nil)
+            self.routingAlert = nil
+            self.routingAlertPrompt = nil
+            if response == .alertFirstButtonReturn || response == .alertSecondButtonReturn {
+                self.model.resolveRoutingPrompt(prompt, resume: response == .alertSecondButtonReturn)
+            }
+            self.updateRoutingPrompt()
+        }
+    }
 }

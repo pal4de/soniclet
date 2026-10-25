@@ -1,5 +1,4 @@
 import SwiftUI
-import UniformTypeIdentifiers
 
 struct VolumeMenuContent: View {
     @ObservedObject var model: AudioModel
@@ -27,7 +26,8 @@ struct VolumeMenuContent: View {
                     : L10n.text("Volume cannot be adjusted for this device"))
                 .help(model.outputVolume.canAdjust ? L10n.format("Volume for %@", model.outputName) : L10n.text("Adjust the volume on the device"))
             VolumeStepButton(up: true, enabled: model.outputVolume.canAdjust) { model.stepVolume(up: true) }
-                .frame(width: 18, height: 24)
+                // The sound waves make this glyph wider; preserve the same optical gap as the left endpoint.
+                .frame(width: 30, height: 24)
         }
         .frame(height: 24)
         .padding(.horizontal, 12).padding(.vertical, 8)
@@ -69,6 +69,10 @@ struct DeviceSettingsView: View {
     @ObservedObject var model: AudioModel
     @StateObject private var loginItem = LoginItemModel()
     @AppStorage(MenuBarIconStyle.preferenceKey) private var menuBarIconStyle = MenuBarIconStyle.system
+    private var reorderHelp: String {
+        if #available(macOS 27, *) { return L10n.text("Drag devices to change their order in the menu.") }
+        return "\(L10n.text("Move Up")) / \(L10n.text("Move Down"))"
+    }
     var body: some View {
         Form {
             Section(L10n.text("General")) {
@@ -102,26 +106,43 @@ struct DeviceSettingsView: View {
             }
             ForEach(AudioDirection.allCases, id: \.self) { direction in
                 Section {
+                    Toggle(L10n.text("Automatically select devices"), isOn: Binding(
+                        get: { model.automaticSelectionEnabled(direction) },
+                        set: { model.setAutomaticSelection($0, direction: direction) }
+                    )).toggleStyle(.checkbox)
+                    if model.automaticSelectionEnabled(direction), model.isManualSelection(direction) {
+                        Button(L10n.text("Resume Automatic Selection")) { model.resumeAutomaticSelection(direction) }
+                    }
                     let devices = model.savedDevices(direction)
                     if devices.isEmpty {
                         Text(L10n.text(direction == .output ? "No output devices" : "No input devices")).foregroundStyle(.secondary)
                     }
-                    ForEach(devices) { preference in
-                        DevicePreferenceRow(model: model, preference: preference)
+                    if #available(macOS 27, *) {
+                        ForEach(devices) { preference in
+                            DevicePreferenceRow(model: model, preference: preference)
+                        }
+                        .reorderable(collectionID: direction)
+                    } else {
+                        ForEach(devices) { preference in
+                            DevicePreferenceRow(model: model, preference: preference)
+                        }
                     }
                 } header: {
                     Text(direction.title)
                 } footer: {
                     Text([
                         L10n.text("Choose which devices appear in the menu."),
-                        L10n.text("Drag devices to change their order in the menu."),
-                        L10n.text("Hiding a device does not change the current input, output, or settings in other apps.")
+                        reorderHelp,
+                        L10n.text(model.automaticSelectionEnabled(direction)
+                            ? "Devices higher in the list take priority; hidden devices are excluded."
+                            : "Hiding a device does not change the current input, output, or settings in other apps.")
                     ].joined(separator: " "))
                     .font(.caption).foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
                 }
             }
         }
+        .modifier(DeviceReorderContainer(model: model))
         .formStyle(.grouped)
         .frame(width: 520, height: 580)
         .onAppear { model.refresh(); loginItem.refresh() }
@@ -132,8 +153,6 @@ struct DeviceSettingsView: View {
 private struct DevicePreferenceRow: View {
     @ObservedObject var model: AudioModel
     let preference: DevicePreference
-    private typealias RowHeight = State<CGFloat>
-    @RowHeight private var rowHeight: CGFloat = 28
     private var direction: AudioDirection { preference.key.direction }
     private var index: Int { model.savedDevices(direction).firstIndex { $0.key == preference.key } ?? 0 }
 
@@ -154,24 +173,19 @@ private struct DevicePreferenceRow: View {
             }
             .toggleStyle(.checkbox)
             .accessibilityLabel(L10n.format("Show %@ (%@)", preference.name, direction.title))
-            Image(systemName: "line.3.horizontal")
-                .foregroundStyle(.secondary)
-                .frame(width: 20, height: 24)
-                .contentShape(Rectangle())
-                .help(L10n.text("Drag devices to change their order in the menu."))
-                .accessibilityLabel(L10n.text("Drag devices to change their order in the menu."))
+            if #available(macOS 27, *) {
+                Image(systemName: "line.3.horizontal")
+                    .foregroundStyle(.secondary)
+                    .frame(width: 20, height: 24)
+                    .contentShape(Rectangle())
+                    .help(L10n.text("Drag devices to change their order in the menu."))
+                    .accessibilityLabel(L10n.text("Drag devices to change their order in the menu."))
+            }
         }
     }
     var body: some View {
         rowContent
         .contentShape(Rectangle())
-        .onDrag {
-            DeviceDragItem(key: preference.key).itemProvider()
-        } preview: {
-            rowContent.frame(width: 460).padding(8)
-        }
-        .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { rowHeight = $0 }
-        .onDrop(of: [DeviceDragItem.contentType(direction)], delegate: DeviceReorderDrop(model: model, target: preference.key, rowHeight: rowHeight))
         .contextMenu {
             Button(L10n.text("Move Up"), systemImage: "chevron.up") {
                 model.moveDevices(direction, from: IndexSet(integer: index), to: index - 1)
@@ -189,22 +203,32 @@ private struct DevicePreferenceRow: View {
     }
 }
 
-private struct DeviceReorderDrop: DropDelegate {
-    let model: AudioModel
-    let target: DeviceKey
-    let rowHeight: CGFloat
-    func validateDrop(info: DropInfo) -> Bool {
-        info.hasItemsConforming(to: [DeviceDragItem.contentType(target.direction)])
-    }
-    func dropUpdated(info: DropInfo) -> DropProposal? { DropProposal(operation: .move) }
-    func performDrop(info: DropInfo) -> Bool {
-        guard let provider = info.itemProviders(for: [DeviceDragItem.contentType(target.direction)]).first else { return false }
-        let after = info.location.y > rowHeight / 2
-        DeviceDragItem.load(from: provider, direction: target.direction) { key in
-            guard let key else { return }
-            DispatchQueue.main.async { model.moveDevice(key, relativeTo: target, after: after) }
+/// SwiftUI owns the lifted row, placeholder, and pointer interaction on macOS 27.
+/// Earlier systems retain the row's native Move Up/Down commands.
+private struct DeviceReorderContainer: ViewModifier {
+    @ObservedObject var model: AudioModel
+    @ViewBuilder func body(content: Content) -> some View {
+        if #available(macOS 27, *) {
+            content.reorderContainer(for: DevicePreference.self, in: AudioDirection.self) { difference in
+                let direction = difference.destination.collectionID
+                let devices = model.savedDevices(direction)
+                let sources = Set(difference.sources)
+                guard !sources.isEmpty, sources.allSatisfy({ $0.direction == direction }),
+                      sources.isSubset(of: Set(devices.map(\.key))) else { return }
+                let destination: Int
+                switch difference.destination.position {
+                case .before(let key):
+                    guard key.direction == direction,
+                          let index = devices.firstIndex(where: { $0.key == key }) else { return }
+                    destination = index
+                case .end: destination = devices.count
+                }
+                let offsets = IndexSet(devices.indices.filter { sources.contains(devices[$0].key) })
+                model.moveDevices(direction, from: offsets, to: destination)
+            }
+        } else {
+            content
         }
-        return true
     }
 }
 

@@ -66,3 +66,10 @@
 "Move Down" = "Siirrä alas";
 "Connected device" = "Yhdistetty laite";
 "Speaker" = "Kaiutin";
+
+/* Automatic device selection. */
+"Automatically select devices" = "Valitse laitteet automaattisesti";
+"Devices higher in the list take priority; hidden devices are excluded." = "Luettelossa ylempänä olevat laitteet ovat etusijalla. Piilotetut laitteet ohitetaan.";
+"Resume Automatic Selection" = "Jatka automaattista valintaa";
+"Keep Manual Selection" = "Säilytä manuaalinen valinta";
+"Switch %@ from %@ to %@?" = "Vaihda %@ laitteesta %@ laitteeseen %@?";

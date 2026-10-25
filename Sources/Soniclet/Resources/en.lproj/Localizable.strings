@@ -66,3 +66,10 @@
 "Move Down" = "Move Down";
 "Connected device" = "Connected device";
 "Speaker" = "Speaker";
+
+/* Automatic device selection. */
+"Automatically select devices" = "Automatically select devices";
+"Devices higher in the list take priority; hidden devices are excluded." = "Devices higher in the list take priority; hidden devices are excluded.";
+"Resume Automatic Selection" = "Resume Automatic Selection";
+"Keep Manual Selection" = "Keep Manual Selection";
+"Switch %@ from %@ to %@?" = "Switch %@ from %@ to %@?";

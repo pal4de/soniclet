@@ -66,3 +66,10 @@
 "Move Down" = "ย้ายลง";
 "Connected device" = "อุปกรณ์ที่เชื่อมต่อ";
 "Speaker" = "ลำโพง";
+
+/* Automatic device selection. */
+"Automatically select devices" = "เลือกอุปกรณ์อัตโนมัติ";
+"Devices higher in the list take priority; hidden devices are excluded." = "อุปกรณ์ด้านบนมีความสำคัญกว่า โดยไม่รวมอุปกรณ์ที่ซ่อนอยู่";
+"Resume Automatic Selection" = "กลับไปเลือกอัตโนมัติ";
+"Keep Manual Selection" = "คงการเลือกด้วยตนเอง";
+"Switch %@ from %@ to %@?" = "เปลี่ยน%@จาก %@ เป็น %@ หรือไม่?";

@@ -66,3 +66,10 @@
 "Move Down" = "Verplaats omlaag";
 "Connected device" = "Verbonden apparaat";
 "Speaker" = "Luidspreker";
+
+/* Automatic device selection. */
+"Automatically select devices" = "Apparaten automatisch selecteren";
+"Devices higher in the list take priority; hidden devices are excluded." = "Apparaten hoger in de lijst krijgen voorrang; verborgen apparaten zijn uitgesloten.";
+"Resume Automatic Selection" = "Automatische selectie hervatten";
+"Keep Manual Selection" = "Handmatige selectie behouden";
+"Switch %@ from %@ to %@?" = "%@ van %@ naar %@ schakelen?";
