@@ -95,6 +95,13 @@ enum SettingsSmokeTest {
 
         let primary = controller.makeDeviceMenu()
         let deviceItems = primary.items.filter { $0.representedObject is DeviceKey }
+        guard let resume = primary.item(withTag: 114),
+              resume.target === controller,
+              resume.title == L10n.text("Resume Automatic Selection"),
+              resume.isHidden == controller.model.manuallyOverriddenDirections.isEmpty,
+              primary.items.dropFirst(primary.index(of: resume) + 1).first?.title == L10n.text("Soniclet Settings…") else {
+            fail("Resume automatic selection must appear directly above settings only for manual overrides")
+        }
         guard primary.items.filter({ $0.action != nil && $0.isEnabled }).allSatisfy({ $0.view == nil }),
               deviceItems.allSatisfy({ $0.target === controller && $0.state == .off && $0.image?.isValid == true && $0.toolTip != $0.title }),
               primary.item(withTag: 900)?.title == "Soniclet" else {
@@ -144,6 +151,12 @@ enum SettingsSmokeTest {
                               let button = controller.statusItem.button,
                               let statusWindow = button.window,
                               let screen = statusWindow.screen else { fail("Native device menu did not open") }
+                        guard let resume = menu.item(withTag: 114) else { fail("Missing manual-override command") }
+                        resume.isHidden = false
+                        controller.update()
+                        guard resume.isHidden == controller.model.manuallyOverriddenDirections.isEmpty else {
+                            fail("Manual-override command visibility did not refresh")
+                        }
                         for direction in AudioDirection.allCases {
                             guard let row = menu.item(withTag: direction == .output ? 112 : 113) else {
                                 fail("Missing native hidden-current placeholder")

@@ -243,6 +243,16 @@ final class AudioModel: ObservableObject {
     func isManuallySelected(_ device: AudioDevice) -> Bool {
         selected(device) && (!automaticSelectionEnabled(device.key.direction) || routing[device.key.direction]?.manual == device.key)
     }
+    var manuallyOverriddenDirections: [AudioDirection] {
+        AudioDirection.allCases.filter { automaticSelectionEnabled($0) && isManualSelection($0) }
+    }
+    func resumeAllAutomaticSelections() {
+        for direction in manuallyOverriddenDirections {
+            routing[direction, default: AutomaticRouting()].resume()
+            routingPrompts.removeValue(forKey: direction)
+        }
+        refresh()
+    }
     func resumeAutomaticSelection(_ direction: AudioDirection) {
         routing[direction, default: AutomaticRouting()].resume()
         refresh()

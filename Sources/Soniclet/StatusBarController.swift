@@ -8,7 +8,7 @@ import Symbols
 @MainActor
 final class StatusBarController: NSObject, NSMenuDelegate {
     let model: AudioModel
-    let updates = UpdateChecker()
+    let updates: UpdateChecker
     let statusItem: NSStatusItem
     let iconView = StatusIconView(frame: NSRect(x: 0, y: 0, width: 22, height: 20))
     private let settings: SettingsWindowController
@@ -34,7 +34,9 @@ final class StatusBarController: NSObject, NSMenuDelegate {
 
     init(model: AudioModel) {
         self.model = model
-        self.settings = SettingsWindowController(model: model)
+        let updates = UpdateChecker()
+        self.updates = updates
+        self.settings = SettingsWindowController(model: model, updates: updates)
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
         super.init()
         if let button = statusItem.button {
@@ -106,6 +108,7 @@ final class StatusBarController: NSObject, NSMenuDelegate {
             item.isHidden = model.bluetoothOutputs.isEmpty
         }
         guard let menu = currentMenu else { return }
+        menu.item(withTag: 114)?.isHidden = model.manuallyOverriddenDirections.isEmpty
         menu.item(withTag: 101)?.title = summaryLines[0]
         menu.item(withTag: 102)?.title = summaryLines[1]
         menu.item(withTag: 103)?.title = L10n.text(model.outputVolume.muted ? "Unmute Output" : "Mute Output")
@@ -265,6 +268,10 @@ final class StatusBarController: NSObject, NSMenuDelegate {
             menu.addItem(item)
         }
         menu.addItem(.separator())
+        let resume = command(L10n.text("Resume Automatic Selection"), #selector(resumeManualSelections))
+        resume.tag = 114
+        resume.isHidden = model.manuallyOverriddenDirections.isEmpty
+        menu.addItem(resume)
         menu.addItem(command(L10n.text("Soniclet Settings…"), #selector(showSettings)))
         let update = command(updates.menuTitle, #selector(checkForUpdates))
         update.tag = 104
@@ -397,6 +404,11 @@ final class StatusBarController: NSObject, NSMenuDelegate {
 
     func dismissMenu() { currentMenu?.cancelTrackingWithoutAnimation() }
     @objc func toggleMute() { model.toggleOutputMute() }
+
+    @objc private func resumeManualSelections() {
+        dismissMenu()
+        DispatchQueue.main.async { [weak self] in self?.model.resumeAllAutomaticSelections() }
+    }
 
     @objc func showSettings() {
         dismissMenu()

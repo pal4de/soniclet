@@ -5,15 +5,17 @@ import SwiftUI
 @MainActor
 final class SettingsWindowController {
     private let model: AudioModel
+    private let updates: UpdateChecker
     private var nativeOpen: (() -> Void)?
     private var fallbackWindow: NSWindow?
 
-    init(model: AudioModel) {
+    init(model: AudioModel, updates: UpdateChecker) {
         self.model = model
+        self.updates = updates
         if #available(macOS 26, *) {
             let representation = NSHostingSceneRepresentation {
                 Settings {
-                    DeviceSettingsView(model: model)
+                    DeviceSettingsView(model: model, updates: updates)
                         .navigationTitle(L10n.text("Soniclet Settings"))
                 }
                 .windowResizability(.contentSize)
@@ -35,7 +37,7 @@ final class SettingsWindowController {
                                   styleMask: [.titled, .closable], backing: .buffered, defer: false)
             window.title = L10n.text("Soniclet Settings")
             window.isReleasedWhenClosed = false
-            window.contentViewController = NSHostingController(rootView: DeviceSettingsView(model: model))
+            window.contentViewController = NSHostingController(rootView: DeviceSettingsView(model: model, updates: updates))
             window.center()
             fallbackWindow = window
         }

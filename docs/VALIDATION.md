@@ -33,3 +33,7 @@ A live readback confirmed the preferred USB input even though an already-open me
 The native GUI test renders a synthetic AirPods Pro output event without changing audio routing, compares the actual displayed image to the AirPods symbol, applies a following input event and model update, and checks that the output preview remains until restoring the chosen icon after two seconds. Physical connection timing remains separately observable.
 
 Policy regressions also cover a connection where macOS has already selected the preferred route: it reports destination feedback without writing the default again, and does not repeat on unchanged refreshes or manual default-only changes. Combine delivers distinct output/input events in order so an input adjustment cannot replace an unseen output event.
+
+## 0.7.5 settings and menu commands
+
+A native Resume Automatic Selection command appears immediately above Soniclet Settings only for enabled directions with manual overrides, and resumes them together without enabling disabled directions. GUI checks cover command position and live visibility. Settings now observes the same UpdateChecker instance as the status menu, sharing in-flight and available-release state. Offline update fixtures remain the network-contract checks.

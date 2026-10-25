@@ -13,7 +13,7 @@ A small, native macOS menu-bar utility for choosing audio input and output devic
 - Choose Soniclet’s monochrome mark, the connected output device, or the speaker from the icon picker in Settings. The initial choice is the speaker; previews follow the current volume. Speaker mode always represents volume and mute, without headphone exceptions. Waveform bars brighten from left to right with volume; mute dims all three without a slash.
 - Launch at login using macOS ServiceManagement.
 - Follow macOS language preferences, with 34 bundled translations.
-- See new stable GitHub Releases in the menu, with manual update checking.
+- See new stable GitHub Releases in the menu, with manual update checking in both the menu and Settings using the same update state.
 - Use a headphone symbol for headphone outputs; show reported Bluetooth battery levels and a native settings link when available.
 
 Device visibility only changes this app's list. It does not remove devices from macOS or change another app's explicit device selection. This app uses public Core Audio APIs; it does not record audio, install a driver, or process audio streams.
@@ -52,7 +52,7 @@ See [device icon coverage and fallbacks](docs/DEVICE-ICONS.md) for AirPods, Beat
 
 Enable **Automatically select devices** separately in the input/output settings sections. Existing visible-device order is priority: the highest connected visible device wins. Hidden devices are excluded; if no candidates are available, Soniclet makes no selection. Enabling or changing the priority applies the policy immediately; startup and wake also re-evaluate enabled directions.
 
-Manual choices remain in effect while connected. A newly available higher-priority candidate opens a native confirmation alert even when the menu is closed. Return keeps the manual choice; the other button resumes automatic selection. Declining suppresses repeated prompts for that candidate/order context. Disconnection of the manually chosen device resumes automatic selection. Hidden manually chosen devices are preserved while connected. Settings also offers a resume button during manual selection.
+Manual choices remain in effect while connected. A newly available higher-priority candidate opens a native confirmation alert even when the menu is closed. Return keeps the manual choice; the other button resumes automatic selection. Declining suppresses repeated prompts for that candidate/order context. Disconnection of the manually chosen device resumes automatic selection. Hidden manually chosen devices are preserved while connected. Settings also offers a resume button during manual selection. The primary menu adds Resume Automatic Selection directly above Soniclet Settings while any enabled direction is manually overridden; it resumes those directions together without enabling automation for disabled directions.
 
 Core Audio reports default changes but not their author. Changes outside Soniclet that occur without a connection change are treated conservatively as manual. Connection notifications are debounced; simultaneous external changes cannot always be attributed perfectly. Mode and declined-prompt context are session-only; the per-direction enable switches persist. Relaunch starts enabled directions in automatic mode.
 

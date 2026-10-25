@@ -67,6 +67,7 @@ struct AudioErrorMenuContent: View {
 
 struct DeviceSettingsView: View {
     @ObservedObject var model: AudioModel
+    @ObservedObject var updates: UpdateChecker
     @StateObject private var loginItem = LoginItemModel()
     @AppStorage(MenuBarIconStyle.preferenceKey) private var menuBarIconStyle = MenuBarIconStyle.system
     private var reorderHelp: String {
@@ -103,6 +104,9 @@ struct DeviceSettingsView: View {
                     Button(L10n.text("Open Login Items Settings…")) { loginItem.openSystemSettings() }
                 }
                 if let error = loginItem.errorMessage { Text(error).foregroundStyle(.red).font(.callout) }
+                Button(updates.menuTitle) { updates.performUserAction() }
+                    .disabled(!updates.actionIsEnabled)
+                    .accessibilityIdentifier("check-for-updates")
             }
             ForEach(AudioDirection.allCases, id: \.self) { direction in
                 Section {
