@@ -6,7 +6,7 @@ enum DeviceMenuIcon {
         let tint = selected ? NSColor.white : NSColor.labelColor.withAlphaComponent(0.8)
         guard let colored = glyph(symbol: symbol, color: tint, pointSize: 13) else { return nil }
         return NSImage(size: NSSize(width: 26, height: 26), flipped: false) { bounds in
-            (selected ? NSColor.systemCyan : NSColor.labelColor.withAlphaComponent(0.14)).setFill()
+            (selected ? NSColor.controlAccentColor : NSColor.labelColor.withAlphaComponent(0.14)).setFill()
             NSBezierPath(ovalIn: bounds).fill()
             let size = colored.size
             colored.draw(in: NSRect(x: (26 - size.width) / 2, y: (26 - size.height) / 2,
