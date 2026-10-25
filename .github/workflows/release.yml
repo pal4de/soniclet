@@ -27,7 +27,9 @@ jobs:
           test "$RELEASE_TAG" = "v$version"
           ARCHS='arm64 x86_64' ./build.sh
           ./test.sh
-          lipo 'Soniclet.app/Contents/MacOS/Soniclet' -verify_arch arm64 x86_64
+          for architecture in arm64 x86_64; do
+            /usr/bin/lipo 'Soniclet.app/Contents/MacOS/Soniclet' -verify_arch "$architecture"
+          done
           codesign --verify --deep --strict 'Soniclet.app'
       - name: Package ad-hoc signed build
         run: |
