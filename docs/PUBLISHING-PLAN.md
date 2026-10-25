@@ -8,12 +8,13 @@ The public payload is source, tests, build metadata/scripts, and documentation. 
 
 ## Name directions
 
-The name should retain a Japanese sound while allowing an international audience to understand the purpose. Candidates are working ideas, not cleared trademarks:
+Use an English name rather than Japanese-derived branding. Favor something short, readable, and suitable for a small audio utility. Candidates remain unapproved working ideas:
 
-- **OtoPick** — short; choosing an audio device is the primary action.
-- **OtoSelect** — explicit selection utility; slightly longer.
-- **OtoPort** — evokes input/output endpoints; less explicit about switching.
-- **Oto Switch** — direct; two words and a longer menu/settings name.
+- **ToneHop** — suggests moving quickly between audio destinations.
+- **Routelet** — a small routing utility; less explicit about audio without its description.
+- **Soundlet** — a small sound utility; the name is also used by an existing music community, so it needs further review.
+
+Do not rename app identity or create the GitHub repository until the user selects a name. Broad web searches are not a guarantee of name availability.
 
 Possible English description: “A native audio switcher for your Mac.” Keep the brand unchanged across translations and translate descriptive labels.
 

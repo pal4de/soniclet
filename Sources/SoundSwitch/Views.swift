@@ -33,16 +33,13 @@ struct SoundPopover: View {
             Divider().padding(.horizontal, 12)
             VStack(alignment: .leading, spacing: 0) {
                 Button(action: openSystemSettings) { footerLabel("System Sound Settings…") }
-                Text(L10n.text("Connect AirPlay devices in System Sound Settings first."))
-                    .font(.caption).foregroundStyle(.secondary)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .padding(.horizontal, 8).padding(.bottom, 5)
                 Button {
                     dismiss()
                     if let settingsAction { settingsAction() }
                     else { SettingsPresentation.open(openSettings) }
                 } label: { footerLabel("Sound Switch Settings…") }
                     .keyboardShortcut(",", modifiers: .command)
+                Divider().padding(.horizontal, 6).padding(.vertical, 4)
                 Button { NSApplication.shared.terminate(nil) } label: { footerLabel("Quit Sound Switch") }
                     .keyboardShortcut("q", modifiers: .command)
             }
@@ -121,6 +118,12 @@ struct SoundPopover: View {
                     .padding(.horizontal, 14).padding(.top, 5)
                     .help(L10n.text("The current device is hidden in settings"))
             }
+            if direction == .output {
+                Text(L10n.text("Connect AirPlay devices in System Sound Settings first."))
+                    .font(.caption).foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .padding(.horizontal, 14).padding(.top, 5)
+            }
         }
     }
 }
@@ -133,17 +136,19 @@ private struct DeviceRow: View {
     var body: some View {
         Button(action: action) {
             HStack(spacing: 9) {
-                Image(systemName: device.symbol)
-                    .font(.system(size: 13, weight: .medium))
-                    .foregroundStyle(selected ? Color.white : Color.secondary)
-                    .frame(width: 26, height: 26)
-                    .background(selected ? Color.accentColor : Color.primary.opacity(0.07), in: Circle())
+                Group {
+                    if pending {
+                        ProgressView().controlSize(.small)
+                    } else {
+                        Image(systemName: device.symbol)
+                            .font(.system(size: 13, weight: .medium))
+                            .foregroundStyle(selected ? Color.white : Color.secondary)
+                    }
+                }
+                .frame(width: 26, height: 26)
+                .background(!pending && selected ? Color.accentColor : Color.primary.opacity(0.07), in: Circle())
                 Text(device.name).font(.body).lineLimit(1)
                 Spacer(minLength: 4)
-                if pending { ProgressView().controlSize(.mini).frame(width: 12) }
-                else if selected {
-                    Image(systemName: "checkmark").font(.caption.weight(.semibold)).foregroundStyle(.secondary)
-                }
             }
             .padding(.horizontal, 8).padding(.vertical, 3)
             .contentShape(Rectangle())
