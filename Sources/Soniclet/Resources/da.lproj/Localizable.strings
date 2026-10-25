@@ -1,0 +1,47 @@
+/* Soniclet interface strings. Keep format placeholders unchanged. */
+"Sound" = "Lyd";
+"Output" = "Udgang";
+"Input" = "Indgang";
+"System Sound Settings…" = "Systemets lydindstillinger…";
+"Soniclet Settings…" = "Indstillinger til Soniclet…";
+"Quit Soniclet" = "Slut Soniclet";
+"Close error" = "Luk fejlmeddelelse";
+"Output volume" = "Udgangslydstyrke";
+"Volume cannot be adjusted for this device" = "Lydstyrken kan ikke justeres for denne enhed";
+"Adjust the volume on the device" = "Juster lydstyrken på enheden";
+"Volume for %@" = "Lydstyrke for %@";
+"No output devices to show" = "Ingen udgangsenheder at vise";
+"No input devices to show" = "Ingen indgangsenheder at vise";
+"Current: %@" = "Aktuel: %@";
+"The current device is hidden in settings" = "Den aktuelle enhed er skjult i indstillingerne";
+"Switching" = "Skifter";
+"Selected" = "Valgt";
+"Not selected" = "Ikke valgt";
+"Choose which devices appear in the menu." = "Vælg de enheder, der vises i menuen.";
+"Hiding a device does not change the current input, output, or settings in other apps." = "Hvis du skjuler en enhed, ændres den aktuelle indgang, udgang eller indstillingerne i andre apps ikke.";
+"Not connected" = "Ikke tilsluttet";
+"Show %@ (%@)" = "Vis %@ (%@)";
+"No output devices" = "Ingen udgangsenheder";
+"No input devices" = "Ingen indgangsenheder";
+"Could not switch to %@. Please try again." = "Kunne ikke skifte til %@. Prøv igen.";
+"Audio operation failed (%d). Check the device connection and try again." = "Lydhandlingen mislykkedes (%d). Kontroller enhedens forbindelse, og prøv igen.";
+"Soniclet — audio devices" = "Soniclet — lydenheder";
+"Soniclet Settings" = "Indstillinger til Soniclet";
+
+/* Status menu and system-managed login item. */
+"General" = "Generelt";
+"Launch at login" = "Åbn ved login";
+"Approval is required in System Settings." = "Godkendelse i Systemindstillinger er påkrævet.";
+"Open Login Items Settings…" = "Åbn indstillinger til loginemner…";
+"Could not change login settings: %@" = "Kunne ikke ændre loginindstillingerne: %@";
+"Mute Output" = "Slå udgangslyd fra";
+"Unmute Output" = "Slå udgangslyd til";
+"Window" = "Vindue";
+"Close" = "Luk";
+"%@: %@" = "%@: %@";
+
+/* Volume step buttons. */
+"Decrease volume" = "Skru ned";
+"Increase volume" = "Skru op";
+
+"Connect AirPlay devices in System Sound Settings first." = "Tilslut først AirPlay-enheder i systemets lydindstillinger.";

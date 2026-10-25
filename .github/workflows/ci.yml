@@ -21,7 +21,7 @@ jobs:
         run: ./test.sh
       - name: Verify architecture and signature
         run: |
-          lipo -verify_arch arm64 x86_64 'Sound Switch.app/Contents/MacOS/SoundSwitch'
-          codesign --verify --deep --strict 'Sound Switch.app'
+          lipo -verify_arch arm64 x86_64 'Soniclet.app/Contents/MacOS/Soniclet'
+          codesign --verify --deep --strict 'Soniclet.app'
       - name: Compile graphical smoke test
         run: ./test-settings.sh --build-only

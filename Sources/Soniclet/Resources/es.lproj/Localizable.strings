@@ -1,0 +1,47 @@
+/* Soniclet interface strings. Keep format placeholders unchanged. */
+"Sound" = "Sonido";
+"Output" = "Salida";
+"Input" = "Entrada";
+"System Sound Settings…" = "Ajustes de sonido del sistema…";
+"Soniclet Settings…" = "Ajustes de Soniclet…";
+"Quit Soniclet" = "Salir de Soniclet";
+"Close error" = "Cerrar mensaje de error";
+"Output volume" = "Volumen de salida";
+"Volume cannot be adjusted for this device" = "No se puede ajustar el volumen de este dispositivo";
+"Adjust the volume on the device" = "Ajusta el volumen en el dispositivo";
+"Volume for %@" = "Volumen de %@";
+"No output devices to show" = "No hay dispositivos de salida que mostrar";
+"No input devices to show" = "No hay dispositivos de entrada que mostrar";
+"Current: %@" = "Actual: %@";
+"The current device is hidden in settings" = "El dispositivo actual está oculto en los ajustes";
+"Switching" = "Cambiando";
+"Selected" = "Seleccionado";
+"Not selected" = "Sin seleccionar";
+"Choose which devices appear in the menu." = "Elige los dispositivos que aparecerán en el menú.";
+"Hiding a device does not change the current input, output, or settings in other apps." = "Ocultar un dispositivo no cambia la entrada, la salida ni los ajustes de otras apps.";
+"Not connected" = "Sin conexión";
+"Show %@ (%@)" = "Mostrar %@ (%@)";
+"No output devices" = "No hay dispositivos de salida";
+"No input devices" = "No hay dispositivos de entrada";
+"Could not switch to %@. Please try again." = "No se ha podido cambiar a %@. Inténtalo de nuevo.";
+"Audio operation failed (%d). Check the device connection and try again." = "La operación de audio ha fallado (%d). Comprueba la conexión del dispositivo e inténtalo de nuevo.";
+"Soniclet — audio devices" = "Soniclet — dispositivos de audio";
+"Soniclet Settings" = "Ajustes de Soniclet";
+
+/* Status menu and system-managed login item. */
+"General" = "General";
+"Launch at login" = "Abrir al iniciar sesión";
+"Approval is required in System Settings." = "Se requiere autorización en Ajustes del Sistema.";
+"Open Login Items Settings…" = "Abrir ajustes de ítems de inicio…";
+"Could not change login settings: %@" = "No se han podido cambiar los ajustes de inicio de sesión: %@";
+"Mute Output" = "Silenciar salida";
+"Unmute Output" = "Activar sonido de salida";
+"Window" = "Ventana";
+"Close" = "Cerrar";
+"%@: %@" = "%@: %@";
+
+/* Volume step buttons. */
+"Decrease volume" = "Bajar volumen";
+"Increase volume" = "Subir volumen";
+
+"Connect AirPlay devices in System Sound Settings first." = "Conecta primero los dispositivos AirPlay en los ajustes de sonido del sistema.";

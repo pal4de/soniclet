@@ -2,21 +2,13 @@
 
 ## Repository and first pull request
 
-The owner is `pal4de`; the repository name remains undecided. Create `main` with an empty bootstrap commit, then put the complete application, documentation, tests, and workflows in a feature branch and the first PR. The empty commit exists only to give GitHub a comparison base. Do not auto-merge the PR.
+The repository is `pal4de/soniclet`. Create `main` with an empty bootstrap commit, then put the complete application, documentation, tests, and workflows in a feature branch and the first PR. The empty commit exists only to give GitHub a comparison base. Do not auto-merge the PR.
 
 The public payload is source, tests, build metadata/scripts, and documentation. Local apps, ZIPs, screenshots with personal device names, experiments, caches, and account data stay out of Git.
 
-## Name directions
+## App identity
 
-Use an English name rather than Japanese-derived branding. Favor something short, readable, and suitable for a small audio utility. Candidates remain unapproved working ideas:
-
-- **ToneHop** — suggests moving quickly between audio destinations.
-- **Routelet** — a small routing utility; less explicit about audio without its description.
-- **Soundlet** — a small sound utility; the name is also used by an existing music community, so it needs further review.
-
-Do not rename app identity or create the GitHub repository until the user selects a name. Broad web searches are not a guarantee of name availability.
-
-Possible English description: “A native audio switcher for your Mac.” Keep the brand unchanged across translations and translate descriptive labels.
+The app is **Soniclet**, repository `pal4de/soniclet`, bundle identifier `io.github.pal4de.soniclet`. Preserve these identifiers after publication. The earlier local Sound Switch build used `local.sound-switch.app`; import only its device visibility preferences if Soniclet has no saved preferences. Login-item registration remains user controlled.
 
 ## Original app icon
 
@@ -26,7 +18,7 @@ A suitable direction is two small opposing audio paths around a central selectio
 
 Apple's current workflow: https://developer.apple.com/icon-composer/ and https://developer.apple.com/documentation/Xcode/creating-your-app-icon-using-icon-composer
 
-The local Xcode installation includes Icon Composer. Icon source and compiled artwork are not yet prepared. Do not fabricate a `.icon` bundle format or describe a static PNG as an adaptive icon.
+Icon source and compiled artwork are not yet prepared. Do not fabricate a `.icon` bundle format or describe a static PNG as an adaptive icon.
 
 ## Update notification
 
@@ -41,7 +33,7 @@ Prefer a small GitHub Releases notifier using Foundation URLSession. No dependen
 - Disclose the GitHub request in the privacy note. Send no audio/device details.
 - Test version comparison, missing/malformed fields, wrong release URLs, timeout/rate-limit handling, and the first release case with fixtures.
 
-Implementation waits for final repository identity. The current app does not yet make update-check network requests.
+The repository identity is finalized. The current app does not yet make update-check network requests.
 
 ## Other small publication essentials
 

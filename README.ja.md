@@ -1,4 +1,4 @@
-# Sound Switch（仮称）
+# Soniclet
 
 macOSの入出力デバイスをメニューバーから切り替える、小さなネイティブアプリです。[English](README.md)
 
@@ -17,12 +17,14 @@ macOSの入出力デバイスをメニューバーから切り替える、小さ
 ```sh
 ./build.sh
 ./test.sh
-open 'Sound Switch.app'
+open 'Soniclet.app'
 ```
 
 Apple SiliconとIntel両方の実行形式を作る場合は、`ARCHS='arm64 x86_64' ./build.sh`を使います。Intel実機での動作確認は別途必要です。
 
 生成アプリはローカル検証用のアドホック署名です。Developer ID署名・Appleの公証はまだ行っていません。
+
+旧Sound Switchの表示設定は、Sonicletの設定がまだない場合に限り引き継ぎます。ログイン時起動はSonicletの設定で管理します。
 
 ## 制限
 
@@ -36,6 +38,6 @@ AirPlay機器には、先に「システムのサウンド設定…」で接続�
 
 [開発方針](AGENTS.md)、[公開準備](docs/PUBLISHING-PLAN.md)、[リリース手順](docs/RELEASING.md)を参照してください。設定画面やメニューバーの変更後は、ログイン済みのmacOS環境で`./test-settings.sh`も実行します。
 
-名称・アイコン・更新通知・署名と公証の整備は進行中です。更新通知の通信はまだ実装していません。
+アイコン・更新通知・署名と公証の整備は進行中です。更新通知の通信はまだ実装していません。
 
 ライセンスは[MIT](LICENSE)です。

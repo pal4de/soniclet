@@ -11,7 +11,7 @@ The initial implementation belongs in a pull request. `main` starts with an empt
 
 ## Pending decisions
 
-- App/repository name and stable bundle ID.
+- App/repository identity is fixed: Soniclet, pal4de/soniclet, io.github.pal4de.soniclet.
 - Original icon and Icon Composer source, plus an older-macOS fallback.
 - GitHub Releases update notifier: HTTPS only, bounded launch-time checks, manual check, release-link validation; no installer or downloaded-code execution.
 - Developer ID and notarization availability.

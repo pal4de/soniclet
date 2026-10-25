@@ -1,0 +1,47 @@
+/* Soniclet interface strings. Keep format placeholders unchanged. */
+"Sound" = "Звук";
+"Output" = "Изход";
+"Input" = "Вход";
+"System Sound Settings…" = "Системни настройки за звук…";
+"Soniclet Settings…" = "Настройки на Soniclet…";
+"Quit Soniclet" = "Изход от Soniclet";
+"Close error" = "Затваряне на съобщението за грешка";
+"Output volume" = "Сила на изходния звук";
+"Volume cannot be adjusted for this device" = "Силата на звука на това устройство не може да се регулира";
+"Adjust the volume on the device" = "Регулирайте силата на звука от устройството";
+"Volume for %@" = "Сила на звука за %@";
+"No output devices to show" = "Няма изходни устройства за показване";
+"No input devices to show" = "Няма входни устройства за показване";
+"Current: %@" = "Текущо: %@";
+"The current device is hidden in settings" = "Текущото устройство е скрито в настройките";
+"Switching" = "Превключване";
+"Selected" = "Избрано";
+"Not selected" = "Не е избрано";
+"Choose which devices appear in the menu." = "Изберете кои устройства да се показват в менюто.";
+"Hiding a device does not change the current input, output, or settings in other apps." = "Скриването на устройство не променя текущия вход, изход или настройките на други приложения.";
+"Not connected" = "Няма връзка";
+"Show %@ (%@)" = "Показване на %@ (%@)";
+"No output devices" = "Няма изходни устройства";
+"No input devices" = "Няма входни устройства";
+"Could not switch to %@. Please try again." = "Неуспешно превключване към %@. Опитайте отново.";
+"Audio operation failed (%d). Check the device connection and try again." = "Аудио операцията е неуспешна (%d). Проверете връзката на устройството и опитайте отново.";
+"Soniclet — audio devices" = "Soniclet — аудио устройства";
+"Soniclet Settings" = "Настройки на Soniclet";
+
+/* Status menu and system-managed login item. */
+"General" = "Основни";
+"Launch at login" = "Отваряне при влизане";
+"Approval is required in System Settings." = "Необходимо е одобрение в Системни настройки.";
+"Open Login Items Settings…" = "Отваряне на настройките за елементи при влизане…";
+"Could not change login settings: %@" = "Настройките за влизане не могат да се променят: %@";
+"Mute Output" = "Изключване на изходния звук";
+"Unmute Output" = "Включване на изходния звук";
+"Window" = "Прозорец";
+"Close" = "Затваряне";
+"%@: %@" = "%@: %@";
+
+/* Volume step buttons. */
+"Decrease volume" = "Намаляване на звука";
+"Increase volume" = "Увеличаване на звука";
+
+"Connect AirPlay devices in System Sound Settings first." = "Първо свържете устройствата AirPlay в системните настройки за звук.";

@@ -1,0 +1,47 @@
+/* Soniclet interface strings. Keep format placeholders unchanged. */
+"Sound" = "الصوت";
+"Output" = "الإخراج";
+"Input" = "الإدخال";
+"System Sound Settings…" = "إعدادات صوت النظام…";
+"Soniclet Settings…" = "إعدادات Soniclet…";
+"Quit Soniclet" = "إنهاء Soniclet";
+"Close error" = "إغلاق رسالة الخطأ";
+"Output volume" = "مستوى صوت الإخراج";
+"Volume cannot be adjusted for this device" = "لا يمكن ضبط مستوى صوت هذا الجهاز";
+"Adjust the volume on the device" = "اضبط مستوى الصوت من الجهاز";
+"Volume for %@" = "مستوى صوت %@";
+"No output devices to show" = "لا توجد أجهزة إخراج لعرضها";
+"No input devices to show" = "لا توجد أجهزة إدخال لعرضها";
+"Current: %@" = "الحالي: %@";
+"The current device is hidden in settings" = "الجهاز الحالي مخفي في الإعدادات";
+"Switching" = "جارٍ التبديل";
+"Selected" = "محدد";
+"Not selected" = "غير محدد";
+"Choose which devices appear in the menu." = "اختر الأجهزة التي تظهر في القائمة.";
+"Hiding a device does not change the current input, output, or settings in other apps." = "لا يؤدي إخفاء جهاز إلى تغيير الإدخال أو الإخراج الحالي أو إعدادات التطبيقات الأخرى.";
+"Not connected" = "غير متصل";
+"Show %@ (%@)" = "إظهار %@ (%@)";
+"No output devices" = "لا توجد أجهزة إخراج";
+"No input devices" = "لا توجد أجهزة إدخال";
+"Could not switch to %@. Please try again." = "تعذر التبديل إلى %@. حاول مرة أخرى.";
+"Audio operation failed (%d). Check the device connection and try again." = "فشلت العملية الصوتية (%d). تحقق من اتصال الجهاز وحاول مرة أخرى.";
+"Soniclet — audio devices" = "Soniclet — أجهزة الصوت";
+"Soniclet Settings" = "إعدادات Soniclet";
+
+/* Status menu and system-managed login item. */
+"General" = "عام";
+"Launch at login" = "فتح عند تسجيل الدخول";
+"Approval is required in System Settings." = "تلزم الموافقة في إعدادات النظام.";
+"Open Login Items Settings…" = "فتح إعدادات عناصر الدخول…";
+"Could not change login settings: %@" = "تعذر تغيير إعدادات تسجيل الدخول: %@";
+"Mute Output" = "كتم صوت الإخراج";
+"Unmute Output" = "إلغاء كتم صوت الإخراج";
+"Window" = "نافذة";
+"Close" = "إغلاق";
+"%@: %@" = "%@: %@";
+
+/* Volume step buttons. */
+"Decrease volume" = "خفض مستوى الصوت";
+"Increase volume" = "رفع مستوى الصوت";
+
+"Connect AirPlay devices in System Sound Settings first." = "وصّل أجهزة AirPlay أولاً من إعدادات الصوت في النظام.";
