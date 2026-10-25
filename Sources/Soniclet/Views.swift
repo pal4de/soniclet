@@ -3,18 +3,21 @@ import UniformTypeIdentifiers
 
 struct VolumeMenuContent: View {
     @ObservedObject var model: AudioModel
+    private typealias InitialVolume = State<Float?>
+    @InitialVolume private var initialVolume: Float?
     var body: some View {
-        HStack(spacing: 8) {
-            Button { model.stepVolume(up: false) } label: {
-                Image(systemName: "speaker.fill").foregroundStyle(.secondary)
-                    .frame(width: 24, height: 24)
-            }
-            .buttonStyle(MenuRowButtonStyle())
-            .disabled(!model.outputVolume.canAdjust)
-            .accessibilityLabel(L10n.text("Decrease volume"))
-            .help(L10n.text("Decrease volume"))
+        HStack(spacing: 4) {
+            VolumeStepButton(up: false, enabled: model.outputVolume.canAdjust) { model.stepVolume(up: false) }
+                .frame(width: 18, height: 24)
             Slider(value: Binding(get: { Double(model.outputVolume.muted ? 0 : model.outputVolume.value) },
-                                  set: { model.changeVolume(Float($0)) }), in: 0...1)
+                                  set: { model.changeVolume(Float($0)) }), in: 0...1,
+                   onEditingChanged: { editing in
+                       if editing { initialVolume = model.outputVolume.value }
+                       else {
+                           if let initialVolume, initialVolume != model.outputVolume.value { model.playVolumeFeedback() }
+                           initialVolume = nil
+                       }
+                   })
                 .controlSize(.large)
                 .tint(Color(nsColor: .controlAccentColor))
                 .disabled(!model.outputVolume.canAdjust)
@@ -23,16 +26,9 @@ struct VolumeMenuContent: View {
                     ? Double(model.outputVolume.muted ? 0 : model.outputVolume.value).formatted(.percent.precision(.fractionLength(0)))
                     : L10n.text("Volume cannot be adjusted for this device"))
                 .help(model.outputVolume.canAdjust ? L10n.format("Volume for %@", model.outputName) : L10n.text("Adjust the volume on the device"))
-            Button { model.stepVolume(up: true) } label: {
-                Image(systemName: "speaker.wave.3.fill").foregroundStyle(.secondary)
-                    .frame(width: 24, height: 24)
-            }
-            .buttonStyle(MenuRowButtonStyle())
-            .disabled(!model.outputVolume.canAdjust)
-            .accessibilityLabel(L10n.text("Increase volume"))
-            .help(L10n.text("Increase volume"))
+            VolumeStepButton(up: true, enabled: model.outputVolume.canAdjust) { model.stepVolume(up: true) }
+                .frame(width: 18, height: 24)
         }
-        .font(.system(size: 15))
         .frame(height: 24)
         .padding(.horizontal, 12).padding(.vertical, 8)
         .frame(width: 304)
@@ -78,16 +74,22 @@ struct DeviceSettingsView: View {
             Section(L10n.text("General")) {
                 Picker(L10n.text("Menu bar icon"), selection: $menuBarIconStyle) {
                     Label {
-                        Text(L10n.text("System icon"))
-                    } icon: {
-                        Image(systemName: "speaker.wave.3.fill", variableValue: 0.5)
-                    }.labelStyle(.titleAndIcon).tag(MenuBarIconStyle.system)
-                    Label {
                         Text("Soniclet")
                     } icon: {
-                        Image(nsImage: StatusMark.image(volume: 0.5, muted: false) ?? NSImage())
+                        Image(nsImage: StatusMark.image(volume: model.outputVolume.canAdjust ? model.outputVolume.value : nil,
+                                                       muted: model.outputVolume.muted) ?? NSImage())
                             .renderingMode(.template)
                     }.labelStyle(.titleAndIcon).tag(MenuBarIconStyle.soniclet)
+                    Label {
+                        Text(L10n.text("Connected device"))
+                    } icon: {
+                        Image(systemName: model.outputSymbol, variableValue: model.outputSymbolValue)
+                    }.labelStyle(.titleAndIcon).tag(MenuBarIconStyle.device)
+                    Label {
+                        Text(L10n.text("Speaker"))
+                    } icon: {
+                        Image(systemName: model.volumeSymbol, variableValue: model.outputSymbolValue)
+                    }.labelStyle(.titleAndIcon).tag(MenuBarIconStyle.system)
                 }.pickerStyle(.menu)
                 Toggle(L10n.text("Launch at login"), isOn: Binding(
                     get: { loginItem.isRequested }, set: { loginItem.setEnabled($0) }
@@ -126,33 +128,6 @@ struct DeviceSettingsView: View {
         .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)) { _ in loginItem.refresh() }
     }
 }
-
-/// NSMenu's custom content contains ordinary SwiftUI controls.
-/// Use SwiftUI's hover tracking and semantic system shading for a shared row style.
-private struct MenuRowButtonStyle: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label.modifier(MenuRowHighlight(isPressed: configuration.isPressed))
-    }
-}
-
-private struct MenuRowHighlight: ViewModifier {
-    let isPressed: Bool
-    // Disambiguate the State property wrapper from the SDK's State macro.
-    private typealias HoverFlag = State<Bool>
-    @HoverFlag private var hovered = false
-
-    func body(content: Content) -> some View {
-        content
-            .background {
-                RoundedRectangle(cornerRadius: 6)
-                    .fill(isPressed ? .tertiary : .quaternary)
-                    .opacity(hovered || isPressed ? 1 : 0)
-            }
-            .onHover { hovered = $0 }
-            .onDisappear { hovered = false }
-    }
-}
-
 
 private struct DevicePreferenceRow: View {
     @ObservedObject var model: AudioModel

@@ -1,7 +1,8 @@
 import AppKit
 
 enum MenuBarIconStyle: String, CaseIterable {
-    case system, soniclet
+    case system, device, soniclet
+    func symbol(device: String, volume: String) -> String { self == .device ? device : volume }
     static let preferenceKey = "menuBarIconStyle"
     static func current(in defaults: UserDefaults = .standard) -> Self {
         defaults.string(forKey: preferenceKey).flatMap(Self.init(rawValue:)) ?? .system

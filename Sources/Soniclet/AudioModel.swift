@@ -20,6 +20,8 @@ final class AudioModel: ObservableObject {
     private var refreshWork: DispatchWorkItem?
     private var wakeObserver: NSObjectProtocol?
     private var selectionRequest = UUID()
+    private let feedbackSound = NSSound(named: "Pop")
+    private var feedbackDate = Date.distantPast
 
     init(store: DevicePreferences = DevicePreferences()) {
         self.store = store
@@ -168,6 +170,7 @@ final class AudioModel: ObservableObject {
         } catch { pendingSelection = nil; errorMessage = error.localizedDescription; refresh() }
     }
     func changeVolume(_ value: Float) {
+        guard outputVolume.canAdjust, value.isFinite else { return }
         do {
             try service.setVolume(value, on: outputID, controls: outputVolume)
             outputVolume = service.volume(outputID)
@@ -177,7 +180,17 @@ final class AudioModel: ObservableObject {
         refresh()
         guard outputVolume.canAdjust else { return }
         let step: Float = 1.0 / 16.0
-        changeVolume(max(0, min(1, outputVolume.value + (up ? step : -step))))
+        let previous = outputVolume.value
+        changeVolume(max(0, min(1, previous + (up ? step : -step))))
+        if outputVolume.value != previous { playVolumeFeedback() }
+    }
+    func playVolumeFeedback() {
+        guard outputVolume.canAdjust, !outputVolume.muted, outputVolume.value > 0,
+              Date().timeIntervalSince(feedbackDate) > 0.1 else { return }
+        feedbackDate = Date()
+        feedbackSound?.stop()
+        feedbackSound?.playbackDeviceIdentifier = devices.first { $0.key.direction == .output && $0.objectID == outputID }?.key.uid
+        feedbackSound?.play()
     }
     func toggleOutputMute() {
         refresh()
@@ -188,11 +201,7 @@ final class AudioModel: ObservableObject {
     }
     var outputSymbol: String {
         guard let output = devices.first(where: { $0.key.direction == .output && $0.objectID == outputID }) else { return volumeSymbol }
-        let icon = symbol(for: output)
-        if icon == "headphones" || icon == "earbuds" || icon.hasPrefix("airpods") || icon.hasPrefix("beats.") ||
-            icon.hasPrefix("homepod") || icon.hasPrefix("appletv") || icon == "airplay.audio" ||
-            icon == "hifispeaker.fill" || icon == "display" { return icon }
-        return volumeSymbol
+        return symbol(for: output)
     }
     var volumeSymbol: String {
         outputVolume.muted || (outputVolume.canAdjust && outputVolume.value <= 0)

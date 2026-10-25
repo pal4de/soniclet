@@ -60,15 +60,21 @@ enum SettingsSmokeTest {
                 fail("Waveform levels changed the status item width")
             }
         }
+        UserDefaults.standard.set(MenuBarIconStyle.device.rawValue, forKey: MenuBarIconStyle.preferenceKey)
+        controller.update()
+        guard controller.statusItem.length == requestedWidth,
+              abs((controller.statusItem.button?.frame.width ?? 0) - markWidth) <= pixelTolerance else {
+            fail("Device icon mode changed the status item width")
+        }
         if let originalStyle { UserDefaults.standard.set(originalStyle, forKey: MenuBarIconStyle.preferenceKey) }
         else { UserDefaults.standard.removeObject(forKey: MenuBarIconStyle.preferenceKey) }
         controller.update()
-        print("PASS: fixed status item width across volume symbols and both icon styles")
+        print("PASS: fixed status item width across volume symbols and all three icon styles")
 
         let primary = controller.makeDeviceMenu()
         let deviceItems = primary.items.filter { $0.representedObject is DeviceKey }
         guard primary.items.filter({ $0.action != nil && $0.isEnabled }).allSatisfy({ $0.view == nil }),
-              deviceItems.allSatisfy({ $0.target === controller && $0.state == .off && $0.image?.isValid == true }),
+              deviceItems.allSatisfy({ $0.target === controller && $0.state == .off && $0.image?.isValid == true && $0.toolTip != $0.title }),
               primary.item(withTag: 900)?.title == "Soniclet" else {
             fail("Selectable menu items must use native rows with visible device images")
         }
@@ -78,6 +84,7 @@ enum SettingsSmokeTest {
             }
         }
         print("PASS: native selectable menu rows, device image visibility and no checkmarks")
+        await verifyVolumeButtons()
         await verifyDragPayload()
 
         let menu = controller.makeContextMenu()
@@ -133,6 +140,32 @@ enum SettingsSmokeTest {
         fflush(stdout)
         NSApplication.shared.terminate(nil)
     }
+    private static func verifyVolumeButtons() async {
+        var calls = 0
+        let host = NSHostingView(rootView: VolumeStepButton(up: true, enabled: false) { calls += 1 })
+        let window = NSWindow(contentRect: NSRect(x: -1000, y: -1000, width: 30, height: 30),
+                              styleMask: .borderless, backing: .buffered, defer: false)
+        window.isReleasedWhenClosed = false
+        window.contentView = host
+        func button(in view: NSView) -> NSButton? {
+            (view as? NSButton) ?? view.subviews.lazy.compactMap { button(in: $0) }.first
+        }
+        host.layoutSubtreeIfNeeded()
+        try? await Task.sleep(nanoseconds: 100_000_000)
+        guard let native = button(in: host), !native.isEnabled,
+              native.isContinuous, !native.isBordered, !native.showsBorderOnlyWhileMouseInside,
+              native.toolTip == nil, (native.cell as? NSButtonCell)?.highlightsBy == .contentsCellMask,
+              native.alternateImage != nil else { fail("Volume endpoints must use disabled, borderless, continuous native buttons") }
+        host.rootView = VolumeStepButton(up: true, enabled: true) { calls += 1 }
+        host.layoutSubtreeIfNeeded()
+        try? await Task.sleep(nanoseconds: 100_000_000)
+        guard let active = button(in: host), active.isEnabled else { fail("Volume endpoint did not react to capability changes") }
+        active.performClick(nil)
+        guard calls == 1 else { fail("Native volume endpoint did not send its action") }
+        window.close()
+        print("PASS: native volume endpoint action, press-only highlight, continuous repetition configuration and disabled state")
+    }
+
     private static func verifyDragPayload() async {
         let key = DeviceKey(uid: "drag-fixture", direction: .output)
         let provider = DeviceDragItem(key: key).itemProvider()

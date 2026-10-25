@@ -16,7 +16,7 @@ struct OutputVolume {
     let channels: [UInt32]
     let muteElement: UInt32?
     let muted: Bool
-    var canAdjust: Bool { !channels.isEmpty }
+    var canAdjust: Bool { !channels.isEmpty && value.isFinite }
 }
 
 /// Only reads device metadata and changes system defaults / hardware controls.
@@ -91,7 +91,7 @@ final class CoreAudioService {
                 guard eligible != 0 else { continue }
                 let symbol: String
                 if direction == .input {
-                    symbol = transport == kAudioDeviceTransportTypeBuiltIn ? "laptopcomputer" : "mic.fill"
+                    symbol = transport == kAudioDeviceTransportTypeBuiltIn ? "laptopcomputer" : "mic"
                 } else if let canonical = canonicalOutputSymbol(id) {
                     symbol = canonical
                 } else if hasHeadphoneStream(id) {

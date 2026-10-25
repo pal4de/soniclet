@@ -8,9 +8,9 @@ A small, native macOS menu-bar utility for choosing audio input and output devic
 
 - Switch the Mac's default audio input and output.
 - Hide unused devices from this app, independently for input and output.
-- Adjust output volume; the buttons at either end move by one normal volume-key step (1/16).
+- Adjust output volume; the buttons at either end move by one normal volume-key step (1/16), with native press-and-hold repetition. A short system sound provides feedback after slider edits or button steps. Unsupported hardware controls are disabled.
 - Right-click the menu-bar icon for the current devices, output mute, settings, and quit.
-- Choose the standard speaker or Soniclet’s monochrome mark from the icon picker in Settings. The initial choice is the system icon; both picker previews use volume level two. Waveform bars brighten from left to right with volume; mute dims all three without a slash.
+- Choose Soniclet’s monochrome mark, the connected output device, or the speaker from the icon picker in Settings. The initial choice is the speaker; previews follow the current volume. Speaker mode always represents volume and mute, without headphone exceptions. Waveform bars brighten from left to right with volume; mute dims all three without a slash.
 - Launch at login using macOS ServiceManagement.
 - Follow macOS language preferences, with 34 bundled translations.
 - See new stable GitHub Releases in the menu, with manual update checking.
@@ -42,7 +42,7 @@ Output volume and mute depend on hardware support. For fixed-volume outputs, adj
 
 Connect an AirPlay device through **System Sound Settings…** first. This app lists devices exposed by Core Audio; it cannot discover or connect all unconnected AirPlay destinations such as HomePod. An active AirPlay endpoint may appear with a generic name. Disconnected AirPlay session endpoints are not retained as permanent devices.
 
-Selectable device and command rows use standard NSMenuItems. AppKit owns their layout, hover, press-drag-release selection, keyboard navigation and accessibility; only the circular device image is composed by the app. On macOS 27+, image visibility is explicitly requested. Battery percentages use native menu badges. Only the slider, linked helper text and disabled pending row need custom views. Settings uses declared per-direction data types with native item-provider drag/drop, a whole-row preview and a move proposal. AirPods families are identified from canonical Core Audio metadata or the standard Bluetooth report's Apple vendor/product IDs; unknown devices keep a type-appropriate symbol. Same-shape and volume-only icon changes do not animate; explicit mute changes use SF Symbols Magic Replace on macOS 15+, with standard replacement on macOS 14.
+Selectable device and command rows use standard NSMenuItems. AppKit owns their layout, hover, press-drag-release selection, keyboard navigation and accessibility; only the circular device image is composed by the app. On macOS 27+, image visibility is explicitly requested. Battery percentages use native menu badges. Only controls, linked helper text and the disabled pending row need embedded views. Volume endpoints are borderless continuous NSButtons; AppKit handles their press state and repetition. Device rows retain normal menu dismissal after selection: disabling dismissal is not supported by the public macOS SwiftUI API, and Soniclet does not replace selectable rows or reopen the menu as a workaround. Settings uses declared per-direction data types with native item-provider drag/drop, a whole-row preview and a move proposal. AirPods families are identified from canonical Core Audio metadata or the standard Bluetooth report's Apple vendor/product IDs; unknown devices keep a type-appropriate symbol. Same-shape and volume-only icon changes do not animate; explicit mute changes use SF Symbols Magic Replace on macOS 15+, with standard replacement on macOS 14.
 
 Settings keeps the native grouped form. Drag a device’s handle to reorder that direction’s menu, or use its contextual Move Up/Move Down commands. Order is stored by stable device UID, survives reconnection, and does not change audio routing. Automatic priority-based routing is not enabled or implemented.
 
@@ -50,7 +50,7 @@ See [device icon coverage and fallbacks](docs/DEVICE-ICONS.md) for AirPods, Beat
 
 ### Headphones and battery information
 
-In system-icon mode, headphone outputs use the native headphone symbol. Soniclet-icon mode keeps the chosen app mark.
+Connected-device mode uses the current output’s symbol, including headphone model symbols when identified. Speaker mode only shows volume/mute; Soniclet mode keeps the chosen app mark.
 
 Bluetooth accessory metadata comes from macOS’s documented `system_profiler SPBluetoothDataType -json` utility, read off the main thread with a five-second report timeout. A refresh is requested on audio-device changes or menu opening, at most once per minute for an unchanged connection. Reports stay in memory and are never logged or sent to GitHub. Only connected entries are used. Hardware addresses take precedence over names; ambiguous names are not matched.
 

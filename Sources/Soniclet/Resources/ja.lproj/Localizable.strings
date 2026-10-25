@@ -64,3 +64,5 @@
 "Drag devices to change their order in the menu." = "ドラッグしてメニューの表示順を変更できます。";
 "Move Up" = "上へ移動";
 "Move Down" = "下へ移動";
+"Connected device" = "接続先";
+"Speaker" = "スピーカー";

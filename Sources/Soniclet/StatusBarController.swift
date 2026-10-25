@@ -82,7 +82,7 @@ final class StatusBarController: NSObject, NSMenuDelegate {
                                         muted: model.outputVolume.muted) {
             let level = StatusMark.level(volume: model.outputVolume.canAdjust ? model.outputVolume.value : nil, muted: model.outputVolume.muted)
             setStatusImage(image, key: "soniclet:\(level)", allowTransition: transition)
-        } else { displaySymbol(model.outputSymbol, value: model.outputSymbolValue, animated: transition) }
+        } else { displaySymbol(style.symbol(device: model.outputSymbol, volume: model.volumeSymbol), value: model.outputSymbolValue, animated: transition) }
         var tooltip = summaryLines
         if updates.release != nil { tooltip.append(updates.menuTitle) }
         statusItem.button?.toolTip = tooltip.joined(separator: "\n")
@@ -263,7 +263,7 @@ final class StatusBarController: NSObject, NSMenuDelegate {
         item.image = DeviceMenuIcon.image(symbol: model.symbol(for: device), selected: model.selected(device))
         if #available(macOS 27.0, *) { item.preferredImageVisibility = .visible }
         item.badge = nil
-        item.toolTip = device.name
+        item.toolTip = nil
         if device.key.direction == .output, let battery = model.accessory(for: device)?.batteryPercent {
             let percent = (Double(battery) / 100).formatted(.percent.precision(.fractionLength(0)))
             item.badge = NSMenuItemBadge(string: percent)

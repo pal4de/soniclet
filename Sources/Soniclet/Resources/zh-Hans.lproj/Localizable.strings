@@ -64,3 +64,5 @@
 "Drag devices to change their order in the menu." = "拖移设备以更改其在菜单中的顺序。";
 "Move Up" = "上移";
 "Move Down" = "下移";
+"Connected device" = "连接的设备";
+"Speaker" = "扬声器";

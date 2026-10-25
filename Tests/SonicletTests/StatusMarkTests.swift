@@ -16,6 +16,13 @@ struct StatusMarkTests {
         require(MenuBarIconStyle.current(in: defaults) == .system, "Invalid style falls back to system")
         defaults.set(MenuBarIconStyle.soniclet.rawValue, forKey: MenuBarIconStyle.preferenceKey)
         require(MenuBarIconStyle.current(in: defaults) == .soniclet, "Persist the selected style")
+        require(MenuBarIconStyle.allCases.count == 3, "Three menu-bar icon choices")
+        for device in ["display", "airpodspro", "headphones", "laptopcomputer"] {
+            require(MenuBarIconStyle.system.symbol(device: device, volume: "speaker.slash.fill") == "speaker.slash.fill", "Speaker mode only represents volume/mute")
+            require(MenuBarIconStyle.device.symbol(device: device, volume: "speaker.slash.fill") == device, "Device mode represents the connected output")
+        }
+        defaults.set(MenuBarIconStyle.device.rawValue, forKey: MenuBarIconStyle.preferenceKey)
+        require(MenuBarIconStyle.current(in: defaults) == .device, "Persist device style")
         for name in ["airpods", "airpodspro", "airpodsmax", "airpods.gen3", "beats.headphones", "beats.earphones", "beats.powerbeats3", "beats.powerbeatspro", "beats.studiobuds", "homepod.fill", "homepodmini.fill", "appletv.fill", "hifispeaker.fill"] {
             require(NSImage(systemSymbolName: name, accessibilityDescription: nil) != nil, "Missing system symbol: \(name)")
         }
