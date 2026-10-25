@@ -27,3 +27,12 @@ jobs:
           codesign --verify --deep --strict 'Soniclet.app'
       - name: Compile graphical smoke test
         run: ./test-settings.sh --build-only
+      - name: Build App Store sandbox variant
+        run: DISTRIBUTION_CHANNEL=app-store ARCHS='arm64 x86_64' ./build.sh
+      - name: Verify sandbox entitlement
+        run: |
+          codesign --verify --deep --strict '.build/app-store/Soniclet.app'
+          codesign --display --entitlements - --xml '.build/app-store/Soniclet.app' > .build/app-store/entitlements.plist
+          python3 -c "import plistlib; e=plistlib.load(open('.build/app-store/entitlements.plist','rb')); assert e == {'com.apple.security.app-sandbox': True}, e"
+      - name: Compile sandbox graphical smoke test
+        run: DISTRIBUTION_CHANNEL=app-store ./test-settings.sh --build-only

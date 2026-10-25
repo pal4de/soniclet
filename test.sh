@@ -52,3 +52,11 @@ swiftc -parse-as-library \
   "$project_dir/Tests/SonicletTests/DeviceSelectionProgressTests.swift" \
   -o "$build_dir/DeviceSelectionProgressTests"
 "$build_dir/DeviceSelectionProgressTests"
+
+swiftc -parse-as-library -D MAC_APP_STORE \
+  "$project_dir/Sources/Soniclet/Localization.swift" \
+  "$project_dir/Sources/Soniclet/ReleaseFeed.swift" \
+  "$project_dir/Sources/Soniclet/UpdateChecker.swift" \
+  "$project_dir/Tests/SonicletTests/StoreUpdateTests.swift" \
+  -o "$build_dir/StoreUpdateTests"
+"$build_dir/StoreUpdateTests"

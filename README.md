@@ -94,7 +94,18 @@ Soniclet imports device visibility preferences from the earlier local Sound Swit
 
 ## Privacy
 
-No telemetry or audio capture. Device names and visibility preferences remain on the Mac. Automatic update checks contact GitHub over HTTPS on launch and when opening a menu, at most once per 24 hours. Manual checks are also available. Requests contain the app version, not device names or audio settings. A validated available-release notice survives restarts; drafts and prereleases are ignored. Automatic failures stay quiet; manual checks show a result. The app opens the release page only on request and never downloads or installs an update.
+No telemetry or audio capture. Device names and visibility preferences remain on the Mac. In direct-download builds, automatic update checks contact GitHub over HTTPS on launch and when opening a menu, at most once per 24 hours. Manual checks are also available. Requests contain the app version, not device names or audio settings. A validated available-release notice survives restarts; drafts and prereleases are ignored. Automatic failures stay quiet; manual checks show a result. The app opens the release page only on request and never downloads or installs an update.
+
+## App Store sandbox build
+
+```sh
+DISTRIBUTION_CHANNEL=app-store ARCHS='arm64 x86_64' ./build.sh
+DISTRIBUTION_CHANNEL=app-store ./test-settings.sh --allow-background-focus
+```
+
+The variant is written to `.build/app-store/Soniclet.app` and carries the App Sandbox entitlement. It is ad-hoc signed unless a real signing identity is supplied; it is not an App Store upload package. Use a separate `APP_BUNDLE_ID` for local trials to preserve the installed app's container and preferences. Store builds delegate updates to the App Store and never check GitHub.
+
+The current Bluetooth report method returns no accessory data inside App Sandbox: battery levels, some model-specific symbols and dedicated headphone settings links lose coverage. Generic audio switching and Bluetooth Settings links remain. See [sandbox compatibility and verification limits](docs/SANDBOX.md). A successful local sandbox run is not App Review approval.
 
 ## Release status
 

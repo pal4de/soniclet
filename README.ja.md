@@ -79,3 +79,5 @@ Icon Composerの原稿と旧macOS向けアイコンを同梱しています。De
 自動選択が有効な入出力を手動指定している場合、メニューの「Sonicletの設定…」の直上に「自動選択に戻す」を表示し、手動指定をまとめて解除できます。自動選択をオフにしている方向の設定は変えません。
 
 設定画面の「一般」からも更新確認を実行できます。メニューと同じ更新状態・チェック処理を共有します。
+
+App Store向けのSandboxビルドは `DISTRIBUTION_CHANNEL=app-store ./build.sh` で作成できます。通常版とは別の `.build/app-store/Soniclet.app` に出力し、GitHub更新確認は無効にします。Bluetooth残量・一部の機種別アイコン・専用設定リンクには現行取得方法の制約があります。[検証結果](docs/SANDBOX.md)を参照してください。

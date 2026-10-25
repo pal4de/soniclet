@@ -7,6 +7,13 @@ enum SettingsSmokeTest {
     private static var allowsBackgroundFocus: Bool { CommandLine.arguments.contains("--allow-background-focus") }
     static func run(_ controller: StatusBarController) async {
         guard NSApplication.shared.activationPolicy() == .accessory else { fail("Not an accessory app") }
+        #if MAC_APP_STORE
+        guard NSHomeDirectory().contains("/Library/Containers/"),
+              !FileManager.default.isReadableFile(atPath: #filePath) else {
+            fail("Store GUI test must run inside an enforced sandbox, not just carry entitlements")
+        }
+        print("PASS: enforced App Sandbox, container home and blocked external source-file access")
+        #endif
         controller.showSettings()
         guard let first = await settingsWindow() else { fail("Settings did not become visible, key, and active") }
         capture(first.contentView, name: "settings-test-render.png")

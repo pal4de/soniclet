@@ -60,13 +60,13 @@ The update checker uses GitHub's latest stable release API. Only published, stab
 
 ## Mac App Store distribution (planned)
 
-GitHub Releases and the Mac App Store are both intended distribution channels. The current scripts prepare direct-download builds only; App Store submission is not ready.
+GitHub Releases and the Mac App Store are both intended distribution channels. The scripts now build direct-download and App Sandbox variants. App Store submission is not ready; see [SANDBOX.md](SANDBOX.md) for tested compatibility limits.
 
 Before adding a store build:
 
-- Enable App Sandbox and test actual default-device switching and volume control under it. Revalidate Bluetooth metadata collection via system_profiler, login-item registration, settings links, preferences, and network access; existing non-sandboxed tests do not establish sandbox compatibility.
+- App Sandbox is enabled for `DISTRIBUTION_CHANNEL=app-store`. Local tests cover enumeration, same-value default/volume writes, settings UI and menu tracking. Physical route changes, login registration and final signed distribution still need verification. Bluetooth report data is unavailable in the tested sandbox even with Bluetooth/network entitlements; do not claim battery/model-specific feature parity.
 - Prepare an App Store provisioning/signing and upload workflow, separate from Developer ID/notarization for GitHub downloads. Confirm the application identifier after membership activates.
-- Disable the GitHub update checker in the store build; let the App Store own updates.
+- Store builds disable GitHub checks and ignore GitHub release cache. The update action opens the App Store. Direct builds retain the existing GitHub notifier.
 - Test containerized preference storage and migration between channels, and avoid running duplicate menu-bar/login-item instances.
 - Prepare App Store Connect listing, screenshots, privacy declarations, support and privacy-policy URLs, and submission metadata. Review and approval have not occurred.
 
