@@ -21,23 +21,39 @@ enum SettingsSmokeTest {
         print("PASS: background reopening and settings window reuse")
         second.performClose(nil)
 
+        let originalStyle = UserDefaults.standard.object(forKey: StatusMark.preferenceKey)
+        UserDefaults.standard.set(false, forKey: StatusMark.preferenceKey)
+        controller.update()
+        try? await Task.sleep(nanoseconds: 50_000_000)
         let requestedWidth = controller.statusItem.length
+        // Native symbol/non-symbol buttons can align their bounds to adjacent
+        // half-points. The status item's allocated length must remain identical.
+        let pixelTolerance = 1 / (controller.statusItem.button?.window?.backingScaleFactor ?? 2) + 0.01
         let expectedWidth = controller.statusItem.button?.frame.width ?? 0
         guard expectedWidth > 0 else { fail("Status button has no width") }
         for name in ["speaker.slash.fill", "speaker.wave.1.fill", "speaker.wave.2.fill", "speaker.wave.3.fill"] {
             controller.displaySymbol(name)
             try? await Task.sleep(nanoseconds: 50_000_000)
-            guard abs((controller.statusItem.button?.frame.width ?? 0) - expectedWidth) < 0.5 else {
+            guard controller.statusItem.length == requestedWidth, abs((controller.statusItem.button?.frame.width ?? 0) - expectedWidth) <= pixelTolerance else {
                 fail("Status item width changed for \(name): \(controller.statusItem.button?.frame.width ?? 0) vs \(expectedWidth), requested \(requestedWidth)")
             }
         }
-        let originalStyle = UserDefaults.standard.object(forKey: StatusMark.preferenceKey)
         UserDefaults.standard.set(true, forKey: StatusMark.preferenceKey)
         controller.update()
         guard controller.statusItem.button?.image?.isTemplate == true,
               controller.statusItem.button?.image?.size == NSSize(width: 18, height: 18),
-              abs((controller.statusItem.button?.frame.width ?? 0) - expectedWidth) < 0.5 else {
-            fail("App-icon style is not a fixed-width native template")
+              controller.statusItem.length == requestedWidth,
+              abs((controller.statusItem.button?.frame.width ?? 0) - expectedWidth) <= pixelTolerance else {
+            fail("App-icon style: template=\(controller.statusItem.button?.image?.isTemplate ?? false), size=\(String(describing: controller.statusItem.button?.image?.size)), width=\(controller.statusItem.button?.frame.width ?? 0), expected=\(expectedWidth), pref=\(UserDefaults.standard.bool(forKey: StatusMark.preferenceKey))")
+        }
+        let markWidth = controller.statusItem.button?.frame.width ?? 0
+        for level in 0...3 {
+            controller.statusItem.button?.image = StatusMark.makeImage(level: level)
+            try? await Task.sleep(nanoseconds: 50_000_000)
+            guard controller.statusItem.length == requestedWidth,
+                  abs((controller.statusItem.button?.frame.width ?? 0) - markWidth) <= pixelTolerance else {
+                fail("Waveform levels changed the status item width")
+            }
         }
         if let originalStyle { UserDefaults.standard.set(originalStyle, forKey: StatusMark.preferenceKey) }
         else { UserDefaults.standard.removeObject(forKey: StatusMark.preferenceKey) }
