@@ -1,0 +1,47 @@
+/* Sound Switch interface strings. Keep format placeholders unchanged. */
+"Sound" = "Bunyi";
+"Output" = "Output";
+"Input" = "Input";
+"System Sound Settings…" = "Seting Bunyi Sistem…";
+"Sound Switch Settings…" = "Seting Sound Switch…";
+"Quit Sound Switch" = "Keluar daripada Sound Switch";
+"Close error" = "Tutup mesej ralat";
+"Output volume" = "Kelantangan output";
+"Volume cannot be adjusted for this device" = "Kelantangan peranti ini tidak boleh dilaraskan";
+"Adjust the volume on the device" = "Laraskan kelantangan pada peranti";
+"Volume for %@" = "Kelantangan untuk %@";
+"No output devices to show" = "Tiada peranti output untuk ditunjukkan";
+"No input devices to show" = "Tiada peranti input untuk ditunjukkan";
+"Current: %@" = "Semasa: %@";
+"The current device is hidden in settings" = "Peranti semasa disembunyikan dalam seting";
+"Switching" = "Sedang bertukar";
+"Selected" = "Dipilih";
+"Not selected" = "Tidak dipilih";
+"Choose which devices appear in the menu." = "Pilih peranti yang ditunjukkan dalam menu.";
+"Hiding a device does not change the current input, output, or settings in other apps." = "Menyembunyikan peranti tidak mengubah input, output atau seting app lain.";
+"Not connected" = "Tidak disambungkan";
+"Show %@ (%@)" = "Tunjukkan %@ (%@)";
+"No output devices" = "Tiada peranti output";
+"No input devices" = "Tiada peranti input";
+"Could not switch to %@. Please try again." = "Tidak dapat bertukar kepada %@. Cuba lagi.";
+"Audio operation failed (%d). Check the device connection and try again." = "Operasi audio gagal (%d). Semak sambungan peranti dan cuba lagi.";
+"Sound Switch — audio devices" = "Sound Switch — peranti audio";
+"Sound Switch Settings" = "Seting Sound Switch";
+
+/* Status menu and system-managed login item. */
+"General" = "Umum";
+"Launch at login" = "Buka semasa log masuk";
+"Approval is required in System Settings." = "Kelulusan diperlukan dalam Seting Sistem.";
+"Open Login Items Settings…" = "Buka seting Item Log Masuk…";
+"Could not change login settings: %@" = "Tidak dapat mengubah seting log masuk: %@";
+"Mute Output" = "Senyapkan output";
+"Unmute Output" = "Nyahsenyapkan output";
+"Window" = "Tetingkap";
+"Close" = "Tutup";
+"%@: %@" = "%@: %@";
+
+/* Volume step buttons. */
+"Decrease volume" = "Kurangkan kelantangan";
+"Increase volume" = "Naikkan kelantangan";
+
+"Connect AirPlay devices in System Sound Settings first." = "Sambungkan peranti AirPlay dahulu dalam tetapan bunyi sistem.";

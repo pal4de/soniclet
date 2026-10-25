@@ -1,0 +1,12 @@
+.DS_Store
+.build/
+.swiftpm/
+*.app/
+*.zip
+*.dmg
+*.dSYM/
+menu.png
+settings.png
+release/
+*.p12
+*.mobileprovision

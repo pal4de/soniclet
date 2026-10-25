@@ -1,0 +1,47 @@
+/* Sound Switch interface strings. Keep format placeholders unchanged. */
+"Sound" = "صدا";
+"Output" = "خروجی";
+"Input" = "ورودی";
+"System Sound Settings…" = "تنظیمات صدای سیستم…";
+"Sound Switch Settings…" = "تنظیمات Sound Switch…";
+"Quit Sound Switch" = "خروج از Sound Switch";
+"Close error" = "بستن پیام خطا";
+"Output volume" = "بلندی صدای خروجی";
+"Volume cannot be adjusted for this device" = "بلندی صدای این دستگاه قابل تنظیم نیست";
+"Adjust the volume on the device" = "بلندی صدا را از روی دستگاه تنظیم کنید";
+"Volume for %@" = "بلندی صدای %@";
+"No output devices to show" = "دستگاه خروجی برای نمایش وجود ندارد";
+"No input devices to show" = "دستگاه ورودی برای نمایش وجود ندارد";
+"Current: %@" = "فعلی: %@";
+"The current device is hidden in settings" = "دستگاه فعلی در تنظیمات پنهان شده است";
+"Switching" = "در حال تغییر";
+"Selected" = "انتخاب‌شده";
+"Not selected" = "انتخاب‌نشده";
+"Choose which devices appear in the menu." = "دستگاه‌هایی را که در منو نمایش داده می‌شوند انتخاب کنید.";
+"Hiding a device does not change the current input, output, or settings in other apps." = "پنهان کردن دستگاه، ورودی یا خروجی فعلی یا تنظیمات سایر برنامه‌ها را تغییر نمی‌دهد.";
+"Not connected" = "متصل نیست";
+"Show %@ (%@)" = "نمایش %@ (%@)";
+"No output devices" = "دستگاه خروجی وجود ندارد";
+"No input devices" = "دستگاه ورودی وجود ندارد";
+"Could not switch to %@. Please try again." = "تغییر به %@ ممکن نشد. دوباره تلاش کنید.";
+"Audio operation failed (%d). Check the device connection and try again." = "عملیات صوتی ناموفق بود (%d). اتصال دستگاه را بررسی کنید و دوباره تلاش کنید.";
+"Sound Switch — audio devices" = "Sound Switch — دستگاه‌های صوتی";
+"Sound Switch Settings" = "تنظیمات Sound Switch";
+
+/* Status menu and system-managed login item. */
+"General" = "عمومی";
+"Launch at login" = "باز کردن هنگام ورود";
+"Approval is required in System Settings." = "تأیید در تنظیمات سیستم لازم است.";
+"Open Login Items Settings…" = "باز کردن تنظیمات موارد ورود…";
+"Could not change login settings: %@" = "تغییر تنظیمات ورود ممکن نشد: %@";
+"Mute Output" = "بی‌صدا کردن خروجی";
+"Unmute Output" = "باصدا کردن خروجی";
+"Window" = "پنجره";
+"Close" = "بستن";
+"%@: %@" = "%@: %@";
+
+/* Volume step buttons. */
+"Decrease volume" = "کاهش بلندی صدا";
+"Increase volume" = "افزایش بلندی صدا";
+
+"Connect AirPlay devices in System Sound Settings first." = "ابتدا دستگاه‌های AirPlay را در تنظیمات صدای سیستم متصل کنید.";

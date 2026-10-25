@@ -1,0 +1,47 @@
+/* Sound Switch interface strings. Keep format placeholders unchanged. */
+"Sound" = "Ήχος";
+"Output" = "Έξοδος";
+"Input" = "Είσοδος";
+"System Sound Settings…" = "Ρυθμίσεις ήχου συστήματος…";
+"Sound Switch Settings…" = "Ρυθμίσεις Sound Switch…";
+"Quit Sound Switch" = "Τερματισμός Sound Switch";
+"Close error" = "Κλείσιμο μηνύματος σφάλματος";
+"Output volume" = "Ένταση εξόδου";
+"Volume cannot be adjusted for this device" = "Δεν είναι δυνατή η ρύθμιση της έντασης αυτής της συσκευής";
+"Adjust the volume on the device" = "Ρυθμίστε την ένταση στη συσκευή";
+"Volume for %@" = "Ένταση για %@";
+"No output devices to show" = "Δεν υπάρχουν συσκευές εξόδου για εμφάνιση";
+"No input devices to show" = "Δεν υπάρχουν συσκευές εισόδου για εμφάνιση";
+"Current: %@" = "Τρέχουσα: %@";
+"The current device is hidden in settings" = "Η τρέχουσα συσκευή είναι κρυφή στις ρυθμίσεις";
+"Switching" = "Εναλλαγή σε εξέλιξη";
+"Selected" = "Επιλεγμένο";
+"Not selected" = "Μη επιλεγμένο";
+"Choose which devices appear in the menu." = "Επιλέξτε τις συσκευές που εμφανίζονται στο μενού.";
+"Hiding a device does not change the current input, output, or settings in other apps." = "Η απόκρυψη μιας συσκευής δεν αλλάζει την τρέχουσα είσοδο, έξοδο ή τις ρυθμίσεις άλλων εφαρμογών.";
+"Not connected" = "Δεν έχει συνδεθεί";
+"Show %@ (%@)" = "Εμφάνιση %@ (%@)";
+"No output devices" = "Δεν υπάρχουν συσκευές εξόδου";
+"No input devices" = "Δεν υπάρχουν συσκευές εισόδου";
+"Could not switch to %@. Please try again." = "Δεν ήταν δυνατή η εναλλαγή σε %@. Δοκιμάστε ξανά.";
+"Audio operation failed (%d). Check the device connection and try again." = "Η λειτουργία ήχου απέτυχε (%d). Ελέγξτε τη σύνδεση της συσκευής και δοκιμάστε ξανά.";
+"Sound Switch — audio devices" = "Sound Switch — συσκευές ήχου";
+"Sound Switch Settings" = "Ρυθμίσεις Sound Switch";
+
+/* Status menu and system-managed login item. */
+"General" = "Γενικά";
+"Launch at login" = "Άνοιγμα κατά τη σύνδεση";
+"Approval is required in System Settings." = "Απαιτείται έγκριση στις Ρυθμίσεις συστήματος.";
+"Open Login Items Settings…" = "Άνοιγμα ρυθμίσεων στοιχείων σύνδεσης…";
+"Could not change login settings: %@" = "Δεν ήταν δυνατή η αλλαγή των ρυθμίσεων σύνδεσης: %@";
+"Mute Output" = "Σίγαση εξόδου";
+"Unmute Output" = "Κατάργηση σίγασης εξόδου";
+"Window" = "Παράθυρο";
+"Close" = "Κλείσιμο";
+"%@: %@" = "%@: %@";
+
+/* Volume step buttons. */
+"Decrease volume" = "Μείωση έντασης";
+"Increase volume" = "Αύξηση έντασης";
+
+"Connect AirPlay devices in System Sound Settings first." = "Συνδέστε πρώτα τις συσκευές AirPlay στις ρυθμίσεις ήχου του συστήματος.";

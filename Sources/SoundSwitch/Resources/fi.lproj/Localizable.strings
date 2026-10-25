@@ -1,0 +1,47 @@
+/* Sound Switch interface strings. Keep format placeholders unchanged. */
+"Sound" = "Ääni";
+"Output" = "Ulostulo";
+"Input" = "Sisääntulo";
+"System Sound Settings…" = "Järjestelmän ääniasetukset…";
+"Sound Switch Settings…" = "Sound Switchin asetukset…";
+"Quit Sound Switch" = "Lopeta Sound Switch";
+"Close error" = "Sulje virheilmoitus";
+"Output volume" = "Ulostulon äänenvoimakkuus";
+"Volume cannot be adjusted for this device" = "Tämän laitteen äänenvoimakkuutta ei voi säätää";
+"Adjust the volume on the device" = "Säädä äänenvoimakkuutta laitteesta";
+"Volume for %@" = "Laitteen %@ äänenvoimakkuus";
+"No output devices to show" = "Ei näytettäviä ulostulolaitteita";
+"No input devices to show" = "Ei näytettäviä sisääntulolaitteita";
+"Current: %@" = "Nykyinen: %@";
+"The current device is hidden in settings" = "Nykyinen laite on piilotettu asetuksissa";
+"Switching" = "Vaihdetaan";
+"Selected" = "Valittu";
+"Not selected" = "Ei valittu";
+"Choose which devices appear in the menu." = "Valitse valikossa näytettävät laitteet.";
+"Hiding a device does not change the current input, output, or settings in other apps." = "Laitteen piilottaminen ei muuta nykyistä sisääntuloa, ulostuloa tai muiden appien asetuksia.";
+"Not connected" = "Ei yhteyttä";
+"Show %@ (%@)" = "Näytä %@ (%@)";
+"No output devices" = "Ei ulostulolaitteita";
+"No input devices" = "Ei sisääntulolaitteita";
+"Could not switch to %@. Please try again." = "Laitteeseen %@ ei voitu vaihtaa. Yritä uudelleen.";
+"Audio operation failed (%d). Check the device connection and try again." = "Äänitoiminto epäonnistui (%d). Tarkista laitteen yhteys ja yritä uudelleen.";
+"Sound Switch — audio devices" = "Sound Switch — äänilaitteet";
+"Sound Switch Settings" = "Sound Switchin asetukset";
+
+/* Status menu and system-managed login item. */
+"General" = "Yleiset";
+"Launch at login" = "Avaa kirjauduttaessa";
+"Approval is required in System Settings." = "Hyväksyntä Järjestelmäasetuksissa vaaditaan.";
+"Open Login Items Settings…" = "Avaa kirjautumiskohteiden asetukset…";
+"Could not change login settings: %@" = "Kirjautumisasetuksia ei voitu muuttaa: %@";
+"Mute Output" = "Mykistä ulostulo";
+"Unmute Output" = "Poista ulostulon mykistys";
+"Window" = "Ikkuna";
+"Close" = "Sulje";
+"%@: %@" = "%@: %@";
+
+/* Volume step buttons. */
+"Decrease volume" = "Vähennä äänenvoimakkuutta";
+"Increase volume" = "Lisää äänenvoimakkuutta";
+
+"Connect AirPlay devices in System Sound Settings first." = "Yhdistä AirPlay-laitteet ensin järjestelmän ääniasetuksissa.";

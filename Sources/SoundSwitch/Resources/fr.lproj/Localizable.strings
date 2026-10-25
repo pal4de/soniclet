@@ -1,0 +1,47 @@
+/* Sound Switch interface strings. Keep format placeholders unchanged. */
+"Sound" = "Son";
+"Output" = "Sortie";
+"Input" = "Entrée";
+"System Sound Settings…" = "Réglages Son du système…";
+"Sound Switch Settings…" = "Réglages de Sound Switch…";
+"Quit Sound Switch" = "Quitter Sound Switch";
+"Close error" = "Fermer le message d’erreur";
+"Output volume" = "Volume de sortie";
+"Volume cannot be adjusted for this device" = "Le volume de cet appareil ne peut pas être réglé";
+"Adjust the volume on the device" = "Réglez le volume directement sur l’appareil";
+"Volume for %@" = "Volume de %@";
+"No output devices to show" = "Aucun périphérique de sortie à afficher";
+"No input devices to show" = "Aucun périphérique d’entrée à afficher";
+"Current: %@" = "Actuellement : %@";
+"The current device is hidden in settings" = "Le périphérique actuel est masqué dans les réglages";
+"Switching" = "Changement en cours";
+"Selected" = "Sélectionné";
+"Not selected" = "Non sélectionné";
+"Choose which devices appear in the menu." = "Choisissez les périphériques à afficher dans le menu.";
+"Hiding a device does not change the current input, output, or settings in other apps." = "Masquer un périphérique ne modifie ni l’entrée et la sortie actuelles ni les réglages des autres apps.";
+"Not connected" = "Non connecté";
+"Show %@ (%@)" = "Afficher %@ (%@)";
+"No output devices" = "Aucun périphérique de sortie";
+"No input devices" = "Aucun périphérique d’entrée";
+"Could not switch to %@. Please try again." = "Impossible de passer à %@. Réessayez.";
+"Audio operation failed (%d). Check the device connection and try again." = "L’opération audio a échoué (%d). Vérifiez la connexion du périphérique et réessayez.";
+"Sound Switch — audio devices" = "Sound Switch — périphériques audio";
+"Sound Switch Settings" = "Réglages de Sound Switch";
+
+/* Status menu and system-managed login item. */
+"General" = "Général";
+"Launch at login" = "Ouvrir à l’ouverture de session";
+"Approval is required in System Settings." = "Une autorisation est requise dans Réglages Système.";
+"Open Login Items Settings…" = "Ouvrir les réglages d’ouverture de session…";
+"Could not change login settings: %@" = "Impossible de modifier les réglages d’ouverture de session : %@";
+"Mute Output" = "Couper le son de sortie";
+"Unmute Output" = "Rétablir le son de sortie";
+"Window" = "Fenêtre";
+"Close" = "Fermer";
+"%@: %@" = "%@: %@";
+
+/* Volume step buttons. */
+"Decrease volume" = "Baisser le volume";
+"Increase volume" = "Augmenter le volume";
+
+"Connect AirPlay devices in System Sound Settings first." = "Connectez d’abord les appareils AirPlay dans les réglages Son du système.";
