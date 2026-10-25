@@ -33,8 +33,6 @@ struct SoundMenuContent: View {
             Divider().padding(.horizontal, 12)
             VStack(alignment: .leading, spacing: 0) {
                 Button(action: openSystemSettings) { footerLabel("System Sound Settings…") }
-                Button(action: settingsAction) { footerLabel("Soniclet Settings…") }
-                    .keyboardShortcut(",", modifiers: .command)
                 if !model.bluetoothOutputs.isEmpty {
                     Button(action: openHeadphoneSettings) {
                         Text(SystemSettingsLinks.headphoneTitle(accessory: model.appleHeadphones)).font(.callout)
@@ -43,13 +41,16 @@ struct SoundMenuContent: View {
                             .contentShape(Rectangle())
                     }
                 }
+                Divider().padding(.horizontal, 6).padding(.vertical, 3)
+                Button(action: settingsAction) { footerLabel("Soniclet Settings…") }
+                    .keyboardShortcut(",", modifiers: .command)
+                Divider().padding(.horizontal, 6).padding(.vertical, 3)
                 Button(action: updateAction) {
                     Text(updates.menuTitle).font(.callout)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.horizontal, 8).padding(.vertical, 4)
                         .contentShape(Rectangle())
                 }.disabled(!updates.actionIsEnabled)
-                Divider().padding(.horizontal, 6).padding(.vertical, 3)
                 Button { NSApplication.shared.terminate(nil) } label: { footerLabel("Quit Soniclet") }
                     .keyboardShortcut("q", modifiers: .command)
             }

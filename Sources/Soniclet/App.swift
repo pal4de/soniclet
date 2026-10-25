@@ -66,17 +66,22 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                                       action: #selector(StatusBarController.showSettings), keyEquivalent: ",")
         settingsItem.target = statusController
         appMenu.addItem(settingsItem)
+        appMenu.addItem(.separator())
+        let sound = NSMenuItem(title: L10n.text("System Sound Settings…"),
+                               action: #selector(StatusBarController.showSystemSoundSettings), keyEquivalent: "")
+        sound.target = statusController
+        appMenu.addItem(sound)
         let headphones = NSMenuItem(title: L10n.text("Bluetooth Settings…"),
                                     action: #selector(StatusBarController.showHeadphoneSettings), keyEquivalent: "")
         headphones.tag = 107
         headphones.target = statusController
         appMenu.addItem(headphones)
+        appMenu.addItem(.separator())
         let update = NSMenuItem(title: L10n.text("Check for Updates…"),
                                 action: #selector(StatusBarController.checkForUpdates), keyEquivalent: "")
         update.tag = 104
         update.target = statusController
         appMenu.addItem(update)
-        appMenu.addItem(.separator())
         appMenu.addItem(withTitle: L10n.text("Quit Soniclet"), action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
         appItem.submenu = appMenu
         menu.addItem(appItem)

@@ -1,6 +1,7 @@
 import AppKit
 import Combine
 import SwiftUI
+import QuartzCore
 
 /// AppKit owns status-item geometry, menu tracking, outside clicks and Escape.
 @MainActor
@@ -12,6 +13,7 @@ final class StatusBarController: NSObject, NSMenuDelegate {
     private var observations = Set<AnyCancellable>()
     private let attachedMenu = NSMenu()
     private var forcedContext: Bool?
+    private var displayedIconKey: String?
     var currentMenu: NSMenu? { menuIsOpen ? attachedMenu : nil }
     private(set) var menuIsOpen = false
 
@@ -51,7 +53,8 @@ final class StatusBarController: NSObject, NSMenuDelegate {
         if MenuBarIconStyle.current() == .soniclet,
            let image = StatusMark.image(volume: model.outputVolume.canAdjust ? model.outputVolume.value : nil,
                                         muted: model.outputVolume.muted) {
-            statusItem.button?.image = image
+            let level = StatusMark.level(volume: model.outputVolume.canAdjust ? model.outputVolume.value : nil, muted: model.outputVolume.muted)
+            setStatusImage(image, key: "soniclet:\(level)")
         } else { displaySymbol(model.outputSymbol, value: model.outputSymbolValue) }
         var tooltip = summaryLines
         if updates.release != nil { tooltip.append(updates.menuTitle) }
@@ -84,7 +87,20 @@ final class StatusBarController: NSObject, NSMenuDelegate {
     func displaySymbol(_ name: String, value: Double = 1) {
         let image = NSImage(systemSymbolName: name, variableValue: value, accessibilityDescription: nil)
         image?.isTemplate = true
-        statusItem.button?.image = image
+        setStatusImage(image, key: "symbol:\(name):\(value)")
+    }
+
+    private func setStatusImage(_ image: NSImage?, key: String) {
+        guard let image, let button = statusItem.button, displayedIconKey != key else { return }
+        if displayedIconKey != nil && !NSWorkspace.shared.accessibilityDisplayShouldReduceMotion {
+            button.wantsLayer = true
+            let transition = CATransition()
+            transition.type = .fade
+            transition.duration = 0.15
+            button.layer?.add(transition, forKey: "iconTransition")
+        }
+        button.image = image
+        displayedIconKey = key
     }
 
     func makeDeviceMenu() -> NSMenu {
@@ -124,12 +140,12 @@ final class StatusBarController: NSObject, NSMenuDelegate {
         let settingsItem = NSMenuItem(title: L10n.text("Soniclet Settings…"), action: #selector(showSettings), keyEquivalent: ",")
         settingsItem.target = self
         menu.addItem(settingsItem)
+        menu.addItem(.separator())
         let update = NSMenuItem(title: updates.menuTitle, action: #selector(checkForUpdates), keyEquivalent: "")
         update.tag = 104
         update.target = self
         update.isEnabled = updates.actionIsEnabled
         menu.addItem(update)
-        menu.addItem(.separator())
         let quit = NSMenuItem(title: L10n.text("Quit Soniclet"), action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
         quit.target = NSApplication.shared
         menu.addItem(quit)
@@ -174,6 +190,11 @@ final class StatusBarController: NSObject, NSMenuDelegate {
         dismissMenu()
         // Finish native menu tracking before activating a settings window or alert.
         DispatchQueue.main.async { [weak self] in self?.settings.show() }
+    }
+
+    @objc func showSystemSoundSettings() {
+        dismissMenu()
+        DispatchQueue.main.async { SystemSettingsLinks.openSound() }
     }
 
     @objc func showHeadphoneSettings() {

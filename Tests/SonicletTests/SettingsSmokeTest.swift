@@ -68,8 +68,8 @@ enum SettingsSmokeTest {
               menu.items[1].title == controller.summaryLines[1],
               menu.items[3].isEnabled == (controller.model.outputVolume.muteElement != nil),
               menu.items[5].action == #selector(StatusBarController.showSettings),
-              menu.items[6].action == #selector(StatusBarController.checkForUpdates),
-              menu.items[7].isSeparatorItem,
+              menu.items[6].isSeparatorItem,
+              menu.items[7].action == #selector(StatusBarController.checkForUpdates),
               menu.items[8].action == #selector(NSApplication.terminate(_:)),
               controller.statusItem.button?.toolTip == controller.summaryLines.joined(separator: "\n") else {
             fail("Context menu or tooltip mismatch")
