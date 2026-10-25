@@ -58,6 +58,9 @@ final class AudioModel: ObservableObject {
         guard device.isBluetooth else { return nil }
         return AudioAccessory.match(uid: device.key.uid, name: device.name, in: accessories)
     }
+    func symbol(for device: AudioDevice) -> String {
+        accessory(for: device)?.symbol ?? device.symbol
+    }
     var appleHeadphones: AudioAccessory? {
         let ordered = bluetoothOutputs.sorted {
             if selected($0) != selected($1) { return selected($0) }
@@ -164,7 +167,7 @@ final class AudioModel: ObservableObject {
     }
     var outputSymbol: String {
         if let output = devices.first(where: { $0.key.direction == .output && $0.objectID == outputID }),
-           (output.symbol == "headphones" || output.symbol.hasPrefix("airpods")) { return output.symbol }
+           (output.symbol == "headphones" || output.symbol.hasPrefix("airpods")) { return symbol(for: output) }
         return volumeSymbol
     }
     var volumeSymbol: String {

@@ -7,6 +7,20 @@ struct AudioAccessory: Equatable, Sendable {
     let address: String?
     let isApple: Bool
     let batteryPercent: Int?
+    var productID: UInt16? = nil
+
+    var symbol: String? {
+        guard isApple, let productID else { return nil }
+        // Public system_profiler product IDs. No BLE packets or private selectors.
+        // Family reference: https://github.com/mooons/airpods-fw/blob/main/airpods-fw
+        switch productID {
+        case 0x2002, 0x200F: return "airpods"
+        case 0x2013, 0x2019, 0x201B: return "airpods.gen3"
+        case 0x200E, 0x2014, 0x2024, 0x2027: return "airpodspro"
+        case 0x200A, 0x201F, 0x202D: return "airpodsmax"
+        default: return nil
+        }
+    }
 
     static func match(uid: String, name: String, in entries: [Self]) -> Self? {
         let flattened = uid.lowercased().replacingOccurrences(of: ":", with: "").replacingOccurrences(of: "-", with: "")
@@ -44,7 +58,9 @@ struct AudioAccessory: Equatable, Sendable {
                     let ears = [percent("device_batteryLevelLeft"), percent("device_batteryLevelRight")].compactMap { $0 }
                     let battery = percent("device_batteryLevelMain") ?? percent("device_batteryLevel") ?? ears.min()
                     let vendor = (record["device_vendorID"] as? String ?? "").lowercased()
-                    return Self(name: name, address: address, isApple: vendor == "0x004c", batteryPercent: battery)
+                    let product = (record["device_productID"] as? String ?? "").lowercased()
+                    let productID = UInt16(product.hasPrefix("0x") ? String(product.dropFirst(2)) : product, radix: 16)
+                    return Self(name: name, address: address, isApple: vendor == "0x004c", batteryPercent: battery, productID: productID)
                 }
             }
         }

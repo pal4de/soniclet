@@ -186,7 +186,8 @@ private struct DevicePreferenceRow: View {
                 model.preferences.first { $0.key == preference.key }?.isVisible ?? true
             }, set: { model.setVisible($0, key: preference.key) })) {
                 HStack(spacing: 8) {
-                    Image(systemName: preference.symbol).foregroundStyle(.secondary).frame(width: 20)
+                    Image(systemName: model.devices.first { $0.key == preference.key }.map { model.symbol(for: $0) } ?? preference.symbol)
+                        .foregroundStyle(.secondary).frame(width: 20)
                     Text(preference.name)
                     Spacer(minLength: 4)
                     if !model.isConnected(preference.key) {

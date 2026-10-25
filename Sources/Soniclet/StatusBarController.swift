@@ -74,7 +74,7 @@ final class StatusBarController: NSObject, NSMenuDelegate {
     func update() {
         let style = MenuBarIconStyle.current()
         let context = IconContext(output: model.outputID, muted: model.outputVolume.muted, style: style,
-                                  family: model.devices.first { $0.key.direction == .output && $0.objectID == model.outputID }?.symbol)
+                                  family: model.devices.first { $0.key.direction == .output && $0.objectID == model.outputID }.map { model.symbol(for: $0) })
         let transition = displayedContext != context
         displayedContext = context
         if style == .soniclet,
@@ -253,7 +253,7 @@ final class StatusBarController: NSObject, NSMenuDelegate {
         item.toolTip = device.name
         item.isEnabled = !pending
         item.view = pending ? hosted(PendingDeviceMenuRow(name: device.name)) : nil
-        item.image = DeviceMenuIcon.image(symbol: device.symbol, selected: model.selected(device))
+        item.image = DeviceMenuIcon.image(symbol: model.symbol(for: device), selected: model.selected(device))
         if device.key.direction == .output, let battery = model.accessory(for: device)?.batteryPercent {
             let percent = (Double(battery) / 100).formatted(.percent.precision(.fractionLength(0)))
             item.badge = NSMenuItemBadge(string: percent)
