@@ -34,11 +34,14 @@ done
 lipo -create $binaries -output "$app_dir/Contents/MacOS/Soniclet"
 cp "$project_dir/Info.plist" "$app_dir/Contents/Info.plist"
 plutil -insert SonicletDistributionChannel -string "$channel" "$app_dir/Contents/Info.plist"
+if [[ "$channel" == app-store ]]; then
+  plutil -insert NSBluetoothAlwaysUsageDescription -string 'Identify connected audio devices for their icons and settings links.' "$app_dir/Contents/Info.plist"
+fi
 if [[ -n "${APP_BUNDLE_ID:-}" ]]; then
   plutil -replace CFBundleIdentifier -string "$APP_BUNDLE_ID" "$app_dir/Contents/Info.plist"
 fi
 ditto --norsrc --noextattr "$project_dir/Sources/Soniclet/Resources" "$app_dir/Contents/Resources"
-cp "$project_dir/Assets/StatusMark.svg" "$app_dir/Contents/Resources/StatusMark.svg"
+cp "$project_dir/Assets/Soniclet.icon/Assets/Routing.svg" "$app_dir/Contents/Resources/StatusMark.svg"
 "$project_dir/Tools/build-icon.sh" "$build_dir" "$app_dir/Contents/Resources"
 xattr -d com.apple.FinderInfo "$app_dir" 2>/dev/null || true
 signing_identity="${CODE_SIGN_IDENTITY:--}"

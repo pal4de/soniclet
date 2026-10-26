@@ -1,6 +1,9 @@
 import Foundation
+#if MAC_APP_STORE
+import IOBluetooth
+#endif
 
-/// Only fields reported by macOS's documented system_profiler utility are used.
+/// Public system_profiler reports (direct) or cached IOBluetooth metadata (store).
 /// No Bluetooth scanning, private selectors, or accessory control protocols.
 struct AudioAccessory: Equatable, Sendable {
     let name: String
@@ -79,6 +82,32 @@ struct AudioAccessory: Equatable, Sendable {
     }
 
     static func readConnected() throws -> [Self] {
+#if MAC_APP_STORE
+        // Read the system cache only: no scan, SDP query, connection or pairing.
+        let devices = IOBluetoothDevice.pairedDevices() as? [IOBluetoothDevice] ?? []
+        return devices.filter { $0.isConnected() }.compactMap { device -> Self? in
+            guard device.deviceClassMajor == kBluetoothDeviceClassMajorAudio,
+                  let name = device.name, !name.isEmpty else { return nil }
+            let category: String
+            switch Int(device.deviceClassMinor) {
+            case kBluetoothDeviceClassMinorAudioHeadset: category = "Headset"
+            case kBluetoothDeviceClassMinorAudioHeadphones: category = "Headphones"
+            case kBluetoothDeviceClassMinorAudioLoudspeaker: category = "Loudspeaker"
+            case kBluetoothDeviceClassMinorAudioCar: category = "CarAudio"
+            default: return nil
+            }
+            let uuid = IOBluetoothSDPUUID(uuid16: BluetoothSDPUUID16(kBluetoothSDPUUID16ServiceClassPnPInformation.rawValue))
+            let record = uuid.flatMap { device.getServiceRecord(for: $0) }
+            func number(_ attribute: UInt32) -> UInt16? {
+                guard let value = record?.getAttributeDataElement(BluetoothSDPServiceAttributeID(attribute))?.getNumberValue()?.intValue else { return nil }
+                return UInt16(exactly: value)
+            }
+            return fromCachedMetadata(name: name, address: device.addressString, category: category,
+                vendor: number(kBluetoothSDPAttributeDeviceIdentifierVendorID.rawValue),
+                vendorSource: number(kBluetoothSDPAttributeDeviceIdentifierVendorIDSource.rawValue),
+                product: number(kBluetoothSDPAttributeDeviceIdentifierProductID.rawValue))
+        }
+#else
         let process = Process()
         process.executableURL = URL(fileURLWithPath: "/usr/sbin/system_profiler")
         process.arguments = ["SPBluetoothDataType", "-json", "-timeout", "5"]
@@ -90,5 +119,16 @@ struct AudioAccessory: Equatable, Sendable {
         process.waitUntilExit()
         guard process.terminationStatus == 0 else { return [] }
         return try parseConnected(data)
+#endif
+    }
+
+    /// SDP Device ID uses distinct Bluetooth SIG (1) and USB (2) vendor namespaces.
+    /// Missing battery metadata stays unknown; a product ID never implies a level.
+    static func fromCachedMetadata(name: String, address: String?, category: String,
+                                   vendor: UInt16?, vendorSource: UInt16?, product: UInt16?) -> Self {
+        let hex = (address ?? "").lowercased().filter { $0.isASCII && $0.isHexDigit }
+        let apple = (vendorSource == 1 && vendor == 0x004c) || (vendorSource == 2 && vendor == 0x05ac)
+        return Self(name: name, address: hex.count == 12 ? hex : nil, isApple: apple,
+                    batteryPercent: nil, productID: product, category: category)
     }
 }

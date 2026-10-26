@@ -33,6 +33,6 @@ jobs:
         run: |
           codesign --verify --deep --strict '.build/app-store/Soniclet.app'
           codesign --display --entitlements - --xml '.build/app-store/Soniclet.app' > .build/app-store/entitlements.plist
-          python3 -c "import plistlib; e=plistlib.load(open('.build/app-store/entitlements.plist','rb')); assert e == {'com.apple.security.app-sandbox': True}, e"
+          python3 -c "import plistlib; e=plistlib.load(open('.build/app-store/entitlements.plist','rb')); assert e == {'com.apple.security.app-sandbox': True, 'com.apple.security.device.bluetooth': True}, e"
       - name: Compile sandbox graphical smoke test
         run: DISTRIBUTION_CHANNEL=app-store ./test-settings.sh --build-only

@@ -80,4 +80,4 @@ Icon Composerの原稿と旧macOS向けアイコンを同梱しています。De
 
 設定画面の「一般」からも更新確認を実行できます。メニューと同じ更新状態・チェック処理を共有します。
 
-App Store向けのSandboxビルドは `DISTRIBUTION_CHANNEL=app-store ./build.sh` で作成できます。通常版とは別の `.build/app-store/Soniclet.app` に出力し、GitHub更新確認は無効にします。Bluetooth残量・一部の機種別アイコン・専用設定リンクには現行取得方法の制約があります。[検証結果](docs/SANDBOX.md)を参照してください。
+App Store向けのSandboxビルドは `DISTRIBUTION_CHANNEL=app-store ./build.sh` で作成できます。通常版とは別の `.build/app-store/Soniclet.app` に出力し、GitHub更新確認は無効にします。Bluetooth権限を使い、公開IOBluetooth APIのキャッシュから機種別アイコン・専用設定リンクに必要な情報を取得します。この経路では残量は取得できず空欄になります。通常版の残量表示は従来どおりです。権限や情報がない場合もCore Audioのアイコンと汎用設定リンクを使用できます。[検証結果](docs/SANDBOX.md)を参照してください。

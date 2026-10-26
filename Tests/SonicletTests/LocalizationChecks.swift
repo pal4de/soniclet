@@ -20,6 +20,9 @@ struct LocalizationChecks {
             let matched = Bundle.preferredLocalizations(from: app.localizations, forPreferences: [language])
             require(matched.first == language, "Language negotiation failed: \(language)")
             let localizedBundle = Bundle(url: resources.appendingPathComponent("\(language).lproj"))!
+            let infoURL = localizedBundle.url(forResource: "InfoPlist", withExtension: "strings")!
+            let info = try PropertyListSerialization.propertyList(from: Data(contentsOf: infoURL), format: nil) as! [String: String]
+            require(!(info["NSBluetoothAlwaysUsageDescription"] ?? "").isEmpty, "Bluetooth permission purpose: \(language)")
             let tableURL = localizedBundle.url(forResource: "Localizable", withExtension: "strings")!
             let table = try PropertyListSerialization.propertyList(from: Data(contentsOf: tableURL), format: nil) as! [String: String]
             require(Set(table.keys) == Set(base.keys), "Missing or extra keys: \(language)")

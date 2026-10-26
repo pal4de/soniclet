@@ -105,7 +105,7 @@ DISTRIBUTION_CHANNEL=app-store ./test-settings.sh --allow-background-focus
 
 The variant is written to `.build/app-store/Soniclet.app` and carries the App Sandbox entitlement. It is ad-hoc signed unless a real signing identity is supplied; it is not an App Store upload package. Use a separate `APP_BUNDLE_ID` for local trials to preserve the installed app's container and preferences. Store builds delegate updates to the App Store and never check GitHub.
 
-The current Bluetooth report method returns no accessory data inside App Sandbox: battery levels, some model-specific symbols and dedicated headphone settings links lose coverage. Generic audio switching and Bluetooth Settings links remain. See [sandbox compatibility and verification limits](docs/SANDBOX.md). A successful local sandbox run is not App Review approval.
+Store builds use public IOBluetooth cached metadata with Bluetooth permission for model-specific icons and device settings links. Battery levels are not currently available through that path; direct builds retain their profiler-based battery display. Generic Core Audio symbols and Bluetooth Settings links remain available when permission or metadata is missing. See [sandbox compatibility and verification limits](docs/SANDBOX.md). A successful local sandbox run is not App Review approval.
 
 ## Release status
 

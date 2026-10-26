@@ -6,6 +6,13 @@ struct AudioAccessoryTests {
         guard condition else { fputs("FAIL: \(message)\n", stderr); exit(1) }
     }
     static func main() throws {
+        let cached = AudioAccessory.fromCachedMetadata(name: "Renamed Buds", address: "11-22-33-44-55-66", category: "Headphones", vendor: 0x004c, vendorSource: 1, product: 0x2024)
+        require(cached.symbol == "airpodspro" && cached.batteryPercent == nil, "Cached SDP identifies a model without inventing battery data")
+        require(AudioAccessory.match(uid: "11:22:33:44:55:66:output", name: "Old Name", in: [cached]) == cached, "Cached address matches renamed Core Audio device")
+        let wrongNamespace = AudioAccessory.fromCachedMetadata(name: "Other", address: nil, category: "Headphones", vendor: 0x004c, vendorSource: 2, product: 0x2024)
+        require(wrongNamespace.symbol == nil, "Vendor namespace must agree before assigning Apple symbols")
+        let usb = AudioAccessory.fromCachedMetadata(name: "USB ID", address: "invalid", category: "Headphones", vendor: 0x05ac, vendorSource: 2, product: 0x2024)
+        require(usb.isApple && usb.address == nil, "USB vendor namespace and malformed address handled separately")
         let data = Data(#"""
         {"SPBluetoothDataType":[{"device_connected":[
           {"Studio Headset":{"device_minorType":"Headset","device_address":"AA-BB-CC-DD-EE-FF","device_vendorID":"0x054C","device_batteryLevelMain":"60%"}},

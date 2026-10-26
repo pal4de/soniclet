@@ -37,9 +37,9 @@ enum StatusMark {
         }
         guard let source = NSImage(data: Data(svg.utf8)) else { return nil }
         let result = NSImage(size: NSSize(width: 19, height: 19), flipped: false) { rect in
-            // Keep the full width and native image alignment; shorten only the artwork's height.
-            let artwork = NSRect(x: rect.minX, y: rect.midY - 7.75, width: rect.width, height: 15.5)
-            source.draw(in: artwork, from: NSRect(origin: .zero, size: source.size),
+            // Share the app's motif, cropping only Icon Composer's outer padding.
+            // Its source already contains the menu-bar proportions (19 × 15.5).
+            source.draw(in: rect, from: NSRect(x: 178, y: 178, width: 668, height: 668),
                         operation: .sourceOver, fraction: 1)
             return true
         }

@@ -64,7 +64,7 @@ GitHub Releases and the Mac App Store are both intended distribution channels. T
 
 Before adding a store build:
 
-- App Sandbox is enabled for `DISTRIBUTION_CHANNEL=app-store`. Local tests cover enumeration, same-value default/volume writes, settings UI and menu tracking. Physical route changes, login registration and final signed distribution still need verification. Bluetooth report data is unavailable in the tested sandbox even with Bluetooth/network entitlements; do not claim battery/model-specific feature parity.
+- App Sandbox is enabled for `DISTRIBUTION_CHANNEL=app-store`. Local tests cover enumeration, same-value default/volume writes, settings UI and menu tracking. Physical route changes, login registration and final signed distribution still need verification. Store builds use public cached IOBluetooth metadata with the Bluetooth entitlement for model icons and settings links. Battery data remains unavailable in the tested sandbox; do not claim full feature parity. See `docs/SANDBOX.md` for evidence and limits.
 - Prepare an App Store provisioning/signing and upload workflow, separate from Developer ID/notarization for GitHub downloads. Confirm the application identifier after membership activates.
 - Store builds disable GitHub checks and ignore GitHub release cache. The update action opens the App Store. Direct builds retain the existing GitHub notifier.
 - Test containerized preference storage and migration between channels, and avoid running duplicate menu-bar/login-item instances.
