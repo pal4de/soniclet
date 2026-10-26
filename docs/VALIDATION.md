@@ -63,3 +63,11 @@ The actual accessory-app GUI smoke test selects all three native panes, captures
 The 0.7.7 (21) direct universal distribution artifact was built from runtime source commit `327195ff8b65f0dec8b665dfe8415d5bd8f35376`, Developer ID signed and accepted by Apple under submission `5288540f-43f0-4674-aa77-8d9ea270bfb2`. Ticket stapling, strict signature verification, both CPU slices and Gatekeeper assessment passed again after extracting the final ZIP. The installed app was updated to this version.
 
 Local versioned archive: `Soniclet-0.7.7-universal.zip`; release asset name remains `Soniclet-universal.zip` with identical bytes. SHA-256: `cb0c2e10b7408bd353a271e7be69be8321e21cbd78550dbdb766132c6cad3635`. The tap's draft cask matches this artifact. Both direct and enforced-Sandbox GUI smoke tests passed the tab selection and reopening checks. Release publication, tap installation/upgrade and physical drag verification remain separate.
+
+## 0.7.8 direction-settings sections
+
+Automatic selection now has its own native Form Section and uses SwiftUI's switch style. Device visibility/order remain in a separate Section; the existing bindings and reorderContainer are retained. No custom control, setting migration or routing-policy change was introduced.
+
+Universal Developer ID artifact built from runtime source commit `e66281b`: version 0.7.8 (22), notarization submission `f4984dae-751b-4e6e-a2d2-a43f0eb20e2e`, **Accepted**. Ticket validation, strict signature, both CPU slices and Gatekeeper passed after extracting the final ZIP. Installed locally; normal and enforced-Sandbox GUI smoke tests passed in explicit background-focus mode. Native tab navigation, settings reopening and menu checks remain passing.
+
+Archive: `Soniclet-0.7.8-universal.zip` (same bytes as the release filename `Soniclet-universal.zip`). SHA-256: `85818d2d666d93494ac082d36b5b03f0905991e3a229ac4db1c8accf5477f019`. The draft tap cask matches this version; publication and online install/upgrade checks remain pending.
