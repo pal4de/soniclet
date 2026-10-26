@@ -4,7 +4,7 @@
 
 The public repository and app identity are fixed: `pal4de/soniclet`, bundle ID `io.github.pal4de.soniclet`. The first implementation is reviewed in PR #1; `main` has only an empty bootstrap commit until that PR is merged. Do not auto-merge it.
 
-The app has original Icon Composer artwork and a GitHub Releases update notifier. Builds are **ad-hoc signed by default**. Developer ID signing and actual notarization remain unverified until an active developer membership and signing credentials are available. The publisher has applied for membership and is awaiting the result (2026-10-26). Do not publish a claim that a build is notarized based on compilation alone.
+The app has original Icon Composer artwork and a GitHub Releases update notifier. Builds are **ad-hoc signed by default**. Developer Program membership is active. On 2026-10-26 the local 0.7.6 (20) universal direct build was Developer ID signed with Hardened Runtime and a secure timestamp, accepted by Apple notarization, stapled, and accepted by Gatekeeper after extracting the final ZIP. See [VALIDATION.md](VALIDATION.md) for the exact archive and submission record. This verification applies to that archive; the default CI workflow still makes ad-hoc builds, and no public Release or App Store submission has occurred.
 
 ## What Apple signing requires
 

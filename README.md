@@ -113,7 +113,7 @@ Store builds use public IOBluetooth cached metadata with Bluetooth permission fo
 
 ## Release status
 
-Original Icon Composer artwork and GitHub Releases update notification are implemented. Developer ID signing is supported, with a notarization helper; the authenticated Apple path has not yet been exercised. No public release is implied by a successful local build. See [docs/RELEASING.md](docs/RELEASING.md).
+Original Icon Composer artwork and GitHub Releases update notification are implemented. The 0.7.6 (20) local universal distribution artifact has passed Developer ID signing, Apple notarization, ticket stapling and Gatekeeper verification; see the exact archive record in [VALIDATION.md](docs/VALIDATION.md). Default local/CI builds are still ad-hoc unless a real signing identity is supplied. No public release is implied by a successful local build. See [docs/RELEASING.md](docs/RELEASING.md).
 
 ## License
 

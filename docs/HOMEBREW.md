@@ -12,7 +12,7 @@ brew upgrade --cask pal4de/tap/soniclet
 brew uninstall --cask pal4de/tap/soniclet
 ```
 
-These are intended installation instructions, not a claim that a downloadable release exists yet. The tap starts with an empty bootstrap main and a draft implementation PR, like the application repository. Do not merge its initial cask while its asset URL is unavailable or its checksum still describes a development ZIP.
+These are intended installation instructions, not a claim that a downloadable release exists yet. The tap starts with an empty bootstrap main and a draft implementation PR, like the application repository. The draft cask now matches the locally notarized 0.7.6 ZIP recorded in VALIDATION.md, but do not merge it while its asset URL is unavailable.
 
 ## Maintainer workflow
 
