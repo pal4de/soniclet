@@ -14,6 +14,10 @@ macOSの入出力デバイスをメニューバーから切り替える、小さ
 
 音声の録音・加工やドライバーの導入は行いません。機器の非表示は、このアプリの一覧にだけ適用されます。
 
+## Homebrew Cask（公開準備中）
+
+GUIアプリ向けのCaskとして、独自Tap `pal4de/tap` での配布を準備しています。GitHub Releasesと同じUniversal ZIPを使います。初回ReleaseとTapのCaskを公開してからインストール可能になります。[配布手順](docs/HOMEBREW.md)
+
 ## ビルド
 
 動作対象はmacOS 14以降。ビルドにはSwift 6.4・macOS 27 SDKとIcon Composer用のアセットコンパイラを含むXcode 27が必要です。外部パッケージは不要です。

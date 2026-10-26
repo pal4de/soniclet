@@ -10,3 +10,5 @@ settings.png
 release/
 *.p12
 *.mobileprovision
+
+__pycache__/

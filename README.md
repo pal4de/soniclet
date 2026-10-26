@@ -18,6 +18,10 @@ A small, native macOS menu-bar utility for choosing audio input and output devic
 
 Device visibility only changes this app's list. It does not remove devices from macOS or change another app's explicit device selection. This app uses public Core Audio APIs; it does not record audio, install a driver, or process audio streams.
 
+## Homebrew Cask (release preparation)
+
+Homebrew distribution is being prepared through the independent `pal4de/tap` Cask repository, using the same universal ZIP as GitHub Releases. Installation becomes available after the first reviewed release and tap cask are published. See [Homebrew distribution](docs/HOMEBREW.md).
+
 ## Requirements and build
 
 macOS 14 or later. Building requires Xcode 27: the macOS 27 SDK / Swift 6.4 and Apple’s Icon Composer asset compiler. No third-party packages are required.

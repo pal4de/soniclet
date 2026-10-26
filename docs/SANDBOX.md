@@ -37,6 +37,8 @@ References: [IOBluetoothDevice](https://developer.apple.com/documentation/ioblue
 
 The actual app's sandbox GUI smoke test passed with a container home and a denied read of its external source file, covering settings reopening, native menu tracking/dismissal, fixed status-item width and destination-preview restoration. Foreground activation assertions were explicitly skipped. This is separate from physical switching and login-item testing.
 
+Follow-up: [competitor battery implementations and remaining options](BLUETOOTH-BATTERY.md), including Magic Battery's separate headphone helper and the distinction between public BLE transport and proprietary advertisement formats.
+
 ## Still required before submission
 
 - Decide whether the remaining battery-display difference is acceptable; validate Bluetooth permission denial and cached metadata across more models.

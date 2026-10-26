@@ -37,6 +37,10 @@ jobs:
           ditto -c -k --keepParent --norsrc --noextattr 'Soniclet.app' release/Soniclet-universal.zip
           cd release
           shasum -a 256 Soniclet-universal.zip > SHA256SUMS
+      - name: Prepare matching Homebrew cask for review
+        run: |
+          python3 Tools/make-homebrew-cask.py release/Soniclet-universal.zip release/soniclet.rb
+          ruby -c release/soniclet.rb
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: release
@@ -59,4 +63,4 @@ jobs:
           gh run download "$RUN_ID" -n release -D release
           cd release
           shasum -a 256 -c SHA256SUMS
-          gh release create "$RELEASE_TAG" ./* --verify-tag --draft --title "$RELEASE_TAG" --notes 'Universal macOS build. Ad-hoc signed; not Developer ID signed or notarized. Review installation, hardware behavior, and release notes before publishing.'
+          gh release create "$RELEASE_TAG" ./* --verify-tag --draft --title "$RELEASE_TAG" --notes 'Universal macOS build. Ad-hoc signed; not Developer ID signed or notarized. Review installation, hardware behavior, and release notes before publishing. The staged soniclet.rb matches this ZIP; regenerate it after replacing the ZIP with the final notarized artifact, then review it in pal4de/homebrew-tap after release publication.'

@@ -5,6 +5,7 @@ build_dir="${BUILD_DIR:-$project_dir/.build/local}"
 build_dir="${build_dir:A}"
 mkdir -p "$build_dir/module-cache"
 export CLANG_MODULE_CACHE_PATH="$build_dir/module-cache"
+PYTHONDONTWRITEBYTECODE=1 python3 "$project_dir/Tests/test_homebrew_cask.py"
 swiftc -parse-as-library \
   "$project_dir/Sources/Soniclet/Localization.swift" \
   "$project_dir/Sources/Soniclet/Devices.swift" \

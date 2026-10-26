@@ -58,6 +58,10 @@ For CI signing later, use a protected GitHub environment and secrets for the cer
 
 The update checker uses GitHub's latest stable release API. Only published, stable `vMAJOR.MINOR.PATCH` (or `MAJOR.MINOR.PATCH`) tags count. Drafts and prereleases do not trigger update notices. Until the first release is published, manual checks correctly report no newer release.
 
+## Homebrew Cask
+
+The independent `pal4de/tap` Cask installs the same direct-download release ZIP. The draft-release workflow stages `soniclet.rb` with the exact archive checksum; regenerate it after substituting the final notarized ZIP, then review the update in `pal4de/homebrew-tap`. See [HOMEBREW.md](HOMEBREW.md). Do not enable the cask before the corresponding release asset is public.
+
 ## Mac App Store distribution (planned)
 
 GitHub Releases and the Mac App Store are both intended distribution channels. The scripts now build direct-download and App Sandbox variants. App Store submission is not ready; see [SANDBOX.md](SANDBOX.md) for tested compatibility limits.
