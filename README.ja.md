@@ -70,7 +70,7 @@ Appleのヘッドフォン接続中は、デバイス名付きの項目から、
 
 GitHubへアプリのバージョンを含む通常のHTTPSリクエストを送りますが、デバイス名・音声・音量設定は送りません。自動確認の通信エラーは通知せず、手動確認では結果を表示します。
 
-Icon Composerの原稿と旧macOS向けアイコンを同梱しています。Developer Program加入と証明書の準備が完了し、0.7.6 (20)のローカル配布用Universal ZIPはDeveloper ID署名・Apple公証・チケット添付・Gatekeeper検証まで通過しました。[対象アーカイブの記録](docs/VALIDATION.md)を参照してください。既定のローカル／CIビルドは、署名証明書を指定しない限りアドホック署名のままです。
+Icon Composerの原稿と旧macOS向けアイコンを同梱しています。Developer Program加入と証明書の準備が完了し、0.7.7 (21)のローカル配布用Universal ZIPはDeveloper ID署名・Apple公証・チケット添付・Gatekeeper検証まで通過しました。[対象アーカイブの記録](docs/VALIDATION.md)を参照してください。既定のローカル／CIビルドは、署名証明書を指定しない限りアドホック署名のままです。
 
 ライセンスは[MIT](LICENSE)です。
 

@@ -50,7 +50,7 @@ Verified 2026-10-26 on macOS 27.2. Runtime sources were built from commit `163a1
 - Archive: `Soniclet-universal.zip`.
 - SHA-256: `2c99a9f1a2cdbfd8ee8fdcfc71e8ba23d59bd78dc03f3d9f1ca36d3a3a4a79da`.
 - The full local automated test suite passed before submission. The application commit's GitHub CI also passed.
-- The independent tap's draft cask now uses the checksum of this exact notarized ZIP. Its online URL/install/upgrade check is pending publication of the matching reviewed Release; neither PR has been merged and no Release has been published.
+- At this verification, the independent tap's draft cask was regenerated from this exact notarized ZIP; the later 0.7.7 record supersedes its current pointer. Its online URL/install/upgrade check is pending publication of the matching reviewed Release; neither PR has been merged and no Release has been published.
 
 Do not substitute a newly generated ad-hoc CI ZIP under this checksum or call another archive notarized based on this record. Repackaging requires a fresh SHA-256 and cask update.
 
@@ -59,3 +59,7 @@ Do not substitute a newly generated ad-hoc CI ZIP under this checksum or call an
 Settings is split into native General, Output and Input tabs using SwiftUI's current Tab API inside the Settings scene. macOS 14 retains the standard tabItem compatibility path. Each tab has a grouped Form; device order, visibility, automatic-selection policy and preference keys are unchanged. The OS owns the toolbar/pane titles and tab selection.
 
 The actual accessory-app GUI smoke test selects all three native panes, captures each, restores General and verifies settings reopening/window reuse along with existing menu checks. It runs with the explicit background-focus allowance; it does not change device routing, volume or login registration. Standard ordering remains in each direction's reorderContainer. Old-OS hardware validation remains omitted.
+
+The 0.7.7 (21) direct universal distribution artifact was built from runtime source commit `327195ff8b65f0dec8b665dfe8415d5bd8f35376`, Developer ID signed and accepted by Apple under submission `5288540f-43f0-4674-aa77-8d9ea270bfb2`. Ticket stapling, strict signature verification, both CPU slices and Gatekeeper assessment passed again after extracting the final ZIP. The installed app was updated to this version.
+
+Local versioned archive: `Soniclet-0.7.7-universal.zip`; release asset name remains `Soniclet-universal.zip` with identical bytes. SHA-256: `cb0c2e10b7408bd353a271e7be69be8321e21cbd78550dbdb766132c6cad3635`. The tap's draft cask matches this artifact. Both direct and enforced-Sandbox GUI smoke tests passed the tab selection and reopening checks. Release publication, tap installation/upgrade and physical drag verification remain separate.
