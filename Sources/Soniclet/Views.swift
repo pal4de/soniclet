@@ -160,10 +160,12 @@ private struct DirectionSettingsView: View {
                 Toggle(L10n.text("Automatically select devices"), isOn: Binding(
                     get: { model.automaticSelectionEnabled(direction) },
                     set: { model.setAutomaticSelection($0, direction: direction) }
-                )).toggleStyle(.checkbox)
+                )).toggleStyle(.switch)
                 if model.automaticSelectionEnabled(direction), model.isManualSelection(direction) {
                     Button(L10n.text("Resume Automatic Selection")) { model.resumeAutomaticSelection(direction) }
                 }
+            }
+            Section {
                 let devices = model.savedDevices(direction)
                 if devices.isEmpty {
                     Text(L10n.text(direction == .output ? "No output devices" : "No input devices")).foregroundStyle(.secondary)
