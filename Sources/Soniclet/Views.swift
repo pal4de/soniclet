@@ -68,15 +68,46 @@ struct AudioErrorMenuContent: View {
 struct DeviceSettingsView: View {
     @ObservedObject var model: AudioModel
     @ObservedObject var updates: UpdateChecker
+
+    var body: some View {
+        Group {
+            if #available(macOS 15, *) {
+                TabView {
+                    Tab(L10n.text("General"), systemImage: "gearshape") {
+                        GeneralSettingsView(model: model, updates: updates)
+                    }
+                    Tab(AudioDirection.output.title, systemImage: "speaker.wave.2") {
+                        DirectionSettingsView(model: model, direction: .output)
+                    }
+                    Tab(AudioDirection.input.title, systemImage: "mic") {
+                        DirectionSettingsView(model: model, direction: .input)
+                    }
+                }
+            } else {
+                TabView {
+                    GeneralSettingsView(model: model, updates: updates)
+                        .tabItem { Label(L10n.text("General"), systemImage: "gearshape") }
+                    DirectionSettingsView(model: model, direction: .output)
+                        .tabItem { Label(AudioDirection.output.title, systemImage: "speaker.wave.2") }
+                    DirectionSettingsView(model: model, direction: .input)
+                        .tabItem { Label(AudioDirection.input.title, systemImage: "mic") }
+                }
+            }
+        }
+        .frame(width: 520, height: 480)
+        .onAppear { model.refresh() }
+    }
+}
+
+private struct GeneralSettingsView: View {
+    @ObservedObject var model: AudioModel
+    @ObservedObject var updates: UpdateChecker
     @StateObject private var loginItem = LoginItemModel()
     @AppStorage(MenuBarIconStyle.preferenceKey) private var menuBarIconStyle = MenuBarIconStyle.system
-    private var reorderHelp: String {
-        if #available(macOS 27, *) { return L10n.text("Drag devices to change their order in the menu.") }
-        return "\(L10n.text("Move Up")) / \(L10n.text("Move Down"))"
-    }
+
     var body: some View {
         Form {
-            Section(L10n.text("General")) {
+            Section {
                 Picker(L10n.text("Menu bar icon"), selection: $menuBarIconStyle) {
                     Label {
                         Text("Soniclet")
@@ -108,49 +139,61 @@ struct DeviceSettingsView: View {
                     .disabled(!updates.actionIsEnabled)
                     .accessibilityIdentifier("check-for-updates")
             }
-            ForEach(AudioDirection.allCases, id: \.self) { direction in
-                Section {
-                    Toggle(L10n.text("Automatically select devices"), isOn: Binding(
-                        get: { model.automaticSelectionEnabled(direction) },
-                        set: { model.setAutomaticSelection($0, direction: direction) }
-                    )).toggleStyle(.checkbox)
-                    if model.automaticSelectionEnabled(direction), model.isManualSelection(direction) {
-                        Button(L10n.text("Resume Automatic Selection")) { model.resumeAutomaticSelection(direction) }
-                    }
-                    let devices = model.savedDevices(direction)
-                    if devices.isEmpty {
-                        Text(L10n.text(direction == .output ? "No output devices" : "No input devices")).foregroundStyle(.secondary)
-                    }
-                    if #available(macOS 27, *) {
-                        ForEach(devices) { preference in
-                            DevicePreferenceRow(model: model, preference: preference)
-                        }
-                        .reorderable(collectionID: direction)
-                    } else {
-                        ForEach(devices) { preference in
-                            DevicePreferenceRow(model: model, preference: preference)
-                        }
-                    }
-                } header: {
-                    Text(direction.title)
-                } footer: {
-                    Text([
-                        L10n.text("Choose which devices appear in the menu."),
-                        reorderHelp,
-                        L10n.text(model.automaticSelectionEnabled(direction)
-                            ? "Devices higher in the list take priority; hidden devices are excluded."
-                            : "Hiding a device does not change the current input, output, or settings in other apps.")
-                    ].joined(separator: " "))
-                    .font(.caption).foregroundStyle(.secondary)
-                    .fixedSize(horizontal: false, vertical: true)
+        }
+        .formStyle(.grouped)
+        .onAppear { loginItem.refresh() }
+        .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)) { _ in loginItem.refresh() }
+    }
+}
+
+private struct DirectionSettingsView: View {
+    @ObservedObject var model: AudioModel
+    let direction: AudioDirection
+    private var reorderHelp: String {
+        if #available(macOS 27, *) { return L10n.text("Drag devices to change their order in the menu.") }
+        return "\(L10n.text("Move Up")) / \(L10n.text("Move Down"))"
+    }
+
+    var body: some View {
+        Form {
+            Section {
+                Toggle(L10n.text("Automatically select devices"), isOn: Binding(
+                    get: { model.automaticSelectionEnabled(direction) },
+                    set: { model.setAutomaticSelection($0, direction: direction) }
+                )).toggleStyle(.checkbox)
+                if model.automaticSelectionEnabled(direction), model.isManualSelection(direction) {
+                    Button(L10n.text("Resume Automatic Selection")) { model.resumeAutomaticSelection(direction) }
                 }
+                let devices = model.savedDevices(direction)
+                if devices.isEmpty {
+                    Text(L10n.text(direction == .output ? "No output devices" : "No input devices")).foregroundStyle(.secondary)
+                }
+                if #available(macOS 27, *) {
+                    ForEach(devices) { preference in
+                        DevicePreferenceRow(model: model, preference: preference)
+                    }
+                    .reorderable(collectionID: direction)
+                } else {
+                    ForEach(devices) { preference in
+                        DevicePreferenceRow(model: model, preference: preference)
+                    }
+                }
+            } header: {
+                Text(direction.title)
+            } footer: {
+                Text([
+                    L10n.text("Choose which devices appear in the menu."),
+                    reorderHelp,
+                    L10n.text(model.automaticSelectionEnabled(direction)
+                        ? "Devices higher in the list take priority; hidden devices are excluded."
+                        : "Hiding a device does not change the current input, output, or settings in other apps.")
+                ].joined(separator: " "))
+                .font(.caption).foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
             }
         }
         .modifier(DeviceReorderContainer(model: model))
         .formStyle(.grouped)
-        .frame(width: 520, height: 580)
-        .onAppear { model.refresh(); loginItem.refresh() }
-        .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)) { _ in loginItem.refresh() }
     }
 }
 

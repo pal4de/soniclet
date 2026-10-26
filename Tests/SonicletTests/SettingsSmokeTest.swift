@@ -5,6 +5,10 @@ import SwiftUI
 @MainActor
 enum SettingsSmokeTest {
     private static var allowsBackgroundFocus: Bool { CommandLine.arguments.contains("--allow-background-focus") }
+    // Native tabbed Settings scenes title the window after the selected pane.
+    private static var settingsTitles: Set<String> {
+        Set(["Soniclet Settings", "General", "Output", "Input"].map { L10n.text($0) })
+    }
     static func run(_ controller: StatusBarController) async {
         guard NSApplication.shared.activationPolicy() == .accessory else { fail("Not an accessory app") }
         #if MAC_APP_STORE
@@ -17,6 +21,7 @@ enum SettingsSmokeTest {
         controller.showSettings()
         guard let first = await settingsWindow() else { fail("Settings did not become visible, key, and active") }
         capture(first.contentView, name: "settings-test-render.png")
+        await verifySettingsTabs(first)
         if allowsBackgroundFocus && !NSApplication.shared.isActive {
             print("SKIP: key/active-window assertion; OS did not grant foreground activation")
         }
@@ -28,7 +33,7 @@ enum SettingsSmokeTest {
         guard let second = await settingsWindow() else { fail("Background settings reopening failed") }
         controller.showSettings()
         guard await settingsWindow() != nil else { fail("Existing settings did not become key") }
-        let visible = NSApplication.shared.windows.filter { $0.isVisible && $0.title == L10n.text("Soniclet Settings") }
+        let visible = NSApplication.shared.windows.filter { $0.isVisible && settingsTitles.contains($0.title) }
         guard visible.count == 1, (allowsBackgroundFocus || second.isKeyWindow) else { fail("Settings window was not reused (visible=\(visible.count), key=\(second.isKeyWindow))") }
         print("PASS: background reopening and settings window reuse")
         second.performClose(nil)
@@ -231,6 +236,40 @@ enum SettingsSmokeTest {
         print("PASS: native volume endpoint action, press-only highlight, continuous repetition configuration and disabled state")
     }
 
+    private static func verifySettingsTabs(_ window: NSWindow) async {
+        func findTabs(_ view: NSView) -> NSTabView? {
+            (view as? NSTabView) ?? view.subviews.lazy.compactMap { findTabs($0) }.first
+        }
+        let names = ["general", "output", "input"]
+        if let content = window.contentView, let tabs = findTabs(content), tabs.numberOfTabViewItems == 3 {
+            for (index, name) in names.enumerated() {
+                tabs.selectTabViewItem(at: index)
+                try? await Task.sleep(nanoseconds: 200_000_000)
+                guard tabs.selectedTabViewItem == tabs.tabViewItem(at: index) else { fail("Settings tab did not select: \(name)") }
+                capture(window.contentView?.superview, name: "settings-\(name).png")
+            }
+            tabs.selectTabViewItem(at: 0)
+        } else {
+            let titles = ["General", "Output", "Input"].map { L10n.text($0) }
+            guard let items = window.toolbar?.items, items.map(\.label) == titles else {
+                fail("Settings must expose three native panes")
+            }
+            for (index, item) in items.enumerated() {
+                guard let action = item.action,
+                      NSApplication.shared.sendAction(action, to: item.target, from: item) else {
+                    fail("Native settings toolbar action unavailable")
+                }
+                try? await Task.sleep(nanoseconds: 200_000_000)
+                guard window.title == titles[index] else { fail("Settings pane did not select: \(names[index])") }
+                capture(window.contentView?.superview, name: "settings-\(names[index]).png")
+            }
+            if let action = items[0].action {
+                NSApplication.shared.sendAction(action, to: items[0].target, from: items[0])
+            }
+        }
+        print("PASS: native General/Output/Input tabs select without changing audio settings")
+    }
+
     private static func capture(_ view: NSView?, name: String) {
         guard let directory = ProcessInfo.processInfo.environment["SONICLET_CAPTURE_DIR"], let view,
               let bitmap = view.bitmapImageRepForCachingDisplay(in: view.bounds) else { return }
@@ -242,7 +281,7 @@ enum SettingsSmokeTest {
     private static func settingsWindow() async -> NSWindow? {
         for _ in 0..<40 {
             if let window = NSApplication.shared.windows.first(where: {
-                $0.title == L10n.text("Soniclet Settings") && $0.isVisible && (allowsBackgroundFocus || $0.isKeyWindow)
+                settingsTitles.contains($0.title) && $0.isVisible && (allowsBackgroundFocus || $0.isKeyWindow)
             }), (allowsBackgroundFocus || NSApplication.shared.isActive) { return window }
             try? await Task.sleep(nanoseconds: 100_000_000)
         }

@@ -53,3 +53,9 @@ Verified 2026-10-26 on macOS 27.2. Runtime sources were built from commit `163a1
 - The independent tap's draft cask now uses the checksum of this exact notarized ZIP. Its online URL/install/upgrade check is pending publication of the matching reviewed Release; neither PR has been merged and no Release has been published.
 
 Do not substitute a newly generated ad-hoc CI ZIP under this checksum or call another archive notarized based on this record. Repackaging requires a fresh SHA-256 and cask update.
+
+## 0.7.7 settings tabs
+
+Settings is split into native General, Output and Input tabs using SwiftUI's current Tab API inside the Settings scene. macOS 14 retains the standard tabItem compatibility path. Each tab has a grouped Form; device order, visibility, automatic-selection policy and preference keys are unchanged. The OS owns the toolbar/pane titles and tab selection.
+
+The actual accessory-app GUI smoke test selects all three native panes, captures each, restores General and verifies settings reopening/window reuse along with existing menu checks. It runs with the explicit background-focus allowance; it does not change device routing, volume or login registration. Standard ordering remains in each direction's reorderContainer. Old-OS hardware validation remains omitted.
