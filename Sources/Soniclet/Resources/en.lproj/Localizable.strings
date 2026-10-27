@@ -1,0 +1,83 @@
+/* Soniclet interface strings. Keep format placeholders unchanged. */
+"Sound" = "Sound";
+"Output" = "Output";
+"Input" = "Input";
+"Sound Settings…" = "Sound Settings…";
+"Soniclet Settings…" = "Soniclet Settings…";
+"Quit Soniclet" = "Quit Soniclet";
+"Close error" = "Close error";
+"Output volume" = "Output volume";
+"Volume cannot be adjusted for this device" = "Volume cannot be adjusted for this device";
+"Adjust the volume on the device" = "Adjust the volume on the device";
+"Volume for %@" = "Volume for %@";
+"No output devices to show" = "No output devices to show";
+"No input devices to show" = "No input devices to show";
+"Current: %@" = "Current: %@";
+"The current device is hidden in settings" = "The current device is hidden in settings";
+"Switching" = "Switching";
+"Selected" = "Selected";
+"Not selected" = "Not selected";
+"Choose which devices appear in the menu." = "Choose which devices appear in the menu.";
+"Hiding a device does not change the current input, output, or settings in other apps." = "Hiding a device does not change the current input, output, or settings in other apps.";
+"Not connected" = "Not connected";
+"Show %@ (%@)" = "Show %@ (%@)";
+"No output devices" = "No output devices";
+"No input devices" = "No input devices";
+"Could not switch to %@. Please try again." = "Could not switch to %@. Please try again.";
+"Audio operation failed (%d). Check the device connection and try again." = "Audio operation failed (%d). Check the device connection and try again.";
+"Soniclet — audio devices" = "Soniclet — audio devices";
+"Soniclet Settings" = "Soniclet Settings";
+
+/* Status menu and system-managed login item. */
+"General" = "General";
+"Launch at login" = "Launch at login";
+"Approval is required in System Settings." = "Approval is required in System Settings.";
+"Open Login Items Settings…" = "Open Login Items Settings…";
+"Could not change login settings: %@" = "Could not change login settings: %@";
+"Mute Output" = "Mute Output";
+"Unmute Output" = "Unmute Output";
+"Window" = "Window";
+"Close" = "Close";
+"%@: %@" = "%@: %@";
+
+/* Volume step buttons. */
+"Decrease volume" = "Decrease volume";
+"Increase volume" = "Increase volume";
+
+"Select AirPlay devices in System Sound Settings." = "You can select AirPlay devices in [System Sound Settings](soniclet://sound-settings).";
+
+/* GitHub Releases update notification. */
+"Check for Updates…" = "Check for Updates…";
+"Checking for Updates…" = "Checking for Updates…";
+"No newer release is available." = "No newer release is available.";
+"Could not check for updates. Try again later." = "Could not check for updates. Try again later.";
+"Version %@ is available…" = "Version %@ is available…";
+
+"Menu bar icon" = "Menu bar icon";
+"System icon" = "System icon";
+
+/* Connected audio accessory metadata and native settings. */
+"Battery: %@" = "Battery: %@";
+"“%@” Settings…" = "“%@” Settings…";
+"Bluetooth Settings…" = "Bluetooth Settings…";
+"System Settings" = "System Settings";
+"Drag devices to change their order in the menu." = "Drag devices to change their order in the menu.";
+"Move Up" = "Move Up";
+"Move Down" = "Move Down";
+"Connected device" = "Connected device";
+"Speaker" = "Speaker";
+
+/* Automatic device selection. */
+"Automatically select devices" = "Automatically select devices";
+"Devices higher in the list take priority; hidden devices are excluded." = "Devices higher in the list take priority; hidden devices are excluded.";
+"Resume Automatic Selection" = "Resume Automatic Selection";
+"Keep Manual Selection" = "Keep Manual Selection";
+"Switch %@ from %@ to %@?" = "Switch %@ from %@ to %@?";
+
+"Could not confirm the switch to %@. Please try again." = "Could not confirm the switch to %@. Please try again.";
+
+"Manual" = "Manual";
+
+"App Store…" = "App Store…";
+
+"Automatically switches devices as connections change." = "Automatically switches devices as connections change.";

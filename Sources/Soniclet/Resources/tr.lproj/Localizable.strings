@@ -1,0 +1,83 @@
+/* Soniclet interface strings. Keep format placeholders unchanged. */
+"Sound" = "Ses";
+"Output" = "Çıkış";
+"Input" = "Giriş";
+"Sound Settings…" = "Ses Ayarları…";
+"Soniclet Settings…" = "Soniclet Ayarları…";
+"Quit Soniclet" = "Soniclet’ten Çık";
+"Close error" = "Hata iletisini kapat";
+"Output volume" = "Çıkış ses yüksekliği";
+"Volume cannot be adjusted for this device" = "Bu aygıtın ses yüksekliği ayarlanamıyor";
+"Adjust the volume on the device" = "Ses yüksekliğini aygıt üzerinden ayarlayın";
+"Volume for %@" = "%@ ses yüksekliği";
+"No output devices to show" = "Gösterilecek çıkış aygıtı yok";
+"No input devices to show" = "Gösterilecek giriş aygıtı yok";
+"Current: %@" = "Geçerli: %@";
+"The current device is hidden in settings" = "Geçerli aygıt ayarlarda gizlenmiş";
+"Switching" = "Değiştiriliyor";
+"Selected" = "Seçili";
+"Not selected" = "Seçili değil";
+"Choose which devices appear in the menu." = "Menüde görünecek aygıtları seçin.";
+"Hiding a device does not change the current input, output, or settings in other apps." = "Bir aygıtı gizlemek geçerli girişi, çıkışı veya diğer uygulamaların ayarlarını değiştirmez.";
+"Not connected" = "Bağlı değil";
+"Show %@ (%@)" = "%@ (%@) aygıtını göster";
+"No output devices" = "Çıkış aygıtı yok";
+"No input devices" = "Giriş aygıtı yok";
+"Could not switch to %@. Please try again." = "%@ aygıtına geçilemedi. Yeniden deneyin.";
+"Audio operation failed (%d). Check the device connection and try again." = "Ses işlemi başarısız oldu (%d). Aygıt bağlantısını denetleyip yeniden deneyin.";
+"Soniclet — audio devices" = "Soniclet — ses aygıtları";
+"Soniclet Settings" = "Soniclet Ayarları";
+
+/* Status menu and system-managed login item. */
+"General" = "Genel";
+"Launch at login" = "Oturum açıldığında başlat";
+"Approval is required in System Settings." = "Sistem Ayarları’nda onay gerekiyor.";
+"Open Login Items Settings…" = "Giriş Öğeleri ayarlarını aç…";
+"Could not change login settings: %@" = "Oturum açma ayarları değiştirilemedi: %@";
+"Mute Output" = "Çıkışı sessize al";
+"Unmute Output" = "Çıkışın sesini aç";
+"Window" = "Pencere";
+"Close" = "Kapat";
+"%@: %@" = "%@: %@";
+
+/* Volume step buttons. */
+"Decrease volume" = "Sesi azalt";
+"Increase volume" = "Sesi artır";
+
+"Select AirPlay devices in System Sound Settings." = "AirPlay aygıtlarını [sistem ses ayarlarından](soniclet://sound-settings) seçebilirsiniz.";
+
+/* GitHub Releases update notification. */
+"Check for Updates…" = "Güncellemeleri Denetle…";
+"Checking for Updates…" = "Güncellemeler denetleniyor…";
+"No newer release is available." = "Daha yeni bir sürüm yok.";
+"Could not check for updates. Try again later." = "Güncellemeler denetlenemedi. Daha sonra yeniden deneyin.";
+"Version %@ is available…" = "%@ sürümü kullanılabilir…";
+
+"Menu bar icon" = "Menü çubuğu simgesi";
+"System icon" = "Sistem simgesi";
+
+/* Connected audio accessory metadata and native settings. */
+"Battery: %@" = "Pil: %@";
+"“%@” Settings…" = "“%@” Ayarları…";
+"Bluetooth Settings…" = "Bluetooth Ayarları…";
+"System Settings" = "Sistem Ayarları";
+"Drag devices to change their order in the menu." = "Menüdeki sıralarını değiştirmek için aygıtları sürükleyin.";
+"Move Up" = "Yukarı Taşı";
+"Move Down" = "Aşağı Taşı";
+"Connected device" = "Bağlı aygıt";
+"Speaker" = "Hoparlör";
+
+/* Automatic device selection. */
+"Automatically select devices" = "Aygıtları otomatik seç";
+"Devices higher in the list take priority; hidden devices are excluded." = "Listedeki üst aygıtlar önceliklidir; gizli aygıtlar hariç tutulur.";
+"Resume Automatic Selection" = "Otomatik seçime dön";
+"Keep Manual Selection" = "Elle seçimi koru";
+"Switch %@ from %@ to %@?" = "%@ için %@ yerine %@ kullanılsın mı?";
+
+"Could not confirm the switch to %@. Please try again." = "%@ aygıtına geçiş doğrulanamadı. Tekrar deneyin.";
+
+"Manual" = "Elle";
+
+"App Store…" = "App Store…";
+
+"Automatically switches devices as connections change." = "Bağlantılar değiştiğinde aygıtları otomatik olarak değiştirir.";

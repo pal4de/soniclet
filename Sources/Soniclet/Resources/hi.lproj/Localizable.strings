@@ -1,0 +1,83 @@
+/* Soniclet interface strings. Keep format placeholders unchanged. */
+"Sound" = "ध्वनि";
+"Output" = "आउटपुट";
+"Input" = "इनपुट";
+"Sound Settings…" = "ध्वनि सेटिंग्ज़…";
+"Soniclet Settings…" = "Soniclet सेटिंग्ज़…";
+"Quit Soniclet" = "Soniclet बंद करें";
+"Close error" = "त्रुटि संदेश बंद करें";
+"Output volume" = "आउटपुट वॉल्यूम";
+"Volume cannot be adjusted for this device" = "इस डिवाइस का वॉल्यूम नहीं बदला जा सकता";
+"Adjust the volume on the device" = "डिवाइस पर वॉल्यूम बदलें";
+"Volume for %@" = "%@ का वॉल्यूम";
+"No output devices to show" = "दिखाने के लिए कोई आउटपुट डिवाइस नहीं है";
+"No input devices to show" = "दिखाने के लिए कोई इनपुट डिवाइस नहीं है";
+"Current: %@" = "वर्तमान: %@";
+"The current device is hidden in settings" = "वर्तमान डिवाइस सेटिंग्ज़ में छिपा हुआ है";
+"Switching" = "स्विच किया जा रहा है";
+"Selected" = "चुना गया";
+"Not selected" = "नहीं चुना गया";
+"Choose which devices appear in the menu." = "मेनू में दिखाए जाने वाले डिवाइस चुनें।";
+"Hiding a device does not change the current input, output, or settings in other apps." = "डिवाइस को छिपाने से वर्तमान इनपुट, आउटपुट या अन्य ऐप्स की सेटिंग्ज़ नहीं बदलती हैं।";
+"Not connected" = "कनेक्ट नहीं है";
+"Show %@ (%@)" = "%@ (%@) दिखाएँ";
+"No output devices" = "कोई आउटपुट डिवाइस नहीं है";
+"No input devices" = "कोई इनपुट डिवाइस नहीं है";
+"Could not switch to %@. Please try again." = "%@ पर स्विच नहीं किया जा सका। फिर से कोशिश करें।";
+"Audio operation failed (%d). Check the device connection and try again." = "ऑडियो क्रिया विफल हुई (%d)। डिवाइस का कनेक्शन जाँचें और फिर से कोशिश करें।";
+"Soniclet — audio devices" = "Soniclet — ऑडियो डिवाइस";
+"Soniclet Settings" = "Soniclet सेटिंग्ज़";
+
+/* Status menu and system-managed login item. */
+"General" = "सामान्य";
+"Launch at login" = "लॉगइन पर खोलें";
+"Approval is required in System Settings." = "सिस्टम सेटिंग्ज़ में अनुमति ज़रूरी है।";
+"Open Login Items Settings…" = "लॉगइन आइटम सेटिंग्ज़ खोलें…";
+"Could not change login settings: %@" = "लॉगइन सेटिंग्ज़ नहीं बदली जा सकीं: %@";
+"Mute Output" = "आउटपुट म्यूट करें";
+"Unmute Output" = "आउटपुट अनम्यूट करें";
+"Window" = "विंडो";
+"Close" = "बंद करें";
+"%@: %@" = "%@: %@";
+
+/* Volume step buttons. */
+"Decrease volume" = "वॉल्यूम घटाएँ";
+"Increase volume" = "वॉल्यूम बढ़ाएँ";
+
+"Select AirPlay devices in System Sound Settings." = "आप [सिस्टम की ध्वनि सेटिंग](soniclet://sound-settings) से AirPlay डिवाइस चुन सकते हैं।";
+
+/* GitHub Releases update notification. */
+"Check for Updates…" = "अपडेट देखें…";
+"Checking for Updates…" = "अपडेट देखे जा रहे हैं…";
+"No newer release is available." = "कोई नया संस्करण उपलब्ध नहीं है।";
+"Could not check for updates. Try again later." = "अपडेट नहीं देखे जा सके। कृपया बाद में फिर कोशिश करें।";
+"Version %@ is available…" = "संस्करण %@ उपलब्ध है…";
+
+"Menu bar icon" = "मेनू बार आइकन";
+"System icon" = "सिस्टम आइकन";
+
+/* Connected audio accessory metadata and native settings. */
+"Battery: %@" = "बैटरी: %@";
+"“%@” Settings…" = "“%@” की सेटिंग्ज़…";
+"Bluetooth Settings…" = "Bluetooth सेटिंग…";
+"System Settings" = "सिस्टम सेटिंग्ज़";
+"Drag devices to change their order in the menu." = "मेनू में क्रम बदलने के लिए डिवाइस खींचें।";
+"Move Up" = "ऊपर ले जाएँ";
+"Move Down" = "नीचे ले जाएँ";
+"Connected device" = "कनेक्ट किया गया डिवाइस";
+"Speaker" = "स्पीकर";
+
+/* Automatic device selection. */
+"Automatically select devices" = "डिवाइस अपने आप चुनें";
+"Devices higher in the list take priority; hidden devices are excluded." = "सूची में ऊपर के डिवाइस को प्राथमिकता मिलती है; छिपे डिवाइस शामिल नहीं होते।";
+"Resume Automatic Selection" = "अपने आप चुनना फिर शुरू करें";
+"Keep Manual Selection" = "मैन्युअल चयन बनाए रखें";
+"Switch %@ from %@ to %@?" = "%@ को %@ से %@ पर बदलें?";
+
+"Could not confirm the switch to %@. Please try again." = "%@ पर बदलाव की पुष्टि नहीं हो सकी। फिर से कोशिश करें।";
+
+"Manual" = "मैन्युअल";
+
+"App Store…" = "App Store…";
+
+"Automatically switches devices as connections change." = "कनेक्शन बदलने पर उपकरणों को अपने-आप बदलता है।";

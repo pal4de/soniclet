@@ -1,0 +1,83 @@
+/* Soniclet interface strings. Keep format placeholders unchanged. */
+"Sound" = "Ήχος";
+"Output" = "Έξοδος";
+"Input" = "Είσοδος";
+"Sound Settings…" = "Ρυθμίσεις ήχου…";
+"Soniclet Settings…" = "Ρυθμίσεις Soniclet…";
+"Quit Soniclet" = "Τερματισμός Soniclet";
+"Close error" = "Κλείσιμο μηνύματος σφάλματος";
+"Output volume" = "Ένταση εξόδου";
+"Volume cannot be adjusted for this device" = "Δεν είναι δυνατή η ρύθμιση της έντασης αυτής της συσκευής";
+"Adjust the volume on the device" = "Ρυθμίστε την ένταση στη συσκευή";
+"Volume for %@" = "Ένταση για %@";
+"No output devices to show" = "Δεν υπάρχουν συσκευές εξόδου για εμφάνιση";
+"No input devices to show" = "Δεν υπάρχουν συσκευές εισόδου για εμφάνιση";
+"Current: %@" = "Τρέχουσα: %@";
+"The current device is hidden in settings" = "Η τρέχουσα συσκευή είναι κρυφή στις ρυθμίσεις";
+"Switching" = "Εναλλαγή σε εξέλιξη";
+"Selected" = "Επιλεγμένο";
+"Not selected" = "Μη επιλεγμένο";
+"Choose which devices appear in the menu." = "Επιλέξτε τις συσκευές που εμφανίζονται στο μενού.";
+"Hiding a device does not change the current input, output, or settings in other apps." = "Η απόκρυψη μιας συσκευής δεν αλλάζει την τρέχουσα είσοδο, έξοδο ή τις ρυθμίσεις άλλων εφαρμογών.";
+"Not connected" = "Δεν έχει συνδεθεί";
+"Show %@ (%@)" = "Εμφάνιση %@ (%@)";
+"No output devices" = "Δεν υπάρχουν συσκευές εξόδου";
+"No input devices" = "Δεν υπάρχουν συσκευές εισόδου";
+"Could not switch to %@. Please try again." = "Δεν ήταν δυνατή η εναλλαγή σε %@. Δοκιμάστε ξανά.";
+"Audio operation failed (%d). Check the device connection and try again." = "Η λειτουργία ήχου απέτυχε (%d). Ελέγξτε τη σύνδεση της συσκευής και δοκιμάστε ξανά.";
+"Soniclet — audio devices" = "Soniclet — συσκευές ήχου";
+"Soniclet Settings" = "Ρυθμίσεις Soniclet";
+
+/* Status menu and system-managed login item. */
+"General" = "Γενικά";
+"Launch at login" = "Άνοιγμα κατά τη σύνδεση";
+"Approval is required in System Settings." = "Απαιτείται έγκριση στις Ρυθμίσεις συστήματος.";
+"Open Login Items Settings…" = "Άνοιγμα ρυθμίσεων στοιχείων σύνδεσης…";
+"Could not change login settings: %@" = "Δεν ήταν δυνατή η αλλαγή των ρυθμίσεων σύνδεσης: %@";
+"Mute Output" = "Σίγαση εξόδου";
+"Unmute Output" = "Κατάργηση σίγασης εξόδου";
+"Window" = "Παράθυρο";
+"Close" = "Κλείσιμο";
+"%@: %@" = "%@: %@";
+
+/* Volume step buttons. */
+"Decrease volume" = "Μείωση έντασης";
+"Increase volume" = "Αύξηση έντασης";
+
+"Select AirPlay devices in System Sound Settings." = "Μπορείτε να επιλέξετε συσκευές AirPlay στις [ρυθμίσεις ήχου του συστήματος](soniclet://sound-settings).";
+
+/* GitHub Releases update notification. */
+"Check for Updates…" = "Έλεγχος για ενημερώσεις…";
+"Checking for Updates…" = "Γίνεται έλεγχος για ενημερώσεις…";
+"No newer release is available." = "Δεν υπάρχει νεότερη έκδοση.";
+"Could not check for updates. Try again later." = "Δεν ήταν δυνατός ο έλεγχος ενημερώσεων. Δοκιμάστε ξανά αργότερα.";
+"Version %@ is available…" = "Η έκδοση %@ είναι διαθέσιμη…";
+
+"Menu bar icon" = "Εικονίδιο γραμμής μενού";
+"System icon" = "Εικονίδιο συστήματος";
+
+/* Connected audio accessory metadata and native settings. */
+"Battery: %@" = "Μπαταρία: %@";
+"“%@” Settings…" = "Ρυθμίσεις «%@»…";
+"Bluetooth Settings…" = "Ρυθμίσεις Bluetooth…";
+"System Settings" = "Ρυθμίσεις συστήματος";
+"Drag devices to change their order in the menu." = "Σύρετε τις συσκευές για να αλλάξετε τη σειρά τους στο μενού.";
+"Move Up" = "Μετακίνηση πάνω";
+"Move Down" = "Μετακίνηση κάτω";
+"Connected device" = "Συνδεδεμένη συσκευή";
+"Speaker" = "Ηχείο";
+
+/* Automatic device selection. */
+"Automatically select devices" = "Αυτόματη επιλογή συσκευών";
+"Devices higher in the list take priority; hidden devices are excluded." = "Οι συσκευές ψηλότερα στη λίστα έχουν προτεραιότητα. Οι κρυφές εξαιρούνται.";
+"Resume Automatic Selection" = "Συνέχιση αυτόματης επιλογής";
+"Keep Manual Selection" = "Διατήρηση χειροκίνητης επιλογής";
+"Switch %@ from %@ to %@?" = "Αλλαγή %@ από %@ σε %@;";
+
+"Could not confirm the switch to %@. Please try again." = "Δεν ήταν δυνατή η επιβεβαίωση της αλλαγής σε %@. Δοκιμάστε ξανά.";
+
+"Manual" = "Χειροκίνητα";
+
+"App Store…" = "App Store…";
+
+"Automatically switches devices as connections change." = "Αλλάζει αυτόματα συσκευή όταν αλλάζουν οι συνδέσεις.";

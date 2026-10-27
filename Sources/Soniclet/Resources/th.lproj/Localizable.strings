@@ -1,0 +1,83 @@
+/* Soniclet interface strings. Keep format placeholders unchanged. */
+"Sound" = "เสียง";
+"Output" = "สัญญาณออก";
+"Input" = "สัญญาณเข้า";
+"Sound Settings…" = "การตั้งค่าเสียง…";
+"Soniclet Settings…" = "การตั้งค่า Soniclet…";
+"Quit Soniclet" = "ออกจาก Soniclet";
+"Close error" = "ปิดข้อความข้อผิดพลาด";
+"Output volume" = "ระดับเสียงขาออก";
+"Volume cannot be adjusted for this device" = "ไม่สามารถปรับระดับเสียงของอุปกรณ์นี้ได้";
+"Adjust the volume on the device" = "ปรับระดับเสียงที่ตัวอุปกรณ์";
+"Volume for %@" = "ระดับเสียงของ %@";
+"No output devices to show" = "ไม่มีอุปกรณ์ส่งสัญญาณออกที่จะแสดง";
+"No input devices to show" = "ไม่มีอุปกรณ์รับสัญญาณเข้าที่จะแสดง";
+"Current: %@" = "ปัจจุบัน: %@";
+"The current device is hidden in settings" = "อุปกรณ์ปัจจุบันถูกซ่อนในการตั้งค่า";
+"Switching" = "กำลังสลับ";
+"Selected" = "เลือกอยู่";
+"Not selected" = "ไม่ได้เลือก";
+"Choose which devices appear in the menu." = "เลือกอุปกรณ์ที่จะแสดงในเมนู";
+"Hiding a device does not change the current input, output, or settings in other apps." = "การซ่อนอุปกรณ์จะไม่เปลี่ยนสัญญาณเข้าหรือสัญญาณออกปัจจุบัน หรือการตั้งค่าของแอปอื่น";
+"Not connected" = "ไม่ได้เชื่อมต่อ";
+"Show %@ (%@)" = "แสดง %@ (%@)";
+"No output devices" = "ไม่มีอุปกรณ์ส่งสัญญาณออก";
+"No input devices" = "ไม่มีอุปกรณ์รับสัญญาณเข้า";
+"Could not switch to %@. Please try again." = "ไม่สามารถสลับไปยัง %@ ได้ โปรดลองอีกครั้ง";
+"Audio operation failed (%d). Check the device connection and try again." = "การทำงานด้านเสียงล้มเหลว (%d) ตรวจสอบการเชื่อมต่ออุปกรณ์แล้วลองอีกครั้ง";
+"Soniclet — audio devices" = "Soniclet — อุปกรณ์เสียง";
+"Soniclet Settings" = "การตั้งค่า Soniclet";
+
+/* Status menu and system-managed login item. */
+"General" = "ทั่วไป";
+"Launch at login" = "เปิดเมื่อเข้าสู่ระบบ";
+"Approval is required in System Settings." = "ต้องอนุญาตในการตั้งค่าระบบ";
+"Open Login Items Settings…" = "เปิดการตั้งค่ารายการเข้าสู่ระบบ…";
+"Could not change login settings: %@" = "ไม่สามารถเปลี่ยนการตั้งค่าการเข้าสู่ระบบได้: %@";
+"Mute Output" = "ปิดเสียงขาออก";
+"Unmute Output" = "เปิดเสียงขาออก";
+"Window" = "หน้าต่าง";
+"Close" = "ปิด";
+"%@: %@" = "%@: %@";
+
+/* Volume step buttons. */
+"Decrease volume" = "ลดระดับเสียง";
+"Increase volume" = "เพิ่มระดับเสียง";
+
+"Select AirPlay devices in System Sound Settings." = "คุณสามารถเลือกอุปกรณ์ AirPlay ได้ใน[การตั้งค่าเสียงของระบบ](soniclet://sound-settings)";
+
+/* GitHub Releases update notification. */
+"Check for Updates…" = "ตรวจสอบรายการอัปเดต…";
+"Checking for Updates…" = "กำลังตรวจสอบรายการอัปเดต…";
+"No newer release is available." = "ไม่มีรุ่นใหม่กว่านี้";
+"Could not check for updates. Try again later." = "ไม่สามารถตรวจสอบรายการอัปเดตได้ โปรดลองอีกครั้งภายหลัง";
+"Version %@ is available…" = "มีเวอร์ชัน %@ ให้ใช้งาน…";
+
+"Menu bar icon" = "ไอคอนแถบเมนู";
+"System icon" = "ไอคอนระบบ";
+
+/* Connected audio accessory metadata and native settings. */
+"Battery: %@" = "แบตเตอรี่: %@";
+"“%@” Settings…" = "การตั้งค่า “%@”…";
+"Bluetooth Settings…" = "การตั้งค่า Bluetooth…";
+"System Settings" = "การตั้งค่าระบบ";
+"Drag devices to change their order in the menu." = "ลากอุปกรณ์เพื่อเปลี่ยนลำดับในเมนู";
+"Move Up" = "ย้ายขึ้น";
+"Move Down" = "ย้ายลง";
+"Connected device" = "อุปกรณ์ที่เชื่อมต่อ";
+"Speaker" = "ลำโพง";
+
+/* Automatic device selection. */
+"Automatically select devices" = "เลือกอุปกรณ์อัตโนมัติ";
+"Devices higher in the list take priority; hidden devices are excluded." = "อุปกรณ์ด้านบนมีความสำคัญกว่า โดยไม่รวมอุปกรณ์ที่ซ่อนอยู่";
+"Resume Automatic Selection" = "กลับไปเลือกอัตโนมัติ";
+"Keep Manual Selection" = "คงการเลือกด้วยตนเอง";
+"Switch %@ from %@ to %@?" = "เปลี่ยน%@จาก %@ เป็น %@ หรือไม่?";
+
+"Could not confirm the switch to %@. Please try again." = "ไม่สามารถยืนยันการเปลี่ยนเป็น %@ ได้ โปรดลองอีกครั้ง";
+
+"Manual" = "ด้วยตนเอง";
+
+"App Store…" = "App Store…";
+
+"Automatically switches devices as connections change." = "สลับอุปกรณ์โดยอัตโนมัติเมื่อการเชื่อมต่อเปลี่ยนแปลง";

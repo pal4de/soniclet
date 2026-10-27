@@ -1,0 +1,83 @@
+/* Soniclet interface strings. Keep format placeholders unchanged. */
+"Sound" = "Sunet";
+"Output" = "Ieșire";
+"Input" = "Intrare";
+"Sound Settings…" = "Configurări de sunet…";
+"Soniclet Settings…" = "Configurări Soniclet…";
+"Quit Soniclet" = "Închide Soniclet";
+"Close error" = "Închide mesajul de eroare";
+"Output volume" = "Volum de ieșire";
+"Volume cannot be adjusted for this device" = "Volumul acestui dispozitiv nu poate fi ajustat";
+"Adjust the volume on the device" = "Ajustați volumul direct pe dispozitiv";
+"Volume for %@" = "Volum pentru %@";
+"No output devices to show" = "Niciun dispozitiv de ieșire de afișat";
+"No input devices to show" = "Niciun dispozitiv de intrare de afișat";
+"Current: %@" = "Curent: %@";
+"The current device is hidden in settings" = "Dispozitivul curent este ascuns în configurări";
+"Switching" = "Se comută";
+"Selected" = "Selectat";
+"Not selected" = "Neselectat";
+"Choose which devices appear in the menu." = "Alegeți dispozitivele afișate în meniu.";
+"Hiding a device does not change the current input, output, or settings in other apps." = "Ascunderea unui dispozitiv nu modifică intrarea, ieșirea sau configurările altor aplicații.";
+"Not connected" = "Neconectat";
+"Show %@ (%@)" = "Afișează %@ (%@)";
+"No output devices" = "Niciun dispozitiv de ieșire";
+"No input devices" = "Niciun dispozitiv de intrare";
+"Could not switch to %@. Please try again." = "Nu s-a putut comuta la %@. Încercați din nou.";
+"Audio operation failed (%d). Check the device connection and try again." = "Operațiunea audio a eșuat (%d). Verificați conexiunea dispozitivului și încercați din nou.";
+"Soniclet — audio devices" = "Soniclet — dispozitive audio";
+"Soniclet Settings" = "Configurări Soniclet";
+
+/* Status menu and system-managed login item. */
+"General" = "General";
+"Launch at login" = "Deschide la autentificare";
+"Approval is required in System Settings." = "Este necesară aprobarea în Configurări sistem.";
+"Open Login Items Settings…" = "Deschide configurările articolelor de autentificare…";
+"Could not change login settings: %@" = "Configurările de autentificare nu au putut fi modificate: %@";
+"Mute Output" = "Dezactivează sunetul de ieșire";
+"Unmute Output" = "Reactivează sunetul de ieșire";
+"Window" = "Fereastră";
+"Close" = "Închide";
+"%@: %@" = "%@: %@";
+
+/* Volume step buttons. */
+"Decrease volume" = "Micșorează volumul";
+"Increase volume" = "Mărește volumul";
+
+"Select AirPlay devices in System Sound Settings." = "Poți selecta dispozitive AirPlay în [setările de sunet ale sistemului](soniclet://sound-settings).";
+
+/* GitHub Releases update notification. */
+"Check for Updates…" = "Caută actualizări…";
+"Checking for Updates…" = "Se caută actualizări…";
+"No newer release is available." = "Nu este disponibilă o versiune mai nouă.";
+"Could not check for updates. Try again later." = "Nu s-au putut căuta actualizări. Încearcă din nou mai târziu.";
+"Version %@ is available…" = "Versiunea %@ este disponibilă…";
+
+"Menu bar icon" = "Pictograma din bara de meniu";
+"System icon" = "Pictograma sistemului";
+
+/* Connected audio accessory metadata and native settings. */
+"Battery: %@" = "Baterie: %@";
+"“%@” Settings…" = "Configurări pentru „%@”…";
+"Bluetooth Settings…" = "Configurări Bluetooth…";
+"System Settings" = "Configurări sistem";
+"Drag devices to change their order in the menu." = "Trageți dispozitivele pentru a le schimba ordinea în meniu.";
+"Move Up" = "Mută în sus";
+"Move Down" = "Mută în jos";
+"Connected device" = "Dispozitiv conectat";
+"Speaker" = "Difuzor";
+
+/* Automatic device selection. */
+"Automatically select devices" = "Selectează automat dispozitivele";
+"Devices higher in the list take priority; hidden devices are excluded." = "Dispozitivele de sus au prioritate; cele ascunse sunt excluse.";
+"Resume Automatic Selection" = "Reia selecția automată";
+"Keep Manual Selection" = "Păstrează selecția manuală";
+"Switch %@ from %@ to %@?" = "Comuți %@ de la %@ la %@?";
+
+"Could not confirm the switch to %@. Please try again." = "Nu s-a putut confirma comutarea la %@. Încearcă din nou.";
+
+"Manual" = "Manual";
+
+"App Store…" = "App Store…";
+
+"Automatically switches devices as connections change." = "Schimbă automat dispozitivele când se modifică conexiunile.";

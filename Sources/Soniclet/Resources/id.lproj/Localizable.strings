@@ -1,0 +1,83 @@
+/* Soniclet interface strings. Keep format placeholders unchanged. */
+"Sound" = "Bunyi";
+"Output" = "Output";
+"Input" = "Input";
+"Sound Settings…" = "Pengaturan Suara…";
+"Soniclet Settings…" = "Pengaturan Soniclet…";
+"Quit Soniclet" = "Keluar dari Soniclet";
+"Close error" = "Tutup pesan kesalahan";
+"Output volume" = "Volume output";
+"Volume cannot be adjusted for this device" = "Volume perangkat ini tidak dapat disesuaikan";
+"Adjust the volume on the device" = "Sesuaikan volume pada perangkat";
+"Volume for %@" = "Volume untuk %@";
+"No output devices to show" = "Tidak ada perangkat output untuk ditampilkan";
+"No input devices to show" = "Tidak ada perangkat input untuk ditampilkan";
+"Current: %@" = "Saat ini: %@";
+"The current device is hidden in settings" = "Perangkat saat ini disembunyikan di pengaturan";
+"Switching" = "Beralih";
+"Selected" = "Dipilih";
+"Not selected" = "Tidak dipilih";
+"Choose which devices appear in the menu." = "Pilih perangkat yang ditampilkan di menu.";
+"Hiding a device does not change the current input, output, or settings in other apps." = "Menyembunyikan perangkat tidak mengubah input, output, atau pengaturan app lain.";
+"Not connected" = "Tidak terhubung";
+"Show %@ (%@)" = "Tampilkan %@ (%@)";
+"No output devices" = "Tidak ada perangkat output";
+"No input devices" = "Tidak ada perangkat input";
+"Could not switch to %@. Please try again." = "Tidak dapat beralih ke %@. Coba lagi.";
+"Audio operation failed (%d). Check the device connection and try again." = "Operasi audio gagal (%d). Periksa koneksi perangkat dan coba lagi.";
+"Soniclet — audio devices" = "Soniclet — perangkat audio";
+"Soniclet Settings" = "Pengaturan Soniclet";
+
+/* Status menu and system-managed login item. */
+"General" = "Umum";
+"Launch at login" = "Buka saat masuk";
+"Approval is required in System Settings." = "Persetujuan diperlukan di Pengaturan Sistem.";
+"Open Login Items Settings…" = "Buka pengaturan Item Masuk…";
+"Could not change login settings: %@" = "Tidak dapat mengubah pengaturan masuk: %@";
+"Mute Output" = "Bisukan output";
+"Unmute Output" = "Bunyikan output";
+"Window" = "Jendela";
+"Close" = "Tutup";
+"%@: %@" = "%@: %@";
+
+/* Volume step buttons. */
+"Decrease volume" = "Kecilkan volume";
+"Increase volume" = "Besarkan volume";
+
+"Select AirPlay devices in System Sound Settings." = "Anda dapat memilih perangkat AirPlay di [pengaturan suara sistem](soniclet://sound-settings).";
+
+/* GitHub Releases update notification. */
+"Check for Updates…" = "Periksa Pembaruan…";
+"Checking for Updates…" = "Memeriksa pembaruan…";
+"No newer release is available." = "Tidak ada rilis yang lebih baru.";
+"Could not check for updates. Try again later." = "Tidak dapat memeriksa pembaruan. Coba lagi nanti.";
+"Version %@ is available…" = "Versi %@ tersedia…";
+
+"Menu bar icon" = "Ikon bar menu";
+"System icon" = "Ikon sistem";
+
+/* Connected audio accessory metadata and native settings. */
+"Battery: %@" = "Baterai: %@";
+"“%@” Settings…" = "Pengaturan “%@”…";
+"Bluetooth Settings…" = "Pengaturan Bluetooth…";
+"System Settings" = "Pengaturan Sistem";
+"Drag devices to change their order in the menu." = "Seret perangkat untuk mengubah urutannya di menu.";
+"Move Up" = "Pindahkan ke Atas";
+"Move Down" = "Pindahkan ke Bawah";
+"Connected device" = "Perangkat terhubung";
+"Speaker" = "Speaker";
+
+/* Automatic device selection. */
+"Automatically select devices" = "Pilih perangkat otomatis";
+"Devices higher in the list take priority; hidden devices are excluded." = "Perangkat di bagian atas diprioritaskan; perangkat tersembunyi dikecualikan.";
+"Resume Automatic Selection" = "Lanjutkan pemilihan otomatis";
+"Keep Manual Selection" = "Pertahankan pilihan manual";
+"Switch %@ from %@ to %@?" = "Alihkan %@ dari %@ ke %@?";
+
+"Could not confirm the switch to %@. Please try again." = "Tidak dapat memastikan peralihan ke %@. Coba lagi.";
+
+"Manual" = "Manual";
+
+"App Store…" = "App Store…";
+
+"Automatically switches devices as connections change." = "Beralih perangkat secara otomatis saat koneksi berubah.";

@@ -1,0 +1,66 @@
+name: Prepare draft release
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing reviewed version tag (for example v0.6.0)
+        required: true
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: release
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: xcode-27
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ inputs.tag }}
+      - name: Validate version and build
+        env:
+          RELEASE_TAG: ${{ inputs.tag }}
+        run: |
+          version=$(/usr/libexec/PlistBuddy -c 'Print CFBundleShortVersionString' Info.plist)
+          test "$RELEASE_TAG" = "v$version"
+          ARCHS='arm64 x86_64' ./build.sh
+          ./test.sh
+          for architecture in arm64 x86_64; do
+            /usr/bin/lipo 'Soniclet.app/Contents/MacOS/Soniclet' -verify_arch "$architecture"
+          done
+          codesign --verify --deep --strict 'Soniclet.app'
+      - name: Package ad-hoc signed build
+        run: |
+          mkdir -p release
+          ditto -c -k --keepParent --norsrc --noextattr 'Soniclet.app' release/Soniclet-universal.zip
+          cd release
+          shasum -a 256 Soniclet-universal.zip > SHA256SUMS
+      - name: Prepare matching Homebrew cask for review
+        run: |
+          python3 Tools/make-homebrew-cask.py release/Soniclet-universal.zip release/soniclet.rb
+          ruby -c release/soniclet.rb
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: release
+          path: release/
+          if-no-files-found: error
+  draft:
+    needs: build
+    runs-on: xcode-27
+    permissions:
+      actions: read
+      contents: write
+    steps:
+      - name: Download verified artifacts and create draft
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ inputs.tag }}
+          RUN_ID: ${{ github.run_id }}
+        run: |
+          gh run download "$RUN_ID" -n release -D release
+          cd release
+          shasum -a 256 -c SHA256SUMS
+          gh release create "$RELEASE_TAG" ./* --verify-tag --draft --title "$RELEASE_TAG" --notes 'Universal macOS build. Ad-hoc signed; not Developer ID signed or notarized. Review installation, hardware behavior, and release notes before publishing. The staged soniclet.rb matches this ZIP; regenerate it after replacing the ZIP with the final notarized artifact, then review it in pal4de/homebrew-tap after release publication.'

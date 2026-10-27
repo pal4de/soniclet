@@ -1,0 +1,83 @@
+/* Soniclet interface strings. Keep format placeholders unchanged. */
+"Sound" = "Geluid";
+"Output" = "Uitvoer";
+"Input" = "Invoer";
+"Sound Settings…" = "Geluidsinstellingen…";
+"Soniclet Settings…" = "Instellingen van Soniclet…";
+"Quit Soniclet" = "Stop Soniclet";
+"Close error" = "Foutmelding sluiten";
+"Output volume" = "Uitvoervolume";
+"Volume cannot be adjusted for this device" = "Het volume van dit apparaat kan niet worden aangepast";
+"Adjust the volume on the device" = "Pas het volume op het apparaat aan";
+"Volume for %@" = "Volume van %@";
+"No output devices to show" = "Geen uitvoerapparaten om te tonen";
+"No input devices to show" = "Geen invoerapparaten om te tonen";
+"Current: %@" = "Huidig: %@";
+"The current device is hidden in settings" = "Het huidige apparaat is verborgen in de instellingen";
+"Switching" = "Bezig met schakelen";
+"Selected" = "Geselecteerd";
+"Not selected" = "Niet geselecteerd";
+"Choose which devices appear in the menu." = "Kies welke apparaten in het menu verschijnen.";
+"Hiding a device does not change the current input, output, or settings in other apps." = "Een apparaat verbergen verandert de huidige invoer, uitvoer of instellingen van andere apps niet.";
+"Not connected" = "Niet verbonden";
+"Show %@ (%@)" = "Toon %@ (%@)";
+"No output devices" = "Geen uitvoerapparaten";
+"No input devices" = "Geen invoerapparaten";
+"Could not switch to %@. Please try again." = "Schakelen naar %@ is mislukt. Probeer het opnieuw.";
+"Audio operation failed (%d). Check the device connection and try again." = "De audiobewerking is mislukt (%d). Controleer de verbinding van het apparaat en probeer het opnieuw.";
+"Soniclet — audio devices" = "Soniclet — audioapparaten";
+"Soniclet Settings" = "Instellingen van Soniclet";
+
+/* Status menu and system-managed login item. */
+"General" = "Algemeen";
+"Launch at login" = "Open bij inloggen";
+"Approval is required in System Settings." = "Toestemming in Systeeminstellingen is vereist.";
+"Open Login Items Settings…" = "Open instellingen voor inlogonderdelen…";
+"Could not change login settings: %@" = "De inloginstellingen konden niet worden gewijzigd: %@";
+"Mute Output" = "Demp uitvoer";
+"Unmute Output" = "Hef demping uitvoer op";
+"Window" = "Venster";
+"Close" = "Sluit";
+"%@: %@" = "%@: %@";
+
+/* Volume step buttons. */
+"Decrease volume" = "Volume verlagen";
+"Increase volume" = "Volume verhogen";
+
+"Select AirPlay devices in System Sound Settings." = "Je kunt AirPlay-apparaten selecteren via de [geluidsinstellingen van het systeem](soniclet://sound-settings).";
+
+/* GitHub Releases update notification. */
+"Check for Updates…" = "Zoek naar updates…";
+"Checking for Updates…" = "Zoeken naar updates…";
+"No newer release is available." = "Er is geen nieuwere versie beschikbaar.";
+"Could not check for updates. Try again later." = "Kan niet op updates controleren. Probeer het later opnieuw.";
+"Version %@ is available…" = "Versie %@ is beschikbaar…";
+
+"Menu bar icon" = "Menubalksymbool";
+"System icon" = "Systeemsymbool";
+
+/* Connected audio accessory metadata and native settings. */
+"Battery: %@" = "Batterij: %@";
+"“%@” Settings…" = "Instellingen voor ‘%@’…";
+"Bluetooth Settings…" = "Bluetooth-instellingen…";
+"System Settings" = "Systeeminstellingen";
+"Drag devices to change their order in the menu." = "Sleep apparaten om hun volgorde in het menu te wijzigen.";
+"Move Up" = "Verplaats omhoog";
+"Move Down" = "Verplaats omlaag";
+"Connected device" = "Verbonden apparaat";
+"Speaker" = "Luidspreker";
+
+/* Automatic device selection. */
+"Automatically select devices" = "Apparaten automatisch selecteren";
+"Devices higher in the list take priority; hidden devices are excluded." = "Apparaten hoger in de lijst krijgen voorrang; verborgen apparaten zijn uitgesloten.";
+"Resume Automatic Selection" = "Automatische selectie hervatten";
+"Keep Manual Selection" = "Handmatige selectie behouden";
+"Switch %@ from %@ to %@?" = "%@ van %@ naar %@ schakelen?";
+
+"Could not confirm the switch to %@. Please try again." = "De overschakeling naar %@ kon niet worden bevestigd. Probeer het opnieuw.";
+
+"Manual" = "Handmatig";
+
+"App Store…" = "App Store…";
+
+"Automatically switches devices as connections change." = "Schakelt automatisch tussen apparaten wanneer verbindingen veranderen.";

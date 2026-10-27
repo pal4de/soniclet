@@ -1,0 +1,83 @@
+/* Soniclet interface strings. Keep format placeholders unchanged. */
+"Sound" = "声音";
+"Output" = "输出";
+"Input" = "输入";
+"Sound Settings…" = "声音设置…";
+"Soniclet Settings…" = "Soniclet 设置…";
+"Quit Soniclet" = "退出 Soniclet";
+"Close error" = "关闭错误信息";
+"Output volume" = "输出音量";
+"Volume cannot be adjusted for this device" = "无法调节此设备的音量";
+"Adjust the volume on the device" = "请在设备上调节音量";
+"Volume for %@" = "%@ 的音量";
+"No output devices to show" = "没有可显示的输出设备";
+"No input devices to show" = "没有可显示的输入设备";
+"Current: %@" = "当前：%@";
+"The current device is hidden in settings" = "当前设备已在设置中隐藏";
+"Switching" = "正在切换";
+"Selected" = "已选择";
+"Not selected" = "未选择";
+"Choose which devices appear in the menu." = "选择要在菜单中显示的设备。";
+"Hiding a device does not change the current input, output, or settings in other apps." = "隐藏设备不会更改当前的输入、输出或其他 App 的设置。";
+"Not connected" = "未连接";
+"Show %@ (%@)" = "显示 %@（%@）";
+"No output devices" = "没有输出设备";
+"No input devices" = "没有输入设备";
+"Could not switch to %@. Please try again." = "无法切换到 %@。请重试。";
+"Audio operation failed (%d). Check the device connection and try again." = "音频操作失败（%d）。请检查设备连接，然后重试。";
+"Soniclet — audio devices" = "Soniclet — 音频设备";
+"Soniclet Settings" = "Soniclet 设置";
+
+/* Status menu and system-managed login item. */
+"General" = "通用";
+"Launch at login" = "登录时启动";
+"Approval is required in System Settings." = "需要在系统设置中批准。";
+"Open Login Items Settings…" = "打开登录项设置…";
+"Could not change login settings: %@" = "无法更改登录设置：%@";
+"Mute Output" = "静音输出";
+"Unmute Output" = "取消输出静音";
+"Window" = "窗口";
+"Close" = "关闭";
+"%@: %@" = "%@：%@";
+
+/* Volume step buttons. */
+"Decrease volume" = "调低音量";
+"Increase volume" = "调高音量";
+
+"Select AirPlay devices in System Sound Settings." = "您可以在[系统声音设置](soniclet://sound-settings)中选择 AirPlay 设备。";
+
+/* GitHub Releases update notification. */
+"Check for Updates…" = "检查更新…";
+"Checking for Updates…" = "正在检查更新…";
+"No newer release is available." = "暂无更新的版本。";
+"Could not check for updates. Try again later." = "无法检查更新。请稍后重试。";
+"Version %@ is available…" = "版本 %@ 现已可用…";
+
+"Menu bar icon" = "菜单栏图标";
+"System icon" = "系统图标";
+
+/* Connected audio accessory metadata and native settings. */
+"Battery: %@" = "电池：%@";
+"“%@” Settings…" = "“%@”设置…";
+"Bluetooth Settings…" = "蓝牙设置…";
+"System Settings" = "系统设置";
+"Drag devices to change their order in the menu." = "拖移设备以更改其在菜单中的顺序。";
+"Move Up" = "上移";
+"Move Down" = "下移";
+"Connected device" = "连接的设备";
+"Speaker" = "扬声器";
+
+/* Automatic device selection. */
+"Automatically select devices" = "自动选择设备";
+"Devices higher in the list take priority; hidden devices are excluded." = "优先选择列表中靠上的设备；隐藏的设备不参与自动选择。";
+"Resume Automatic Selection" = "恢复自动选择";
+"Keep Manual Selection" = "保留手动选择";
+"Switch %@ from %@ to %@?" = "将%@从%@切换到%@？";
+
+"Could not confirm the switch to %@. Please try again." = "无法确认已切换到%@。请重试。";
+
+"Manual" = "手动";
+
+"App Store…" = "App Store…";
+
+"Automatically switches devices as connections change." = "根据连接情况自动切换设备。";

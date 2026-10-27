@@ -1,0 +1,83 @@
+/* Soniclet interface strings. Keep format placeholders unchanged. */
+"Sound" = "Звук";
+"Output" = "Вихід";
+"Input" = "Вхід";
+"Sound Settings…" = "Параметри звуку…";
+"Soniclet Settings…" = "Параметри Soniclet…";
+"Quit Soniclet" = "Завершити Soniclet";
+"Close error" = "Закрити повідомлення про помилку";
+"Output volume" = "Вихідна гучність";
+"Volume cannot be adjusted for this device" = "Гучність цього пристрою неможливо змінити";
+"Adjust the volume on the device" = "Змініть гучність на самому пристрої";
+"Volume for %@" = "Гучність пристрою %@";
+"No output devices to show" = "Немає вихідних пристроїв для відображення";
+"No input devices to show" = "Немає вхідних пристроїв для відображення";
+"Current: %@" = "Поточний: %@";
+"The current device is hidden in settings" = "Поточний пристрій приховано в параметрах";
+"Switching" = "Перемикання";
+"Selected" = "Вибрано";
+"Not selected" = "Не вибрано";
+"Choose which devices appear in the menu." = "Виберіть пристрої, які відображатимуться в меню.";
+"Hiding a device does not change the current input, output, or settings in other apps." = "Приховування пристрою не змінює поточний вхід, вихід або параметри інших програм.";
+"Not connected" = "Не під’єднано";
+"Show %@ (%@)" = "Показувати %@ (%@)";
+"No output devices" = "Немає вихідних пристроїв";
+"No input devices" = "Немає вхідних пристроїв";
+"Could not switch to %@. Please try again." = "Не вдалося перемкнутися на %@. Спробуйте ще раз.";
+"Audio operation failed (%d). Check the device connection and try again." = "Помилка аудіооперації (%d). Перевірте під’єднання пристрою та спробуйте ще раз.";
+"Soniclet — audio devices" = "Soniclet — аудіопристрої";
+"Soniclet Settings" = "Параметри Soniclet";
+
+/* Status menu and system-managed login item. */
+"General" = "Загальні";
+"Launch at login" = "Відкривати під час входу";
+"Approval is required in System Settings." = "Потрібен дозвіл у Системних параметрах.";
+"Open Login Items Settings…" = "Відкрити параметри об’єктів входу…";
+"Could not change login settings: %@" = "Не вдалося змінити параметри входу: %@";
+"Mute Output" = "Вимкнути вихідний звук";
+"Unmute Output" = "Увімкнути вихідний звук";
+"Window" = "Вікно";
+"Close" = "Закрити";
+"%@: %@" = "%@: %@";
+
+/* Volume step buttons. */
+"Decrease volume" = "Зменшити гучність";
+"Increase volume" = "Збільшити гучність";
+
+"Select AirPlay devices in System Sound Settings." = "Пристрої AirPlay можна вибрати в [системних параметрах звуку](soniclet://sound-settings).";
+
+/* GitHub Releases update notification. */
+"Check for Updates…" = "Перевірити оновлення…";
+"Checking for Updates…" = "Перевірка оновлень…";
+"No newer release is available." = "Новішої версії немає.";
+"Could not check for updates. Try again later." = "Не вдалося перевірити оновлення. Спробуйте пізніше.";
+"Version %@ is available…" = "Доступна версія %@…";
+
+"Menu bar icon" = "Іконка в смузі меню";
+"System icon" = "Системна іконка";
+
+/* Connected audio accessory metadata and native settings. */
+"Battery: %@" = "Заряд: %@";
+"“%@” Settings…" = "Параметри «%@»…";
+"Bluetooth Settings…" = "Параметри Bluetooth…";
+"System Settings" = "Системні параметри";
+"Drag devices to change their order in the menu." = "Перетягуйте пристрої, щоб змінити їхній порядок у меню.";
+"Move Up" = "Перемістити вгору";
+"Move Down" = "Перемістити вниз";
+"Connected device" = "Підключений пристрій";
+"Speaker" = "Динамік";
+
+/* Automatic device selection. */
+"Automatically select devices" = "Вибирати пристрої автоматично";
+"Devices higher in the list take priority; hidden devices are excluded." = "Пристрої вище в списку мають пріоритет; приховані пристрої виключено.";
+"Resume Automatic Selection" = "Відновити автовибір";
+"Keep Manual Selection" = "Зберегти ручний вибір";
+"Switch %@ from %@ to %@?" = "Перемкнути %@ з %@ на %@?";
+
+"Could not confirm the switch to %@. Please try again." = "Не вдалося підтвердити перемикання на %@. Спробуйте ще раз.";
+
+"Manual" = "Вручну";
+
+"App Store…" = "App Store…";
+
+"Automatically switches devices as connections change." = "Автоматично перемикає пристрої в разі зміни підключень.";

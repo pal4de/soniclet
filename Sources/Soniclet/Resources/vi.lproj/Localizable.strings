@@ -1,0 +1,83 @@
+/* Soniclet interface strings. Keep format placeholders unchanged. */
+"Sound" = "Âm thanh";
+"Output" = "Đầu ra";
+"Input" = "Đầu vào";
+"Sound Settings…" = "Cài đặt âm thanh…";
+"Soniclet Settings…" = "Cài đặt Soniclet…";
+"Quit Soniclet" = "Thoát Soniclet";
+"Close error" = "Đóng thông báo lỗi";
+"Output volume" = "Âm lượng đầu ra";
+"Volume cannot be adjusted for this device" = "Không thể điều chỉnh âm lượng cho thiết bị này";
+"Adjust the volume on the device" = "Điều chỉnh âm lượng trên thiết bị";
+"Volume for %@" = "Âm lượng của %@";
+"No output devices to show" = "Không có thiết bị đầu ra để hiển thị";
+"No input devices to show" = "Không có thiết bị đầu vào để hiển thị";
+"Current: %@" = "Hiện tại: %@";
+"The current device is hidden in settings" = "Thiết bị hiện tại bị ẩn trong cài đặt";
+"Switching" = "Đang chuyển";
+"Selected" = "Đã chọn";
+"Not selected" = "Chưa chọn";
+"Choose which devices appear in the menu." = "Chọn thiết bị xuất hiện trong menu.";
+"Hiding a device does not change the current input, output, or settings in other apps." = "Ẩn thiết bị không thay đổi đầu vào, đầu ra hiện tại hoặc cài đặt của các ứng dụng khác.";
+"Not connected" = "Chưa kết nối";
+"Show %@ (%@)" = "Hiển thị %@ (%@)";
+"No output devices" = "Không có thiết bị đầu ra";
+"No input devices" = "Không có thiết bị đầu vào";
+"Could not switch to %@. Please try again." = "Không thể chuyển sang %@. Vui lòng thử lại.";
+"Audio operation failed (%d). Check the device connection and try again." = "Thao tác âm thanh không thành công (%d). Kiểm tra kết nối thiết bị rồi thử lại.";
+"Soniclet — audio devices" = "Soniclet — thiết bị âm thanh";
+"Soniclet Settings" = "Cài đặt Soniclet";
+
+/* Status menu and system-managed login item. */
+"General" = "Cài đặt chung";
+"Launch at login" = "Mở khi đăng nhập";
+"Approval is required in System Settings." = "Cần phê duyệt trong Cài đặt hệ thống.";
+"Open Login Items Settings…" = "Mở cài đặt Mục đăng nhập…";
+"Could not change login settings: %@" = "Không thể thay đổi cài đặt đăng nhập: %@";
+"Mute Output" = "Tắt tiếng đầu ra";
+"Unmute Output" = "Bật tiếng đầu ra";
+"Window" = "Cửa sổ";
+"Close" = "Đóng";
+"%@: %@" = "%@: %@";
+
+/* Volume step buttons. */
+"Decrease volume" = "Giảm âm lượng";
+"Increase volume" = "Tăng âm lượng";
+
+"Select AirPlay devices in System Sound Settings." = "Bạn có thể chọn thiết bị AirPlay trong [cài đặt âm thanh hệ thống](soniclet://sound-settings).";
+
+/* GitHub Releases update notification. */
+"Check for Updates…" = "Kiểm tra bản cập nhật…";
+"Checking for Updates…" = "Đang kiểm tra bản cập nhật…";
+"No newer release is available." = "Không có bản phát hành mới hơn.";
+"Could not check for updates. Try again later." = "Không thể kiểm tra bản cập nhật. Hãy thử lại sau.";
+"Version %@ is available…" = "Đã có phiên bản %@…";
+
+"Menu bar icon" = "Biểu tượng thanh menu";
+"System icon" = "Biểu tượng hệ thống";
+
+/* Connected audio accessory metadata and native settings. */
+"Battery: %@" = "Pin: %@";
+"“%@” Settings…" = "Cài đặt “%@”…";
+"Bluetooth Settings…" = "Cài đặt Bluetooth…";
+"System Settings" = "Cài đặt hệ thống";
+"Drag devices to change their order in the menu." = "Kéo các thiết bị để thay đổi thứ tự trong menu.";
+"Move Up" = "Di chuyển lên";
+"Move Down" = "Di chuyển xuống";
+"Connected device" = "Thiết bị đã kết nối";
+"Speaker" = "Loa";
+
+/* Automatic device selection. */
+"Automatically select devices" = "Tự động chọn thiết bị";
+"Devices higher in the list take priority; hidden devices are excluded." = "Ưu tiên thiết bị ở phía trên; loại trừ thiết bị bị ẩn.";
+"Resume Automatic Selection" = "Tiếp tục chọn tự động";
+"Keep Manual Selection" = "Giữ lựa chọn thủ công";
+"Switch %@ from %@ to %@?" = "Chuyển %@ từ %@ sang %@?";
+
+"Could not confirm the switch to %@. Please try again." = "Không thể xác nhận việc chuyển sang %@. Vui lòng thử lại.";
+
+"Manual" = "Thủ công";
+
+"App Store…" = "App Store…";
+
+"Automatically switches devices as connections change." = "Tự động chuyển thiết bị khi kết nối thay đổi.";

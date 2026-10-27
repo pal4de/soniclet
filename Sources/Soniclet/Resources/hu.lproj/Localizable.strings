@@ -1,0 +1,83 @@
+/* Soniclet interface strings. Keep format placeholders unchanged. */
+"Sound" = "Hang";
+"Output" = "Kimenet";
+"Input" = "Bemenet";
+"Sound Settings…" = "Hangbeállítások…";
+"Soniclet Settings…" = "A Soniclet beállításai…";
+"Quit Soniclet" = "Kilépés a Sonicletből";
+"Close error" = "Hibaüzenet bezárása";
+"Output volume" = "Kimeneti hangerő";
+"Volume cannot be adjusted for this device" = "Az eszköz hangereje nem állítható";
+"Adjust the volume on the device" = "Állítsa be a hangerőt az eszközön";
+"Volume for %@" = "%@ hangereje";
+"No output devices to show" = "Nincsenek megjeleníthető kimeneti eszközök";
+"No input devices to show" = "Nincsenek megjeleníthető bemeneti eszközök";
+"Current: %@" = "Jelenlegi: %@";
+"The current device is hidden in settings" = "A jelenlegi eszköz el van rejtve a beállításokban";
+"Switching" = "Váltás folyamatban";
+"Selected" = "Kijelölve";
+"Not selected" = "Nincs kijelölve";
+"Choose which devices appear in the menu." = "Válassza ki a menüben megjelenő eszközöket.";
+"Hiding a device does not change the current input, output, or settings in other apps." = "Az eszköz elrejtése nem módosítja a jelenlegi bemenetet, kimenetet vagy más appok beállításait.";
+"Not connected" = "Nincs csatlakoztatva";
+"Show %@ (%@)" = "%@ (%@) megjelenítése";
+"No output devices" = "Nincsenek kimeneti eszközök";
+"No input devices" = "Nincsenek bemeneti eszközök";
+"Could not switch to %@. Please try again." = "Nem sikerült váltani a következőre: %@. Próbálja újra.";
+"Audio operation failed (%d). Check the device connection and try again." = "A hangművelet sikertelen (%d). Ellenőrizze az eszköz csatlakozását, majd próbálja újra.";
+"Soniclet — audio devices" = "Soniclet — hangeszközök";
+"Soniclet Settings" = "A Soniclet beállításai";
+
+/* Status menu and system-managed login item. */
+"General" = "Általános";
+"Launch at login" = "Megnyitás bejelentkezéskor";
+"Approval is required in System Settings." = "Jóváhagyás szükséges a Rendszerbeállításokban.";
+"Open Login Items Settings…" = "Bejelentkezési elemek beállításainak megnyitása…";
+"Could not change login settings: %@" = "Nem sikerült módosítani a bejelentkezési beállításokat: %@";
+"Mute Output" = "Kimenet némítása";
+"Unmute Output" = "Kimenet némításának feloldása";
+"Window" = "Ablak";
+"Close" = "Bezárás";
+"%@: %@" = "%@: %@";
+
+/* Volume step buttons. */
+"Decrease volume" = "Hangerő csökkentése";
+"Increase volume" = "Hangerő növelése";
+
+"Select AirPlay devices in System Sound Settings." = "Az AirPlay-eszközöket a [rendszer hangbeállításaiban](soniclet://sound-settings) választhatod ki.";
+
+/* GitHub Releases update notification. */
+"Check for Updates…" = "Frissítések keresése…";
+"Checking for Updates…" = "Frissítések keresése folyamatban…";
+"No newer release is available." = "Nincs elérhető újabb kiadás.";
+"Could not check for updates. Try again later." = "Nem sikerült frissítéseket keresni. Próbáld újra később.";
+"Version %@ is available…" = "A(z) %@ verzió elérhető…";
+
+"Menu bar icon" = "Menüsorikon";
+"System icon" = "Rendszerikon";
+
+/* Connected audio accessory metadata and native settings. */
+"Battery: %@" = "Akkumulátor: %@";
+"“%@” Settings…" = "„%@” beállításai…";
+"Bluetooth Settings…" = "Bluetooth-beállítások…";
+"System Settings" = "Rendszerbeállítások";
+"Drag devices to change their order in the menu." = "Húzással módosítható az eszközök sorrendje a menüben.";
+"Move Up" = "Mozgatás felfelé";
+"Move Down" = "Mozgatás lefelé";
+"Connected device" = "Csatlakoztatott eszköz";
+"Speaker" = "Hangszóró";
+
+/* Automatic device selection. */
+"Automatically select devices" = "Eszközök automatikus kiválasztása";
+"Devices higher in the list take priority; hidden devices are excluded." = "A lista felső eszközei élveznek elsőbbséget; a rejtett eszközök kimaradnak.";
+"Resume Automatic Selection" = "Automatikus kiválasztás folytatása";
+"Keep Manual Selection" = "Kézi kiválasztás megtartása";
+"Switch %@ from %@ to %@?" = "%@ átváltása erről: %@, erre: %@?";
+
+"Could not confirm the switch to %@. Please try again." = "Nem sikerült megerősíteni a váltást erre: %@. Próbáld újra.";
+
+"Manual" = "Kézi";
+
+"App Store…" = "App Store…";
+
+"Automatically switches devices as connections change." = "A kapcsolatok változásakor automatikusan vált az eszközök között.";

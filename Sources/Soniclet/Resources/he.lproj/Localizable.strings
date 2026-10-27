@@ -1,0 +1,83 @@
+/* Soniclet interface strings. Keep format placeholders unchanged. */
+"Sound" = "צליל";
+"Output" = "פלט";
+"Input" = "קלט";
+"Sound Settings…" = "הגדרות צליל…";
+"Soniclet Settings…" = "הגדרות Soniclet…";
+"Quit Soniclet" = "סיום Soniclet";
+"Close error" = "סגירת הודעת השגיאה";
+"Output volume" = "עוצמת הפלט";
+"Volume cannot be adjusted for this device" = "לא ניתן לשנות את עוצמת הקול של התקן זה";
+"Adjust the volume on the device" = "יש לשנות את עוצמת הקול בהתקן עצמו";
+"Volume for %@" = "עוצמת הקול של %@";
+"No output devices to show" = "אין התקני פלט להצגה";
+"No input devices to show" = "אין התקני קלט להצגה";
+"Current: %@" = "נוכחי: %@";
+"The current device is hidden in settings" = "ההתקן הנוכחי מוסתר בהגדרות";
+"Switching" = "מתבצע מעבר";
+"Selected" = "נבחר";
+"Not selected" = "לא נבחר";
+"Choose which devices appear in the menu." = "יש לבחור אילו התקנים יופיעו בתפריט.";
+"Hiding a device does not change the current input, output, or settings in other apps." = "הסתרת התקן אינה משנה את הקלט, הפלט או ההגדרות של יישומים אחרים.";
+"Not connected" = "לא מחובר";
+"Show %@ (%@)" = "הצגת %@ (%@)";
+"No output devices" = "אין התקני פלט";
+"No input devices" = "אין התקני קלט";
+"Could not switch to %@. Please try again." = "לא ניתן לעבור אל %@. יש לנסות שוב.";
+"Audio operation failed (%d). Check the device connection and try again." = "פעולת השמע נכשלה (%d). יש לבדוק את חיבור ההתקן ולנסות שוב.";
+"Soniclet — audio devices" = "Soniclet — התקני שמע";
+"Soniclet Settings" = "הגדרות Soniclet";
+
+/* Status menu and system-managed login item. */
+"General" = "כללי";
+"Launch at login" = "פתיחה בעת התחברות";
+"Approval is required in System Settings." = "נדרש אישור בהגדרות המערכת.";
+"Open Login Items Settings…" = "פתיחת הגדרות פריטי התחברות…";
+"Could not change login settings: %@" = "לא ניתן לשנות את הגדרות ההתחברות: %@";
+"Mute Output" = "השתקת הפלט";
+"Unmute Output" = "ביטול השתקת הפלט";
+"Window" = "חלון";
+"Close" = "סגירה";
+"%@: %@" = "%@: %@";
+
+/* Volume step buttons. */
+"Decrease volume" = "הנמכת עוצמת הקול";
+"Increase volume" = "הגברת עוצמת הקול";
+
+"Select AirPlay devices in System Sound Settings." = "ניתן לבחור מכשירי AirPlay דרך [הגדרות הצליל של המערכת](soniclet://sound-settings).";
+
+/* GitHub Releases update notification. */
+"Check for Updates…" = "בדיקת עדכונים…";
+"Checking for Updates…" = "מתבצעת בדיקת עדכונים…";
+"No newer release is available." = "אין גרסה חדשה יותר.";
+"Could not check for updates. Try again later." = "לא ניתן לבדוק עדכונים. יש לנסות שוב מאוחר יותר.";
+"Version %@ is available…" = "גרסה %@ זמינה…";
+
+"Menu bar icon" = "סמל שורת התפריטים";
+"System icon" = "סמל מערכת";
+
+/* Connected audio accessory metadata and native settings. */
+"Battery: %@" = "סוללה: %@";
+"“%@” Settings…" = "הגדרות ״%@״…";
+"Bluetooth Settings…" = "הגדרות Bluetooth…";
+"System Settings" = "הגדרות המערכת";
+"Drag devices to change their order in the menu." = "גררו מכשירים כדי לשנות את הסדר שלהם בתפריט.";
+"Move Up" = "העברה למעלה";
+"Move Down" = "העברה למטה";
+"Connected device" = "התקן מחובר";
+"Speaker" = "רמקול";
+
+/* Automatic device selection. */
+"Automatically select devices" = "בחירת התקנים אוטומטית";
+"Devices higher in the list take priority; hidden devices are excluded." = "להתקנים בראש הרשימה יש עדיפות; התקנים מוסתרים אינם נכללים.";
+"Resume Automatic Selection" = "חזרה לבחירה אוטומטית";
+"Keep Manual Selection" = "שמירת הבחירה הידנית";
+"Switch %@ from %@ to %@?" = "להעביר את %@ מ־%@ אל %@?";
+
+"Could not confirm the switch to %@. Please try again." = "לא ניתן לאשר את המעבר אל %@. נסה שוב.";
+
+"Manual" = "ידני";
+
+"App Store…" = "App Store…";
+
+"Automatically switches devices as connections change." = "מחליף התקנים באופן אוטומטי כשהחיבורים משתנים.";

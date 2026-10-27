@@ -1,0 +1,83 @@
+/* Soniclet interface strings. Keep format placeholders unchanged. */
+"Sound" = "Звук";
+"Output" = "Изход";
+"Input" = "Вход";
+"Sound Settings…" = "Настройки на звука…";
+"Soniclet Settings…" = "Настройки на Soniclet…";
+"Quit Soniclet" = "Изход от Soniclet";
+"Close error" = "Затваряне на съобщението за грешка";
+"Output volume" = "Сила на изходния звук";
+"Volume cannot be adjusted for this device" = "Силата на звука на това устройство не може да се регулира";
+"Adjust the volume on the device" = "Регулирайте силата на звука от устройството";
+"Volume for %@" = "Сила на звука за %@";
+"No output devices to show" = "Няма изходни устройства за показване";
+"No input devices to show" = "Няма входни устройства за показване";
+"Current: %@" = "Текущо: %@";
+"The current device is hidden in settings" = "Текущото устройство е скрито в настройките";
+"Switching" = "Превключване";
+"Selected" = "Избрано";
+"Not selected" = "Не е избрано";
+"Choose which devices appear in the menu." = "Изберете кои устройства да се показват в менюто.";
+"Hiding a device does not change the current input, output, or settings in other apps." = "Скриването на устройство не променя текущия вход, изход или настройките на други приложения.";
+"Not connected" = "Няма връзка";
+"Show %@ (%@)" = "Показване на %@ (%@)";
+"No output devices" = "Няма изходни устройства";
+"No input devices" = "Няма входни устройства";
+"Could not switch to %@. Please try again." = "Неуспешно превключване към %@. Опитайте отново.";
+"Audio operation failed (%d). Check the device connection and try again." = "Аудио операцията е неуспешна (%d). Проверете връзката на устройството и опитайте отново.";
+"Soniclet — audio devices" = "Soniclet — аудио устройства";
+"Soniclet Settings" = "Настройки на Soniclet";
+
+/* Status menu and system-managed login item. */
+"General" = "Основни";
+"Launch at login" = "Отваряне при влизане";
+"Approval is required in System Settings." = "Необходимо е одобрение в Системни настройки.";
+"Open Login Items Settings…" = "Отваряне на настройките за елементи при влизане…";
+"Could not change login settings: %@" = "Настройките за влизане не могат да се променят: %@";
+"Mute Output" = "Изключване на изходния звук";
+"Unmute Output" = "Включване на изходния звук";
+"Window" = "Прозорец";
+"Close" = "Затваряне";
+"%@: %@" = "%@: %@";
+
+/* Volume step buttons. */
+"Decrease volume" = "Намаляване на звука";
+"Increase volume" = "Увеличаване на звука";
+
+"Select AirPlay devices in System Sound Settings." = "Можете да избирате устройства AirPlay от [системните настройки за звук](soniclet://sound-settings).";
+
+/* GitHub Releases update notification. */
+"Check for Updates…" = "Проверка за актуализации…";
+"Checking for Updates…" = "Проверява се за актуализации…";
+"No newer release is available." = "Няма налична по-нова версия.";
+"Could not check for updates. Try again later." = "Неуспешна проверка за актуализации. Опитайте отново по-късно.";
+"Version %@ is available…" = "Налична е версия %@…";
+
+"Menu bar icon" = "Икона в лентата с менюта";
+"System icon" = "Системна икона";
+
+/* Connected audio accessory metadata and native settings. */
+"Battery: %@" = "Батерия: %@";
+"“%@” Settings…" = "Настройки на „%@“…";
+"Bluetooth Settings…" = "Настройки за Bluetooth…";
+"System Settings" = "Системни настройки";
+"Drag devices to change their order in the menu." = "Плъзнете устройствата, за да промените реда им в менюто.";
+"Move Up" = "Преместване нагоре";
+"Move Down" = "Преместване надолу";
+"Connected device" = "Свързано устройство";
+"Speaker" = "Високоговорител";
+
+/* Automatic device selection. */
+"Automatically select devices" = "Автоматичен избор на устройства";
+"Devices higher in the list take priority; hidden devices are excluded." = "Устройствата по-горе имат предимство; скритите са изключени.";
+"Resume Automatic Selection" = "Възобновяване на автоматичния избор";
+"Keep Manual Selection" = "Запазване на ръчния избор";
+"Switch %@ from %@ to %@?" = "Превключване на %@ от %@ към %@?";
+
+"Could not confirm the switch to %@. Please try again." = "Неуспешно потвърждение на превключването към %@. Опитайте отново.";
+
+"Manual" = "Ръчно";
+
+"App Store…" = "App Store…";
+
+"Automatically switches devices as connections change." = "Автоматично превключва устройствата при промяна на връзките.";

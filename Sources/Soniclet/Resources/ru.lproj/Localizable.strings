@@ -1,0 +1,83 @@
+/* Soniclet interface strings. Keep format placeholders unchanged. */
+"Sound" = "Звук";
+"Output" = "Выход";
+"Input" = "Вход";
+"Sound Settings…" = "Настройки звука…";
+"Soniclet Settings…" = "Настройки Soniclet…";
+"Quit Soniclet" = "Завершить Soniclet";
+"Close error" = "Закрыть сообщение об ошибке";
+"Output volume" = "Громкость на выходе";
+"Volume cannot be adjusted for this device" = "Громкость этого устройства нельзя изменить";
+"Adjust the volume on the device" = "Измените громкость на самом устройстве";
+"Volume for %@" = "Громкость устройства %@";
+"No output devices to show" = "Нет выходных устройств для отображения";
+"No input devices to show" = "Нет входных устройств для отображения";
+"Current: %@" = "Текущее: %@";
+"The current device is hidden in settings" = "Текущее устройство скрыто в настройках";
+"Switching" = "Переключение";
+"Selected" = "Выбрано";
+"Not selected" = "Не выбрано";
+"Choose which devices appear in the menu." = "Выберите устройства, которые будут отображаться в меню.";
+"Hiding a device does not change the current input, output, or settings in other apps." = "Скрытие устройства не меняет текущий вход, выход или настройки других приложений.";
+"Not connected" = "Не подключено";
+"Show %@ (%@)" = "Показывать %@ (%@)";
+"No output devices" = "Нет выходных устройств";
+"No input devices" = "Нет входных устройств";
+"Could not switch to %@. Please try again." = "Не удалось переключиться на %@. Повторите попытку.";
+"Audio operation failed (%d). Check the device connection and try again." = "Сбой аудиооперации (%d). Проверьте подключение устройства и повторите попытку.";
+"Soniclet — audio devices" = "Soniclet — аудиоустройства";
+"Soniclet Settings" = "Настройки Soniclet";
+
+/* Status menu and system-managed login item. */
+"General" = "Основные";
+"Launch at login" = "Открывать при входе";
+"Approval is required in System Settings." = "Требуется разрешение в Системных настройках.";
+"Open Login Items Settings…" = "Открыть настройки объектов входа…";
+"Could not change login settings: %@" = "Не удалось изменить настройки входа: %@";
+"Mute Output" = "Выключить звук на выходе";
+"Unmute Output" = "Включить звук на выходе";
+"Window" = "Окно";
+"Close" = "Закрыть";
+"%@: %@" = "%@: %@";
+
+/* Volume step buttons. */
+"Decrease volume" = "Уменьшить громкость";
+"Increase volume" = "Увеличить громкость";
+
+"Select AirPlay devices in System Sound Settings." = "Устройства AirPlay можно выбрать в [системных настройках звука](soniclet://sound-settings).";
+
+/* GitHub Releases update notification. */
+"Check for Updates…" = "Проверить обновления…";
+"Checking for Updates…" = "Проверка обновлений…";
+"No newer release is available." = "Более новой версии нет.";
+"Could not check for updates. Try again later." = "Не удалось проверить обновления. Повторите попытку позже.";
+"Version %@ is available…" = "Доступна версия %@…";
+
+"Menu bar icon" = "Значок в строке меню";
+"System icon" = "Системный значок";
+
+/* Connected audio accessory metadata and native settings. */
+"Battery: %@" = "Заряд: %@";
+"“%@” Settings…" = "Настройки «%@»…";
+"Bluetooth Settings…" = "Настройки Bluetooth…";
+"System Settings" = "Системные настройки";
+"Drag devices to change their order in the menu." = "Перетаскивайте устройства, чтобы изменить их порядок в меню.";
+"Move Up" = "Переместить вверх";
+"Move Down" = "Переместить вниз";
+"Connected device" = "Подключённое устройство";
+"Speaker" = "Динамик";
+
+/* Automatic device selection. */
+"Automatically select devices" = "Выбирать устройства автоматически";
+"Devices higher in the list take priority; hidden devices are excluded." = "Устройства выше в списке имеют приоритет; скрытые устройства исключены.";
+"Resume Automatic Selection" = "Возобновить автовыбор";
+"Keep Manual Selection" = "Сохранить ручной выбор";
+"Switch %@ from %@ to %@?" = "Переключить %@ с %@ на %@?";
+
+"Could not confirm the switch to %@. Please try again." = "Не удалось подтвердить переключение на %@. Повторите попытку.";
+
+"Manual" = "Вручную";
+
+"App Store…" = "App Store…";
+
+"Automatically switches devices as connections change." = "Автоматически переключает устройства при изменении подключений.";

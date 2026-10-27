@@ -1,0 +1,69 @@
+import AppKit
+
+@main
+struct StatusMarkTests {
+    static func require(_ value: Bool, _ message: String) {
+        guard value else { fputs("FAIL: \(message)\n", stderr); exit(1) }
+    }
+    @MainActor
+    static func main() {
+        let bundle = Bundle(path: CommandLine.arguments[1])!
+        let domain = "Soniclet.icon-style-tests.\(UUID().uuidString)"
+        let defaults = UserDefaults(suiteName: domain)!
+        defer { defaults.removePersistentDomain(forName: domain) }
+        require(MenuBarIconStyle.current(in: defaults) == .system, "System icon is the initial choice")
+        defaults.set("unknown", forKey: MenuBarIconStyle.preferenceKey)
+        require(MenuBarIconStyle.current(in: defaults) == .system, "Invalid style falls back to system")
+        defaults.set(MenuBarIconStyle.soniclet.rawValue, forKey: MenuBarIconStyle.preferenceKey)
+        require(MenuBarIconStyle.current(in: defaults) == .soniclet, "Persist the selected style")
+        require(MenuBarIconStyle.allCases.count == 3, "Three menu-bar icon choices")
+        for device in ["display", "airpodspro", "headphones", "laptopcomputer"] {
+            require(MenuBarIconStyle.system.symbol(device: device, volume: "speaker.slash.fill") == "speaker.slash.fill", "Speaker mode only represents volume/mute")
+            require(MenuBarIconStyle.device.symbol(device: device, volume: "speaker.slash.fill") == device, "Device mode represents the connected output")
+        }
+        defaults.set(MenuBarIconStyle.device.rawValue, forKey: MenuBarIconStyle.preferenceKey)
+        require(MenuBarIconStyle.current(in: defaults) == .device, "Persist device style")
+        for name in ["airpods", "airpodspro", "airpodsmax", "airpods.gen3", "beats.headphones", "beats.earphones", "beats.powerbeats3", "beats.powerbeatspro", "beats.studiobuds", "homepod.fill", "homepodmini.fill", "appletv.fill", "hifispeaker.fill"] {
+            require(NSImage(systemSymbolName: name, accessibilityDescription: nil) != nil, "Missing system symbol: \(name)")
+        }
+        let levels: [(Float, Int)] = [(0, 0), (0.01, 1), (1.0 / 3.0, 1), (0.5, 2), (2.0 / 3.0, 2), (1, 3)]
+        for (volume, expected) in levels {
+            require(StatusMark.level(volume: volume, muted: false) == expected, "Volume level \(volume)")
+        }
+        require(StatusMark.level(volume: 1, muted: true) == 0, "Muted means all waveform bars dimmed")
+        require(StatusMark.level(volume: nil, muted: false) == 3, "Unknown hardware volume remains visible")
+        for level in 0...3 {
+            guard let image = StatusMark.makeImage(level: level, bundle: bundle) else { fatalError("Missing status mark") }
+            require(image.isTemplate && image.size == NSSize(width: 19, height: 19), "Fixed-size native template")
+            let bitmap = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: 180, pixelsHigh: 180,
+                bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false,
+                colorSpaceName: .deviceRGB, bytesPerRow: 0, bitsPerPixel: 0)!
+            NSGraphicsContext.saveGraphicsState()
+            NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: bitmap)
+            image.draw(in: NSRect(x: 0, y: 0, width: 180, height: 180))
+            NSGraphicsContext.restoreGraphicsState()
+            for (index, x) in [69, 90, 111].enumerated() {
+                let alpha = bitmap.colorAt(x: x, y: 90)!.alphaComponent
+                let expected: CGFloat = index < level ? 1 : 0.3
+                require(abs(alpha - expected) < 0.08, "Waveform opacity at level \(level), bar \(index): \(alpha)")
+            }
+            require(bitmap.colorAt(x: 29, y: 90)!.alphaComponent > 0.95, "Routing arrows stay opaque")
+        }
+        guard let menuIcon = DeviceMenuIcon.image(symbol: "laptopcomputer", selected: true) else { fatalError("Missing device menu icon") }
+        let menuBitmap = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: 52, pixelsHigh: 52,
+            bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false,
+            colorSpaceName: .deviceRGB, bytesPerRow: 0, bitsPerPixel: 0)!
+        NSGraphicsContext.saveGraphicsState()
+        NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: menuBitmap)
+        menuIcon.draw(in: NSRect(x: 0, y: 0, width: 52, height: 52))
+        NSGraphicsContext.restoreGraphicsState()
+        require(menuBitmap.colorAt(x: 8, y: 26)!.alphaComponent > 0.9, "Selected device circle must render")
+        var whitePixels = 0
+        for y in 10..<42 { for x in 10..<42 {
+            let color = menuBitmap.colorAt(x: x, y: y)!
+            if color.redComponent > 0.95 && color.greenComponent > 0.95 && color.blueComponent > 0.95 && color.alphaComponent > 0.9 { whitePixels += 1 }
+        }}
+        require(whitePixels > 10, "Device glyph must render over the selected circle")
+        print("PASS: menu-bar template size, stepped waveform opacity, muted state, and opaque routing arrows")
+    }
+}

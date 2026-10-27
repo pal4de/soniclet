@@ -1,0 +1,83 @@
+/* Soniclet interface strings. Keep format placeholders unchanged. */
+"Sound" = "사운드";
+"Output" = "출력";
+"Input" = "입력";
+"Sound Settings…" = "사운드 설정…";
+"Soniclet Settings…" = "Soniclet 설정…";
+"Quit Soniclet" = "Soniclet 종료";
+"Close error" = "오류 닫기";
+"Output volume" = "출력 음량";
+"Volume cannot be adjusted for this device" = "이 기기에서는 음량을 조절할 수 없습니다";
+"Adjust the volume on the device" = "기기에서 직접 음량을 조절하십시오";
+"Volume for %@" = "%@ 음량";
+"No output devices to show" = "표시할 출력 기기가 없습니다";
+"No input devices to show" = "표시할 입력 기기가 없습니다";
+"Current: %@" = "현재: %@";
+"The current device is hidden in settings" = "현재 기기가 설정에서 가려져 있습니다";
+"Switching" = "전환 중";
+"Selected" = "선택됨";
+"Not selected" = "선택되지 않음";
+"Choose which devices appear in the menu." = "메뉴에 표시할 기기를 선택하십시오.";
+"Hiding a device does not change the current input, output, or settings in other apps." = "기기를 가려도 현재 입력, 출력 또는 다른 앱의 설정은 변경되지 않습니다.";
+"Not connected" = "연결되지 않음";
+"Show %@ (%@)" = "%@(%@) 표시";
+"No output devices" = "출력 기기가 없습니다";
+"No input devices" = "입력 기기가 없습니다";
+"Could not switch to %@. Please try again." = "%@ 기기로 전환할 수 없습니다. 다시 시도하십시오.";
+"Audio operation failed (%d). Check the device connection and try again." = "오디오 작업에 실패했습니다(%d). 기기 연결을 확인한 후 다시 시도하십시오.";
+"Soniclet — audio devices" = "Soniclet — 오디오 기기";
+"Soniclet Settings" = "Soniclet 설정";
+
+/* Status menu and system-managed login item. */
+"General" = "일반";
+"Launch at login" = "로그인 시 실행";
+"Approval is required in System Settings." = "시스템 설정에서 승인이 필요합니다.";
+"Open Login Items Settings…" = "로그인 항목 설정 열기…";
+"Could not change login settings: %@" = "로그인 설정을 변경할 수 없습니다: %@";
+"Mute Output" = "출력 소리 끄기";
+"Unmute Output" = "출력 소리 켜기";
+"Window" = "윈도우";
+"Close" = "닫기";
+"%@: %@" = "%@: %@";
+
+/* Volume step buttons. */
+"Decrease volume" = "음량 낮추기";
+"Increase volume" = "음량 높이기";
+
+"Select AirPlay devices in System Sound Settings." = "[시스템 사운드 설정](soniclet://sound-settings)에서 AirPlay 기기를 선택할 수 있습니다.";
+
+/* GitHub Releases update notification. */
+"Check for Updates…" = "업데이트 확인…";
+"Checking for Updates…" = "업데이트 확인 중…";
+"No newer release is available." = "새로운 릴리스가 없습니다.";
+"Could not check for updates. Try again later." = "업데이트를 확인할 수 없습니다. 나중에 다시 시도하세요.";
+"Version %@ is available…" = "버전 %@을(를) 사용할 수 있습니다…";
+
+"Menu bar icon" = "메뉴 막대 아이콘";
+"System icon" = "시스템 아이콘";
+
+/* Connected audio accessory metadata and native settings. */
+"Battery: %@" = "배터리: %@";
+"“%@” Settings…" = "“%@” 설정…";
+"Bluetooth Settings…" = "Bluetooth 설정…";
+"System Settings" = "시스템 설정";
+"Drag devices to change their order in the menu." = "기기를 드래그하여 메뉴의 표시 순서를 변경할 수 있습니다.";
+"Move Up" = "위로 이동";
+"Move Down" = "아래로 이동";
+"Connected device" = "연결된 기기";
+"Speaker" = "스피커";
+
+/* Automatic device selection. */
+"Automatically select devices" = "기기 자동 선택";
+"Devices higher in the list take priority; hidden devices are excluded." = "목록 위쪽의 기기를 우선합니다. 숨긴 기기는 자동으로 선택하지 않습니다.";
+"Resume Automatic Selection" = "자동 선택으로 돌아가기";
+"Keep Manual Selection" = "수동 선택 유지";
+"Switch %@ from %@ to %@?" = "%@을(를) %@에서 %@으로 전환할까요?";
+
+"Could not confirm the switch to %@. Please try again." = "%@으로 전환되었는지 확인할 수 없습니다. 다시 시도하세요.";
+
+"Manual" = "수동";
+
+"App Store…" = "App Store…";
+
+"Automatically switches devices as connections change." = "연결 상태에 따라 기기를 자동으로 전환합니다.";

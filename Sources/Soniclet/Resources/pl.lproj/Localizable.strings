@@ -1,0 +1,83 @@
+/* Soniclet interface strings. Keep format placeholders unchanged. */
+"Sound" = "Dźwięk";
+"Output" = "Wyjście";
+"Input" = "Wejście";
+"Sound Settings…" = "Ustawienia dźwięku…";
+"Soniclet Settings…" = "Ustawienia Soniclet…";
+"Quit Soniclet" = "Zakończ Soniclet";
+"Close error" = "Zamknij komunikat o błędzie";
+"Output volume" = "Głośność wyjściowa";
+"Volume cannot be adjusted for this device" = "Nie można regulować głośności tego urządzenia";
+"Adjust the volume on the device" = "Dostosuj głośność na urządzeniu";
+"Volume for %@" = "Głośność urządzenia %@";
+"No output devices to show" = "Brak urządzeń wyjściowych do wyświetlenia";
+"No input devices to show" = "Brak urządzeń wejściowych do wyświetlenia";
+"Current: %@" = "Bieżące: %@";
+"The current device is hidden in settings" = "Bieżące urządzenie jest ukryte w ustawieniach";
+"Switching" = "Przełączanie";
+"Selected" = "Wybrane";
+"Not selected" = "Niewybrane";
+"Choose which devices appear in the menu." = "Wybierz urządzenia widoczne w menu.";
+"Hiding a device does not change the current input, output, or settings in other apps." = "Ukrycie urządzenia nie zmienia bieżącego wejścia, wyjścia ani ustawień innych aplikacji.";
+"Not connected" = "Brak połączenia";
+"Show %@ (%@)" = "Pokaż %@ (%@)";
+"No output devices" = "Brak urządzeń wyjściowych";
+"No input devices" = "Brak urządzeń wejściowych";
+"Could not switch to %@. Please try again." = "Nie można przełączyć na %@. Spróbuj ponownie.";
+"Audio operation failed (%d). Check the device connection and try again." = "Operacja audio nie powiodła się (%d). Sprawdź połączenie urządzenia i spróbuj ponownie.";
+"Soniclet — audio devices" = "Soniclet — urządzenia audio";
+"Soniclet Settings" = "Ustawienia Soniclet";
+
+/* Status menu and system-managed login item. */
+"General" = "Ogólne";
+"Launch at login" = "Otwieraj przy logowaniu";
+"Approval is required in System Settings." = "Wymagana jest zgoda w Ustawieniach systemowych.";
+"Open Login Items Settings…" = "Otwórz ustawienia rzeczy otwieranych podczas logowania…";
+"Could not change login settings: %@" = "Nie można zmienić ustawień logowania: %@";
+"Mute Output" = "Wycisz wyjście";
+"Unmute Output" = "Wyłącz wyciszenie wyjścia";
+"Window" = "Okno";
+"Close" = "Zamknij";
+"%@: %@" = "%@: %@";
+
+/* Volume step buttons. */
+"Decrease volume" = "Zmniejsz głośność";
+"Increase volume" = "Zwiększ głośność";
+
+"Select AirPlay devices in System Sound Settings." = "Urządzenia AirPlay możesz wybrać w [systemowych ustawieniach dźwięku](soniclet://sound-settings).";
+
+/* GitHub Releases update notification. */
+"Check for Updates…" = "Sprawdź uaktualnienia…";
+"Checking for Updates…" = "Sprawdzanie uaktualnień…";
+"No newer release is available." = "Nie ma nowszej wersji.";
+"Could not check for updates. Try again later." = "Nie udało się sprawdzić uaktualnień. Spróbuj ponownie później.";
+"Version %@ is available…" = "Wersja %@ jest dostępna…";
+
+"Menu bar icon" = "Ikona na pasku menu";
+"System icon" = "Ikona systemowa";
+
+/* Connected audio accessory metadata and native settings. */
+"Battery: %@" = "Bateria: %@";
+"“%@” Settings…" = "Ustawienia „%@”…";
+"Bluetooth Settings…" = "Ustawienia Bluetooth…";
+"System Settings" = "Ustawienia systemowe";
+"Drag devices to change their order in the menu." = "Przeciągnij urządzenia, aby zmienić ich kolejność w menu.";
+"Move Up" = "Przenieś w górę";
+"Move Down" = "Przenieś w dół";
+"Connected device" = "Podłączone urządzenie";
+"Speaker" = "Głośnik";
+
+/* Automatic device selection. */
+"Automatically select devices" = "Automatycznie wybieraj urządzenia";
+"Devices higher in the list take priority; hidden devices are excluded." = "Urządzenia wyżej na liście mają pierwszeństwo; ukryte są pomijane.";
+"Resume Automatic Selection" = "Wznów automatyczny wybór";
+"Keep Manual Selection" = "Zachowaj ręczny wybór";
+"Switch %@ from %@ to %@?" = "Przełączyć %@ z %@ na %@?";
+
+"Could not confirm the switch to %@. Please try again." = "Nie można potwierdzić przełączenia na %@. Spróbuj ponownie.";
+
+"Manual" = "Ręcznie";
+
+"App Store…" = "App Store…";
+
+"Automatically switches devices as connections change." = "Automatycznie przełącza urządzenia po zmianie połączeń.";

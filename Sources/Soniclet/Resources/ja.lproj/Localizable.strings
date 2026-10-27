@@ -1,0 +1,83 @@
+/* Soniclet interface strings. Keep format placeholders unchanged. */
+"Sound" = "サウンド";
+"Output" = "出力";
+"Input" = "入力";
+"Sound Settings…" = "サウンド設定…";
+"Soniclet Settings…" = "Sonicletの設定…";
+"Quit Soniclet" = "Sonicletを終了";
+"Close error" = "エラーを閉じる";
+"Output volume" = "出力音量";
+"Volume cannot be adjusted for this device" = "このデバイスでは音量を調整できません";
+"Adjust the volume on the device" = "このデバイスの音量は本体で調整してください";
+"Volume for %@" = "%@の音量";
+"No output devices to show" = "表示する出力デバイスがありません";
+"No input devices to show" = "表示する入力デバイスがありません";
+"Current: %@" = "現在：%@";
+"The current device is hidden in settings" = "現在選択中のデバイスは、設定で非表示になっています";
+"Switching" = "切り替え中";
+"Selected" = "選択中";
+"Not selected" = "未選択";
+"Choose which devices appear in the menu." = "メニューに表示するデバイスを選んでください。";
+"Hiding a device does not change the current input, output, or settings in other apps." = "非表示にしても、現在の入出力先や他のアプリの設定は変わりません。";
+"Not connected" = "未接続";
+"Show %@ (%@)" = "%@（%@）を表示";
+"No output devices" = "出力デバイスがありません";
+"No input devices" = "入力デバイスがありません";
+"Could not switch to %@. Please try again." = "%@に切り替えられませんでした。もう一度お試しください。";
+"Audio operation failed (%d). Check the device connection and try again." = "オーディオ操作に失敗しました（%d）。デバイスの接続を確認して、もう一度お試しください。";
+"Soniclet — audio devices" = "Soniclet、サウンドの切り替え";
+"Soniclet Settings" = "Sonicletの設定";
+
+/* Status menu and system-managed login item. */
+"General" = "一般";
+"Launch at login" = "ログイン時に起動";
+"Approval is required in System Settings." = "システム設定での承認が必要です。";
+"Open Login Items Settings…" = "ログイン項目の設定を開く…";
+"Could not change login settings: %@" = "ログイン設定を変更できませんでした：%@";
+"Mute Output" = "出力を消音";
+"Unmute Output" = "出力の消音を解除";
+"Window" = "ウインドウ";
+"Close" = "閉じる";
+"%@: %@" = "%@：%@";
+
+/* Volume step buttons. */
+"Decrease volume" = "音量を下げる";
+"Increase volume" = "音量を上げる";
+
+"Select AirPlay devices in System Sound Settings." = "AirPlay機器はシステムの[サウンド設定](soniclet://sound-settings)から選択できます。";
+
+/* GitHub Releases update notification. */
+"Check for Updates…" = "アップデートを確認…";
+"Checking for Updates…" = "アップデートを確認中…";
+"No newer release is available." = "新しいリリースはありません。";
+"Could not check for updates. Try again later." = "アップデートを確認できませんでした。後でもう一度お試しください。";
+"Version %@ is available…" = "バージョン %@ が利用可能です…";
+
+"Menu bar icon" = "メニューバーのアイコン";
+"System icon" = "システムアイコン";
+
+/* Connected audio accessory metadata and native settings. */
+"Battery: %@" = "バッテリー: %@";
+"“%@” Settings…" = "“%@”の設定…";
+"Bluetooth Settings…" = "Bluetooth設定…";
+"System Settings" = "システム設定";
+"Drag devices to change their order in the menu." = "ドラッグしてメニューの表示順を変更できます。";
+"Move Up" = "上へ移動";
+"Move Down" = "下へ移動";
+"Connected device" = "接続先";
+"Speaker" = "スピーカー";
+
+/* Automatic device selection. */
+"Automatically select devices" = "デバイスを自動選択";
+"Devices higher in the list take priority; hidden devices are excluded." = "リストの上にある機器を優先します。非表示の機器は自動選択しません。";
+"Resume Automatic Selection" = "自動選択に戻す";
+"Keep Manual Selection" = "手動選択を維持";
+"Switch %@ from %@ to %@?" = "%@を%@から%@に切り替えますか？";
+
+"Could not confirm the switch to %@. Please try again." = "%@への切り替えを確認できませんでした。もう一度お試しください。";
+
+"Manual" = "手動";
+
+"App Store…" = "App Store…";
+
+"Automatically switches devices as connections change." = "接続状況に応じてデバイスを自動で切り替えます。";

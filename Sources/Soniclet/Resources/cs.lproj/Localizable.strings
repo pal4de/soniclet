@@ -1,0 +1,83 @@
+/* Soniclet interface strings. Keep format placeholders unchanged. */
+"Sound" = "Zvuk";
+"Output" = "Výstup";
+"Input" = "Vstup";
+"Sound Settings…" = "Nastavení zvuku…";
+"Soniclet Settings…" = "Nastavení Soniclet…";
+"Quit Soniclet" = "Ukončit Soniclet";
+"Close error" = "Zavřít chybovou zprávu";
+"Output volume" = "Výstupní hlasitost";
+"Volume cannot be adjusted for this device" = "Hlasitost tohoto zařízení nelze upravit";
+"Adjust the volume on the device" = "Upravte hlasitost přímo na zařízení";
+"Volume for %@" = "Hlasitost zařízení %@";
+"No output devices to show" = "Žádná výstupní zařízení k zobrazení";
+"No input devices to show" = "Žádná vstupní zařízení k zobrazení";
+"Current: %@" = "Aktuální: %@";
+"The current device is hidden in settings" = "Aktuální zařízení je v nastavení skryté";
+"Switching" = "Přepínání";
+"Selected" = "Vybráno";
+"Not selected" = "Nevybráno";
+"Choose which devices appear in the menu." = "Vyberte zařízení, která se zobrazí v nabídce.";
+"Hiding a device does not change the current input, output, or settings in other apps." = "Skrytí zařízení nezmění aktuální vstup, výstup ani nastavení jiných aplikací.";
+"Not connected" = "Nepřipojeno";
+"Show %@ (%@)" = "Zobrazit %@ (%@)";
+"No output devices" = "Žádná výstupní zařízení";
+"No input devices" = "Žádná vstupní zařízení";
+"Could not switch to %@. Please try again." = "Na zařízení %@ se nepodařilo přepnout. Zkuste to znovu.";
+"Audio operation failed (%d). Check the device connection and try again." = "Zvuková operace se nezdařila (%d). Zkontrolujte připojení zařízení a zkuste to znovu.";
+"Soniclet — audio devices" = "Soniclet — zvuková zařízení";
+"Soniclet Settings" = "Nastavení Soniclet";
+
+/* Status menu and system-managed login item. */
+"General" = "Obecné";
+"Launch at login" = "Otevřít při přihlášení";
+"Approval is required in System Settings." = "Je vyžadováno schválení v Nastavení systému.";
+"Open Login Items Settings…" = "Otevřít nastavení položek přihlášení…";
+"Could not change login settings: %@" = "Nastavení přihlášení se nepodařilo změnit: %@";
+"Mute Output" = "Ztlumit výstup";
+"Unmute Output" = "Zrušit ztlumení výstupu";
+"Window" = "Okno";
+"Close" = "Zavřít";
+"%@: %@" = "%@: %@";
+
+/* Volume step buttons. */
+"Decrease volume" = "Snížit hlasitost";
+"Increase volume" = "Zvýšit hlasitost";
+
+"Select AirPlay devices in System Sound Settings." = "Zařízení AirPlay můžete vybrat v [systémovém nastavení zvuku](soniclet://sound-settings).";
+
+/* GitHub Releases update notification. */
+"Check for Updates…" = "Zkontrolovat aktualizace…";
+"Checking for Updates…" = "Kontrola aktualizací…";
+"No newer release is available." = "Novější verze není k dispozici.";
+"Could not check for updates. Try again later." = "Aktualizace nelze zkontrolovat. Zkuste to později.";
+"Version %@ is available…" = "Verze %@ je k dispozici…";
+
+"Menu bar icon" = "Ikona v řádku nabídek";
+"System icon" = "Systémová ikona";
+
+/* Connected audio accessory metadata and native settings. */
+"Battery: %@" = "Baterie: %@";
+"“%@” Settings…" = "Nastavení „%@“…";
+"Bluetooth Settings…" = "Nastavení Bluetooth…";
+"System Settings" = "Nastavení systému";
+"Drag devices to change their order in the menu." = "Přetažením zařízení změníte jejich pořadí v nabídce.";
+"Move Up" = "Přesunout nahoru";
+"Move Down" = "Přesunout dolů";
+"Connected device" = "Připojené zařízení";
+"Speaker" = "Reproduktor";
+
+/* Automatic device selection. */
+"Automatically select devices" = "Vybírat zařízení automaticky";
+"Devices higher in the list take priority; hidden devices are excluded." = "Zařízení výše v seznamu mají přednost. Skrytá zařízení se vynechávají.";
+"Resume Automatic Selection" = "Obnovit automatický výběr";
+"Keep Manual Selection" = "Zachovat ruční výběr";
+"Switch %@ from %@ to %@?" = "Přepnout %@ z %@ na %@?";
+
+"Could not confirm the switch to %@. Please try again." = "Přepnutí na %@ se nepodařilo potvrdit. Zkuste to znovu.";
+
+"Manual" = "Ručně";
+
+"App Store…" = "App Store…";
+
+"Automatically switches devices as connections change." = "Automaticky přepíná zařízení při změně připojení.";
