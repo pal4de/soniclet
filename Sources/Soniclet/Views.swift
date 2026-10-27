@@ -164,6 +164,13 @@ private struct DirectionSettingsView: View {
                 if model.automaticSelectionEnabled(direction), model.isManualSelection(direction) {
                     Button(L10n.text("Resume Automatic Selection")) { model.resumeAutomaticSelection(direction) }
                 }
+            } footer: {
+                Text([
+                    L10n.text("Automatically switches devices as connections change."),
+                    L10n.text("Devices higher in the list take priority; hidden devices are excluded.")
+                ].joined(separator: " "))
+                .font(.caption).foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
             }
             Section {
                 let devices = model.savedDevices(direction)
@@ -183,13 +190,12 @@ private struct DirectionSettingsView: View {
             } header: {
                 Text(direction.title)
             } footer: {
-                Text([
+                Text(([
                     L10n.text("Choose which devices appear in the menu."),
-                    reorderHelp,
-                    L10n.text(model.automaticSelectionEnabled(direction)
-                        ? "Devices higher in the list take priority; hidden devices are excluded."
-                        : "Hiding a device does not change the current input, output, or settings in other apps.")
-                ].joined(separator: " "))
+                    reorderHelp
+                ] + (model.automaticSelectionEnabled(direction) ? [] : [
+                    L10n.text("Hiding a device does not change the current input, output, or settings in other apps.")
+                ])).joined(separator: " "))
                 .font(.caption).foregroundStyle(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
             }

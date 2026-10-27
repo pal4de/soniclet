@@ -79,3 +79,5 @@
 "Manual" = "手動";
 
 "App Store…" = "App Store…";
+
+"Automatically switches devices as connections change." = "依連線狀態自動切換裝置。";

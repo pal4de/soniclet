@@ -79,3 +79,5 @@
 "Manual" = "Manuaalinen";
 
 "App Store…" = "App Store…";
+
+"Automatically switches devices as connections change." = "Vaihtaa laitetta automaattisesti yhteyksien muuttuessa.";

@@ -79,3 +79,5 @@
 "Manual" = "Вручную";
 
 "App Store…" = "App Store…";
+
+"Automatically switches devices as connections change." = "Автоматически переключает устройства при изменении подключений.";
